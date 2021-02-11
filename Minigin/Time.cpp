@@ -20,8 +20,7 @@ std::chrono::steady_clock::time_point Time::GetPreviousTime() const
 
 int Time::GetFPS() const
 {
-	float fps = 1.f / m_DeltaTime;
-	return (int)fps;
+	return int(1.f / m_DeltaTime);
 }
 
 int Time::GetMsPerFrame() const

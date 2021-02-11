@@ -10,7 +10,6 @@ public:
 	std::chrono::steady_clock::time_point GetPreviousTime() const;
 	int GetFPS() const;
 	int GetMsPerFrame() const;
-
 	
 	Time(const Time& other) = delete;
 	Time(Time&& other) = delete;

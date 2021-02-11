@@ -74,6 +74,7 @@ void dae::Minigin::LoadGame() const
 	auto* pFPSTextureComponent = new RenderComponent();
 	TextComponent* pTextComponent = new TextComponent("00 fps", fpsFont, pFPSTextureComponent);
 	FPSComponent* pFPSComponent = new FPSComponent(pTextComponent);
+	pTextComponent->SetColor(SDL_Color{ 255, 255, 0 });
 	fps->AddComponent(pFPSTextureComponent);
 	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);

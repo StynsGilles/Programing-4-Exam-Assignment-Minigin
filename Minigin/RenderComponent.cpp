@@ -6,8 +6,7 @@
 
 dae::RenderComponent::RenderComponent()
 	: m_pTexture(nullptr)
-{
-}
+{}
 
 dae::RenderComponent::RenderComponent(const std::string& filename)
 {

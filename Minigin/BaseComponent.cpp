@@ -15,4 +15,3 @@ void dae::BaseComponent::SetGameObject(GameObject* pObject)
 {
 	m_pObject = pObject;
 }
-

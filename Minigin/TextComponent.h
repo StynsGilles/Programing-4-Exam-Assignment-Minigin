@@ -14,6 +14,7 @@ namespace dae
         void Update() override;
         void Render() const override;
         void SetText(const std::string& text);
+        void SetColor(const SDL_Color& color);
 
         TextComponent(const TextComponent& other) = delete;
         TextComponent(TextComponent&& other) = delete;
@@ -24,5 +25,6 @@ namespace dae
         std::string m_Text;
         std::shared_ptr<Font> m_Font;
         RenderComponent* m_pTextureComponent;
+        SDL_Color m_Color;
     };
 }
