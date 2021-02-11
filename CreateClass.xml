@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet%22%3E">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Class Creator</Title>
+      <Author>Gilles Styns</Author>
+      <Description>Creates a class</Description>
+      <Shortcut>CreateClass</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CPP">
+        <![CDATA[
+        class $ClassName$
+        {
+        public:
+            $ClassName$();
+            virtual ~$ClassName$();
+            
+            $ClassName$(const $ClassName$& other) = delete;
+            $ClassName$($ClassName$&& other) = delete;
+            $ClassName$& operator=(const $ClassName$& other) = delete;
+            $ClassName$& operator=($ClassName$&& other) = delete;
+        private:
+
+        };]]>
+      </Code>
+
+      <Declarations>
+        <Literal>
+          <ID>ClassName</ID>
+          <ToolTip>Choose the name of the class</ToolTip>
+          <Default>TemplateName</Default>
+        </Literal>
+      </Declarations>
+
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
