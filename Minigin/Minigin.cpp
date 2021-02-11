@@ -10,7 +10,7 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
-#include "TextureComponent.h"
+#include "RenderComponent.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
 
@@ -48,26 +48,32 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
-	TextureComponent* pTextureBackgroundComponent = new TextureComponent("background.jpg");
-	go->AddComponent(pTextureBackgroundComponent);
+	RenderComponent* pBackgroundTextureComponent = new RenderComponent();
+	pBackgroundTextureComponent->SetTexture("background.jpg");
+	go->AddComponent(pBackgroundTextureComponent);
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
-	TextureComponent* pTextureLogoComponent = new TextureComponent("logo.png");
-	go->AddComponent(pTextureLogoComponent);
+	RenderComponent* pLogoTextureComponent = new RenderComponent();
+	pLogoTextureComponent->SetTexture("logo.png");
+	go->AddComponent(pLogoTextureComponent);
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
 	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto to = std::make_shared<GameObject>();
-	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font);
+	RenderComponent* pTextTextureComponent = new RenderComponent();
+	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font, pTextTextureComponent);
+	to->AddComponent(pTextTextureComponent);
 	to->AddComponent(pTextInfoComponent);
 	to->SetPosition(80, 20);
 	scene.Add(to);
 
 	auto fps = std::make_shared<GameObject>();
-	TextComponent* pTextComponent = new TextComponent("00 fps", font);
+	auto* pFPSTextureComponent = new RenderComponent();
+	TextComponent* pTextComponent = new TextComponent("00 fps", font, pFPSTextureComponent);
 	FPSComponent* pFPSComponent = new FPSComponent(pTextComponent);
+	fps->AddComponent(pFPSTextureComponent);
 	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);

@@ -4,10 +4,11 @@
 
 namespace dae
 {
-    class TextComponent final : public BaseComponent
+	class RenderComponent;
+	class TextComponent final : public BaseComponent
     {
     public:
-        explicit TextComponent(const std::string& text, const std::shared_ptr<Font>& font);
+        explicit TextComponent(const std::string& text, const std::shared_ptr<Font>& font, RenderComponent* pTextureComponent);
         virtual ~TextComponent();
 
         void Update() override;
@@ -22,6 +23,6 @@ namespace dae
         bool m_NeedsUpdate;
         std::string m_Text;
         std::shared_ptr<Font> m_Font;
-        std::shared_ptr<dae::Texture2D> m_pTexture;
+        RenderComponent* m_pTextureComponent;
     };
 }

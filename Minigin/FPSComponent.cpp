@@ -8,8 +8,7 @@
 #include "TextComponent.h"
 
 dae::FPSComponent::FPSComponent(TextComponent* pTextComponent)
-	: BaseComponent()
-	, m_pTextComponent(pTextComponent)
+	: m_pTextComponent(pTextComponent)
 {
 }
 

@@ -1,15 +1,14 @@
 #pragma once
 #include "Transform.h"
-#include "SceneObject.h"
 #include "BaseComponent.h"
 
 namespace dae
 {
-	class GameObject final : public SceneObject
+	class GameObject final
 	{
 	public:
-		void Update() override;
-		void Render() const override;
+		void Update();
+		void Render() const;
 		
 		void SetPosition(float x, float y);
 		Transform GetTransform() const;
