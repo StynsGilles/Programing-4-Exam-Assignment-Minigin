@@ -10,6 +10,7 @@
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
+#include "TextureComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -45,18 +46,20 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
+	TextureComponent* pTextureBackgroundComponent = new TextureComponent("background.jpg", go);
+	go->AddComponent(pTextureBackgroundComponent);
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
+	TextureComponent* pTextureLogoComponent = new TextureComponent("logo.png", go);
+	go->AddComponent(pTextureLogoComponent);
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<GameObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//auto to = std::make_shared<GameObject>("Programming 4 Assignment", font);
+	//to->SetPosition(80, 20);
+	//scene.Add(to);
 }
 
 void dae::Minigin::Cleanup()

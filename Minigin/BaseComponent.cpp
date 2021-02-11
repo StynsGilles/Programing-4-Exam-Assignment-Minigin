@@ -1,10 +1,12 @@
 #include "MiniginPCH.h"
 #include "BaseComponent.h"
+#include "GameObject.h"
 
-BaseComponent::BaseComponent()
+dae::BaseComponent::BaseComponent(std::shared_ptr<GameObject> pObject)
+	: m_pObject(pObject)
 {
 }
 
-BaseComponent::~BaseComponent()
+dae::BaseComponent::~BaseComponent()
 {
 }

@@ -1,16 +1,23 @@
 #pragma once
 
-class BaseComponent
+namespace dae
 {
-public:
-	BaseComponent();
-	virtual ~BaseComponent();
-	
-	virtual void Update() = 0;
-	virtual void Render() const = 0;
+	class GameObject;
+	class BaseComponent
+	{
+	public:
+		BaseComponent(std::shared_ptr<GameObject> pObject);
+		virtual ~BaseComponent();
 
-	BaseComponent(const BaseComponent& other) = delete;
-	BaseComponent(BaseComponent&& other) = delete;
-	BaseComponent& operator=(const BaseComponent& other) = delete;
-	BaseComponent& operator=(BaseComponent&& other) = delete;
-};
+		virtual void Update() = 0;
+		virtual void Render() const = 0;
+
+		BaseComponent(const BaseComponent& other) = delete;
+		BaseComponent(BaseComponent&& other) = delete;
+		BaseComponent& operator=(const BaseComponent& other) = delete;
+		BaseComponent& operator=(BaseComponent&& other) = delete;
+
+	protected:
+		std::shared_ptr<GameObject> m_pObject;
+	};
+}

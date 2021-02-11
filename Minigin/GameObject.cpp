@@ -1,59 +1,38 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
-
-dae::GameObject::GameObject(const std::string& text, const std::shared_ptr<Font>& font)
-	: m_pTextComponent{ new TextComponent(text, font) }
-{
-}
 
 dae::GameObject::~GameObject()
 {
-	delete m_pTextComponent;
+	for (BaseComponent* component : m_pComponents)
+	{
+		delete component;
+	}
 };
 
 void dae::GameObject::Update()
 {
-	if (m_pTextComponent)
+	for (BaseComponent* component : m_pComponents)
 	{
-		m_pTextComponent->Update();
+		component->Update();
 	}
 }
 
 void dae::GameObject::Render() const
 {
-	if (m_Texture)
+	for (BaseComponent* component : m_pComponents)
 	{
-		const auto pos = m_Transform.GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+		component->Render();
 	}
-	if (m_pTextComponent)
-	{
-		m_pTextComponent->Render();
-	}
-}
-
-void dae::GameObject::SetText(const std::string& text) const
-{
-	if (m_pTextComponent)
-	{
-		m_pTextComponent->SetText(text);
-	}
-}
-
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
 }
 
 void dae::GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
-	if (m_pTextComponent)
-	{
-		m_pTextComponent->SetPosition(x, y);
-	}
+}
+
+dae::Transform dae::GameObject::GetTransform() const
+{
+	return m_Transform;
 }
 
 void dae::GameObject::AddComponent(BaseComponent* component)
