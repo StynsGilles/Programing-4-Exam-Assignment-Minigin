@@ -11,7 +11,7 @@ namespace dae
 		virtual ~BaseComponent();
 
 		virtual void Update() = 0;
-		virtual void Render() const;
+		virtual void Render() const = 0;
 
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;
@@ -20,6 +20,5 @@ namespace dae
 
 	protected:
 		GameObject* m_pObject;
-		std::shared_ptr<dae::Texture2D> m_pTexture;
 	};
 }

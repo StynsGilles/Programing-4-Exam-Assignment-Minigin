@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "FPSComponent.h"
 #include "Time.h"
+#include "GameObject.h"
 
 dae::FPSComponent::FPSComponent(const std::shared_ptr<Font>& font, std::shared_ptr<GameObject> pObject)
 	: BaseComponent(pObject)
@@ -36,5 +37,9 @@ void dae::FPSComponent::Update()
 
 void dae::FPSComponent::Render() const
 {
-	BaseComponent::Render();
+	if (m_pTexture != nullptr)
+	{
+		const auto pos = m_pObject->GetTransform().GetPosition();
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	}
 }

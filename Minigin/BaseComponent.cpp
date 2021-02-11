@@ -11,12 +11,3 @@ dae::BaseComponent::BaseComponent(std::shared_ptr<GameObject> pObject)
 dae::BaseComponent::~BaseComponent()
 {
 }
-
-void dae::BaseComponent::Render() const
-{
-	if (m_pTexture)
-	{
-		const auto pos = m_pObject->GetTransform().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
-	}
-}

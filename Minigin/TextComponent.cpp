@@ -3,6 +3,7 @@
 #include <SDL_ttf.h>
 #include "Renderer.h"
 #include "TextComponent.h"
+#include "GameObject.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font, std::shared_ptr<GameObject> pObject)
 	: BaseComponent(pObject)
@@ -39,12 +40,11 @@ void dae::TextComponent::Update()
 
 void dae::TextComponent::Render() const
 {
-	BaseComponent::Render();
-	//if (m_pTexture != nullptr)
-	//{
-	//	const auto pos = m_pObject->GetTransform().GetPosition();
-	//	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
-	//}
+	if (m_pTexture != nullptr)
+	{
+		const auto pos = m_pObject->GetTransform().GetPosition();
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	}
 }
 
 void dae::TextComponent::SetText(const std::string& text)

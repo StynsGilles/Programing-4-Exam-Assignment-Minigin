@@ -4,7 +4,6 @@
 
 namespace dae
 {
-    class GameObject;
     class TextComponent final : public BaseComponent
     {
     public:
@@ -23,5 +22,6 @@ namespace dae
         bool m_NeedsUpdate;
         std::string m_Text;
         std::shared_ptr<Font> m_Font;
+        std::shared_ptr<dae::Texture2D> m_pTexture;
     };
 }

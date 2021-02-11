@@ -13,6 +13,11 @@ float Time::GetDeltaTime() const
 	return m_DeltaTime;
 }
 
+std::chrono::steady_clock::time_point Time::GetPreviousTime() const
+{
+	return m_PreviousTime;
+}
+
 int Time::GetFPS() const
 {
 	float fps = 1.f / m_DeltaTime;

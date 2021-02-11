@@ -3,7 +3,6 @@
 
 namespace dae
 {
-    class GameObject;
     class TextureComponent : public BaseComponent
     {
     public:
@@ -18,6 +17,7 @@ namespace dae
         TextureComponent& operator=(const TextureComponent& other) = delete;
         TextureComponent& operator=(TextureComponent&& other) = delete;
     private:
+        std::shared_ptr<dae::Texture2D> m_pTexture;
     };
 }
 

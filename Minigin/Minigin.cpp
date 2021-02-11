@@ -111,6 +111,8 @@ void dae::Minigin::Run()
 			}
 			
 			renderer.Render();
+			auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
+			this_thread::sleep_for(sleepTime);
 		}
 	}
 

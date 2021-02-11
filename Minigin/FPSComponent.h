@@ -20,5 +20,6 @@ namespace dae
         FPSComponent& operator=(FPSComponent&& other) = delete;
     private:
         std::shared_ptr<Font> m_Font;
+        std::shared_ptr<dae::Texture2D> m_pTexture;
     };
 }
