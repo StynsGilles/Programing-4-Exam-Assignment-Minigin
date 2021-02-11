@@ -23,5 +23,3 @@ namespace dae
         std::shared_ptr<Texture2D> m_pTexture;
     };
 }
-
-

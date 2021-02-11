@@ -69,9 +69,10 @@ void dae::Minigin::LoadGame() const
 	to->SetPosition(80, 20);
 	scene.Add(to);
 
+	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps = std::make_shared<GameObject>();
 	auto* pFPSTextureComponent = new RenderComponent();
-	TextComponent* pTextComponent = new TextComponent("00 fps", font, pFPSTextureComponent);
+	TextComponent* pTextComponent = new TextComponent("00 fps", fpsFont, pFPSTextureComponent);
 	FPSComponent* pFPSComponent = new FPSComponent(pTextComponent);
 	fps->AddComponent(pFPSTextureComponent);
 	fps->AddComponent(pTextComponent);
