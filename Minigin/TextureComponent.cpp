@@ -1,7 +1,5 @@
 #include "MiniginPCH.h"
 #include "TextureComponent.h"
-#include "GameObject.h"
-#include "Renderer.h"
 #include "ResourceManager.h"
 
 dae::TextureComponent::TextureComponent(const std::string& filename, std::shared_ptr<GameObject> pObject)
@@ -20,9 +18,10 @@ void dae::TextureComponent::Update()
 
 void dae::TextureComponent::Render() const
 {
-	if (m_pTexture)
-	{
-		const auto pos = m_pObject->GetTransform().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
-	}
+	BaseComponent::Render();
+	//if (m_pTexture)
+	//{
+	//	const auto pos = m_pObject->GetTransform().GetPosition();
+	//	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	//}
 }

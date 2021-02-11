@@ -1,10 +1,8 @@
 #include "MiniginPCH.h"
 #include <SDL.h>
 #include <SDL_ttf.h>
-
 #include "Renderer.h"
 #include "TextComponent.h"
-#include "GameObject.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font, std::shared_ptr<GameObject> pObject)
 	: BaseComponent(pObject)
@@ -34,18 +32,19 @@ void dae::TextComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		m_Texture = std::make_shared<Texture2D>(texture);
+		m_pTexture = std::make_shared<Texture2D>(texture);
 		m_NeedsUpdate = false;
 	}
 }
 
 void dae::TextComponent::Render() const
 {
-	if (m_Texture != nullptr)
-	{
-		const auto pos = m_pObject->GetTransform().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
-	}
+	BaseComponent::Render();
+	//if (m_pTexture != nullptr)
+	//{
+	//	const auto pos = m_pObject->GetTransform().GetPosition();
+	//	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+	//}
 }
 
 void dae::TextComponent::SetText(const std::string& text)

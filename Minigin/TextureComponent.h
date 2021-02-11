@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Texture2D.h"
 
 namespace dae
 {
@@ -19,7 +18,6 @@ namespace dae
         TextureComponent& operator=(const TextureComponent& other) = delete;
         TextureComponent& operator=(TextureComponent&& other) = delete;
     private:
-        std::shared_ptr<dae::Texture2D> m_pTexture{};
     };
 }
 
