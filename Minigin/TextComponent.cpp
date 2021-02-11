@@ -5,8 +5,8 @@
 #include "TextComponent.h"
 #include "GameObject.h"
 
-dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font, std::shared_ptr<GameObject> pObject)
-	: BaseComponent(pObject)
+dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
+	: BaseComponent()
 	, m_NeedsUpdate(true)
 	, m_Text(text)
 	, m_Font(font)

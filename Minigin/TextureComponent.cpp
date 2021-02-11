@@ -4,8 +4,8 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
-dae::TextureComponent::TextureComponent(const std::string& filename, std::shared_ptr<GameObject> pObject)
-	: BaseComponent(pObject)
+dae::TextureComponent::TextureComponent(const std::string& filename)
+	: BaseComponent()
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
 }

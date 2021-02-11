@@ -3,11 +3,16 @@
 #include "GameObject.h"
 #include "Renderer.h"
 
-dae::BaseComponent::BaseComponent(std::shared_ptr<GameObject> pObject)
-	: m_pObject(pObject.get())
+dae::BaseComponent::BaseComponent()
 {
 }
 
 dae::BaseComponent::~BaseComponent()
 {
 }
+
+void dae::BaseComponent::SetGameObject(GameObject* pObject)
+{
+	m_pObject = pObject;
+}
+

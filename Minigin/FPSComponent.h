@@ -4,11 +4,12 @@
 
 namespace dae
 {
+	class TextComponent;
 	class GameObject;
 	class FPSComponent : public BaseComponent
 	{
     public:
-        explicit FPSComponent(const std::shared_ptr<Font>& font, std::shared_ptr<GameObject> pObject);
+        explicit FPSComponent(TextComponent* pTextComponent);
         virtual ~FPSComponent();
 
         void Update() override;
@@ -19,7 +20,6 @@ namespace dae
         FPSComponent& operator=(const FPSComponent& other) = delete;
         FPSComponent& operator=(FPSComponent&& other) = delete;
     private:
-        std::shared_ptr<Font> m_Font;
-        std::shared_ptr<dae::Texture2D> m_pTexture;
+        TextComponent* m_pTextComponent;
     };
 }

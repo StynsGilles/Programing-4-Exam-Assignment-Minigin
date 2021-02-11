@@ -48,25 +48,27 @@ void dae::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
-	TextureComponent* pTextureBackgroundComponent = new TextureComponent("background.jpg", go);
+	TextureComponent* pTextureBackgroundComponent = new TextureComponent("background.jpg");
 	go->AddComponent(pTextureBackgroundComponent);
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
-	TextureComponent* pTextureLogoComponent = new TextureComponent("logo.png", go);
+	TextureComponent* pTextureLogoComponent = new TextureComponent("logo.png");
 	go->AddComponent(pTextureLogoComponent);
 	go->SetPosition(216, 180);
 	scene.Add(go);
 
 	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto to = std::make_shared<GameObject>();
-	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font, to);
+	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font);
 	to->AddComponent(pTextInfoComponent);
 	to->SetPosition(80, 20);
 	scene.Add(to);
 
 	auto fps = std::make_shared<GameObject>();
-	FPSComponent* pFPSComponent = new FPSComponent(font, fps);
+	TextComponent* pTextComponent = new TextComponent("00 fps", font);
+	FPSComponent* pFPSComponent = new FPSComponent(pTextComponent);
+	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 }

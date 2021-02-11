@@ -6,7 +6,7 @@ namespace dae
     class TextureComponent : public BaseComponent
     {
     public:
-        TextureComponent(const std::string& filename, std::shared_ptr<GameObject> pObject);
+        TextureComponent(const std::string& filename);
         virtual ~TextureComponent();
 
         void Update() override;

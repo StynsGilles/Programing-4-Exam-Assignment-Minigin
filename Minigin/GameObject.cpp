@@ -37,5 +37,6 @@ dae::Transform dae::GameObject::GetTransform() const
 
 void dae::GameObject::AddComponent(BaseComponent* component)
 {
+	component->SetGameObject(this);
 	m_pComponents.push_back(component);
 }
