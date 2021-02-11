@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minigin", "Minigin\Minigin.vcxproj", "{41B0EC47-D48C-4B0F-951B-D98595FFAE0A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1F2E9DB2-3A51-49E1-8082-D4FAE4E7B587}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
