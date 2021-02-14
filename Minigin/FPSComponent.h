@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Font.h"
 
 namespace dae
 {

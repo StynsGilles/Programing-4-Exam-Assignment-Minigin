@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include "Texture2D.h"
 
 namespace dae
 {

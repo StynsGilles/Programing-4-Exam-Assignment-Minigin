@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include <SDL.h>
 
+#include "Time.h"
+
 
 bool dae::InputManager::ProcessInput()
 {
@@ -14,7 +16,20 @@ bool dae::InputManager::ProcessInput()
 			return false;
 		}
 		if (e.type == SDL_KEYDOWN) {
-			
+			switch (e.key.keysym.scancode)
+			{
+			case SDL_SCANCODE_KP_1:
+				Time::GetInstance().SetMsPerFrame(6);
+				break;
+			case SDL_SCANCODE_KP_2:
+				Time::GetInstance().SetMsPerFrame(16);
+				break;
+			case SDL_SCANCODE_KP_3:
+				Time::GetInstance().SetMsPerFrame(33);
+				break;
+			default:
+				break;
+			}
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			

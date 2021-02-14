@@ -27,3 +27,8 @@ int Time::GetMsPerFrame() const
 {
 	return m_MsPerFrame;
 }
+
+void Time::SetMsPerFrame(const int& msPerFrame)
+{
+	m_MsPerFrame = msPerFrame;
+}

@@ -1,7 +1,6 @@
 #include "MiniginPCH.h"
 #include "BaseComponent.h"
 #include "GameObject.h"
-#include "Renderer.h"
 
 dae::BaseComponent::BaseComponent()
 {

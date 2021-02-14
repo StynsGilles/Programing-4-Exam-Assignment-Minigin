@@ -103,6 +103,8 @@ void dae::Minigin::Run()
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
 		
+		std::cout << "Change fps with the num pad : '1' for 144 fps, '2' for 60 fps, '3' for 30 fps." << std::endl;
+
 		bool doContinue = true;
 		float lag = 0.f;
 		while (doContinue)
