@@ -13,6 +13,16 @@ namespace dae
 		void SetPosition(float x, float y);
 		Transform GetTransform() const;
 		void AddComponent(BaseComponent* component);
+		template <typename T>
+		T* GetComponent() const
+		{
+			for (BaseComponent* component: m_pComponents)
+			{
+				if (dynamic_cast<T*>(component))
+					return (T*)component;
+			}
+			return nullptr;
+		}
 
 		GameObject() = default;
 		virtual ~GameObject();

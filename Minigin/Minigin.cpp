@@ -63,7 +63,7 @@ void dae::Minigin::LoadGame() const
 	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto to = std::make_shared<GameObject>();
 	RenderComponent* pTextTextureComponent = new RenderComponent();
-	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font, pTextTextureComponent);
+	TextComponent* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font);
 	to->AddComponent(pTextTextureComponent);
 	to->AddComponent(pTextInfoComponent);
 	to->SetPosition(80, 20);
@@ -72,7 +72,7 @@ void dae::Minigin::LoadGame() const
 	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps = std::make_shared<GameObject>();
 	auto* pFPSTextureComponent = new RenderComponent();
-	TextComponent* pTextComponent = new TextComponent("00 fps", fpsFont, pFPSTextureComponent);
+	TextComponent* pTextComponent = new TextComponent("00 fps", fpsFont);
 	FPSComponent* pFPSComponent = new FPSComponent(pTextComponent);
 	pTextComponent->SetColor(SDL_Color{ 255, 255, 0 });
 	fps->AddComponent(pFPSTextureComponent);
