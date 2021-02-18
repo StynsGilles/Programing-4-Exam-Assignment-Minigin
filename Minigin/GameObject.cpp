@@ -1,6 +1,15 @@
 #include "MiniginPCH.h"
 #include "GameObject.h"
 
+void dae::GameObject::RemoveComponent(BaseComponent* pComponent)
+{
+	m_pComponents.erase(std::remove_if(m_pComponents.begin(),
+		m_pComponents.end(),
+		[pComponent](BaseComponent* pObjectComponent) {return pObjectComponent == pComponent; }),
+		m_pComponents.end());
+	delete pComponent;
+}
+
 dae::GameObject::~GameObject()
 {
 	for (BaseComponent* component : m_pComponents)

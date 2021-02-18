@@ -4,12 +4,31 @@
 
 #include "Time.h"
 
-
 bool dae::InputManager::ProcessInput()
-{
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
+{	
+	ProcessController();
+	const bool keepPlaying= ProcessKeyBoard();
+	HandleCommands();
+	
+	return keepPlaying;
+}
 
+bool dae::InputManager::ProcessController()
+{
+	m_PreviousState = m_CurrentState;
+	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
+	DWORD dwResult{};
+	dwResult = XInputGetState(0, &m_CurrentState);
+	if (dwResult != ERROR_SUCCESS)
+	{
+		std::cout << "No controller connected!" << std::endl;
+	}
+
+	return true;
+}
+
+bool dae::InputManager::ProcessKeyBoard()
+{	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 		if (e.type == SDL_QUIT) {
@@ -31,27 +50,57 @@ bool dae::InputManager::ProcessInput()
 				break;
 			}
 		}
+
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
+
 		}
 	}
 
 	return true;
 }
 
-bool dae::InputManager::IsPressed(ControllerButton button) const
+bool dae::InputManager::HandleCommands()
 {
-	switch (button)
+	for (ControllerCommandMap::const_iterator commandIt = m_Commands.begin(); commandIt != m_Commands.end(); ++commandIt)
 	{
-	case ControllerButton::ButtonA:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-	case ControllerButton::ButtonB:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-	case ControllerButton::ButtonX:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-	case ControllerButton::ButtonY:
-		return m_CurrentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-	default: return false;
+		switch ((*commandIt).first.inputState)
+		{
+		case InputState::Up:
+			if (IsReleased((*commandIt).first.button)) (*commandIt).second->Execute();
+			break;
+		case InputState::Down:
+			if (IsDown((*commandIt).first.button)) (*commandIt).second->Execute();
+			break;
+		case InputState::Pressed:
+			if (IsPressed((*commandIt).first.button)) (*commandIt).second->Execute();
+			break;
+		case InputState::PressedAndUp:
+			if (IsReleased((*commandIt).first.button) || IsPressed((*commandIt).first.button)) (*commandIt).second->Execute();
+			break;
+		}
 	}
+
+	return true;
 }
 
+bool dae::InputManager::IsPressed(const ControllerButton& button) const
+{
+	return m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button) &&
+		!(m_PreviousState.Gamepad.wButtons & static_cast<WORD>(button));
+}
+
+bool dae::InputManager::IsDown(const ControllerButton& button) const
+{
+	return m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button);
+}
+
+bool dae::InputManager::IsReleased(const ControllerButton& button) const
+{
+	return !(m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button)) &&
+		m_PreviousState.Gamepad.wButtons & static_cast<WORD>(button);
+}
+
+void dae::InputManager::AddInput(const ButtonInfo& button, Command* pCommand)
+{
+	m_Commands.insert(std::make_pair(button, pCommand));
+}

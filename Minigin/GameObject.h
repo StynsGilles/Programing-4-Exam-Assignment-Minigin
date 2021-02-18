@@ -24,6 +24,7 @@ namespace dae
 			}
 			return nullptr;
 		}
+		void RemoveComponent(BaseComponent* pComponent);
 
 		GameObject() = default;
 		virtual ~GameObject();
