@@ -13,6 +13,8 @@ namespace dae
 		void SetPosition(float x, float y);
 		Transform GetTransform() const;
 		void AddComponent(BaseComponent* component);
+		bool GetMarkedForDeletion() const;
+		void Delete();
 		template <typename T>
 		T* GetComponent() const
 		{
@@ -31,6 +33,7 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		bool m_MarkedForDeletion = false;
 		std::vector<BaseComponent*> m_pComponents;
 		Transform m_Transform;
 	};

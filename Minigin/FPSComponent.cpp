@@ -14,7 +14,13 @@ dae::FPSComponent::~FPSComponent()
 
 void dae::FPSComponent::Update()
 {
-	if (m_pTextComponent) m_pTextComponent->SetText(std::to_string(Time::GetInstance().GetFPS()) + " FPS");
+	m_TimeSinceLastUpdate += Time::GetInstance().GetDeltaTime();
+
+	if (m_TimeSinceLastUpdate >= m_UpdateFPSInterval)
+	{
+		if (m_pTextComponent) m_pTextComponent->SetText(std::to_string(Time::GetInstance().GetFPS()) + " FPS");
+		m_TimeSinceLastUpdate -= m_UpdateFPSInterval;
+	}
 }
 
 void dae::FPSComponent::Render() const

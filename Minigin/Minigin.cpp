@@ -112,6 +112,8 @@ void dae::Minigin::Run()
 			
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
+			sceneManager.RemoveDeadObjects();
+
 			renderer.Render();
 			
 			auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());

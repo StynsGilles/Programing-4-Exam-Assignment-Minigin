@@ -12,7 +12,8 @@ namespace dae
 
 		void Update();
 		void Render() const;
-
+		void RemoveDeadObjects();
+		
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;

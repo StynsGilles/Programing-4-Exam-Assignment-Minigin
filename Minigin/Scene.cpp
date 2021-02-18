@@ -31,3 +31,11 @@ void Scene::Render() const
 	}
 }
 
+void Scene::RemoveDeadObjects()
+{
+	m_Objects.erase(std::remove_if(m_Objects.begin(),
+		m_Objects.end(),
+		[](std::shared_ptr<GameObject> object) {return object->GetMarkedForDeletion(); }),
+		m_Objects.end());
+}
+

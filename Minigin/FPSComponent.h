@@ -20,5 +20,7 @@ namespace dae
         FPSComponent& operator=(FPSComponent&& other) = delete;
     private:
         TextComponent* m_pTextComponent;
+        const float m_UpdateFPSInterval = 0.5f;
+        float m_TimeSinceLastUpdate = 0.f;
     };
 }

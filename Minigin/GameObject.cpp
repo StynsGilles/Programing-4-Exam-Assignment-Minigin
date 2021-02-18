@@ -40,3 +40,13 @@ void dae::GameObject::AddComponent(BaseComponent* component)
 	component->SetGameObject(this);
 	m_pComponents.push_back(component);
 }
+
+bool dae::GameObject::GetMarkedForDeletion() const
+{
+	return m_MarkedForDeletion;
+}
+
+void dae::GameObject::Delete()
+{
+	m_MarkedForDeletion = true;
+}
