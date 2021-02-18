@@ -106,23 +106,14 @@ void dae::Minigin::Run()
 		std::cout << "Change fps with the num pad : '1' for 144 fps, '2' for 60 fps, '3' for 30 fps." << std::endl;
 
 		bool doContinue = true;
-		float lag = 0.f;
 		while (doContinue)
 		{
 			time.Update();
-			const float elapsedSec = time.GetDeltaTime();
-			lag += elapsedSec;
 			
 			doContinue = input.ProcessInput();
-
-			const float msPerFrame = (float)time.GetMsPerFrame() / 1000.f;
-			while (lag >= msPerFrame)
-			{
-				sceneManager.Update();
-				lag -= msPerFrame;
-			}
-			
+			sceneManager.Update();
 			renderer.Render();
+			
 			auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
 			this_thread::sleep_for(sleepTime);
 		}

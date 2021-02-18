@@ -18,8 +18,7 @@ namespace dae
 		{
 			for (BaseComponent* component: m_pComponents)
 			{
-				if (dynamic_cast<T*>(component))
-					return (T*)component;
+				if (dynamic_cast<T*>(component)) return (T*)component;
 			}
 			return nullptr;
 		}
