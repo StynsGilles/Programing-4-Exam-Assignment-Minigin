@@ -46,7 +46,7 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-
+	
 	auto go = std::make_shared<GameObject>();
 	RenderComponent* pBackgroundTextureComponent = new RenderComponent();
 	pBackgroundTextureComponent->SetTexture("background.jpg");
@@ -79,6 +79,16 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
+
+	auto& input = InputManager::GetInstance();
+
+	ActionInfo testAction{};
+	testAction.ControllerButton = ControllerButton::ButtonA;
+	testAction.KeyboardKey = SDL_SCANCODE_1;
+	testAction.InputState = InputState::Down;
+	
+	input.AddInput(testAction, new Fire());
+	
 }
 
 void dae::Minigin::Cleanup()
@@ -102,8 +112,6 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
-		
-		std::cout << "Change fps with the num pad : '1' for 144 fps, '2' for 60 fps, '3' for 30 fps." << std::endl;
 
 		bool doContinue = true;
 		while (doContinue)

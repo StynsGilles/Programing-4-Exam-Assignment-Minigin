@@ -40,7 +40,7 @@
 //   1.11 (2017-03-03) fix HOME on last line, dragging off single-line textfield
 //   1.10 (2016-10-25) supress warnings about casting away const with -Wcast-qual
 //   1.9  (2016-08-27) customizable move-by-word
-//   1.8  (2016-04-02) better keyboard handling when mouse button is down
+//   1.8  (2016-04-02) better keyboard handling when mouse ControllerButton is down
 //   1.7  (2015-09-13) change y range handling in case baseline is non-0
 //   1.6  (2015-04-15) allow STB_TEXTEDIT_memmove
 //   1.5  (2014-09-10) add support for secondary keys for OS X
@@ -172,7 +172,7 @@
 //    STB_TEXTEDIT_K_TEXTSTART2          secondary keyboard input to move cursor to start of text
 //    STB_TEXTEDIT_K_TEXTEND2            secondary keyboard input to move cursor to end of text
 //
-// Keyboard input must be encoded as a single integer value; e.g. a character code
+// KeyboardKey input must be encoded as a single integer value; e.g. a character code
 // and some bitflags that represent shift states. to simplify the interface, SHIFT must
 // be a bitflag, so we can test the shifted state of cursor movements to allow selection,
 // i.e. (STB_TEXTEDIT_K_RIGHT|STB_TEXTEDIT_K_SHIFT) should be shifted right-arrow.
@@ -495,7 +495,7 @@ static void stb_textedit_drag(STB_TEXTEDIT_STRING *str, STB_TexteditState *state
 
 /////////////////////////////////////////////////////////////////////////////
 //
-//      Keyboard input handling
+//      KeyboardKey input handling
 //
 
 // forward declarations

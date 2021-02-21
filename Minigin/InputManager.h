@@ -1,9 +1,9 @@
 #pragma once
 #include <XInput.h>
-
 #include "Commands.h"
 #include "Singleton.h"
 #include <map>
+#include <SDL.h>
 
 namespace dae
 {
@@ -33,15 +33,16 @@ namespace dae
 		Down
 	};
 
-	struct ButtonInfo
+	struct ActionInfo
 	{
-		ControllerButton button;
-		InputState inputState;
+		ControllerButton ControllerButton;
+		SDL_Scancode KeyboardKey;
+		InputState InputState;
 	};
 
-	inline bool operator<(const ButtonInfo& lhs, const ButtonInfo& rhs)
+	inline bool operator<(const ActionInfo& lhs, const ActionInfo& rhs)
 	{
-		return lhs.button < rhs.button;
+		return lhs.ControllerButton < rhs.ControllerButton;
 	};
 
 	class InputManager final : public Singleton<InputManager>
@@ -51,14 +52,15 @@ namespace dae
 		bool IsPressed(const ControllerButton& button) const;
 		bool IsDown(const ControllerButton& button) const;
 		bool IsReleased(const ControllerButton& button) const;
-		void AddInput(const ButtonInfo& button, Command* pCommand);
+		bool IsKeyDown(const SDL_Scancode& key) const;
+		void AddInput(const ActionInfo& button, Command* pCommand);
 
 	private:
-		bool ProcessController();
-		bool ProcessKeyBoard();
+		void ProcessController();
+		bool HandleKeyBoard();
 		bool HandleCommands();
 		
-		using ControllerCommandMap = std::map<ButtonInfo, std::unique_ptr<Command>>;
+		using ControllerCommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
 		ControllerCommandMap m_Commands{};
 		XINPUT_STATE m_PreviousState{};
 		XINPUT_STATE m_CurrentState{};

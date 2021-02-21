@@ -470,7 +470,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
             HelpMarker(
                 "The logging API redirects all text output so you can easily capture the content of "
                 "a window or a block. Tree nodes can be automatically expanded.\n"
-                "Try opening any of the contents below in this window and then click one of the \"Log To\" button.");
+                "Try opening any of the contents below in this window and then click one of the \"Log To\" ControllerButton.");
             ImGui::LogButtons();
 
             HelpMarker("You can also call ImGui::LogText() to output directly to the log without a visual output.");
@@ -522,7 +522,7 @@ static void ShowDemoWindowWidgets()
     if (ImGui::TreeNode("Basic"))
     {
         static int clicked = 0;
-        if (ImGui::Button("Button"))
+        if (ImGui::Button("ControllerButton"))
             clicked++;
         if (clicked & 1)
         {
@@ -553,7 +553,7 @@ static void ShowDemoWindowWidgets()
         }
 
         // Use AlignTextToFramePadding() to align text baseline to the baseline of framed widgets elements
-        // (otherwise a Text+SameLine+Button sequence will have the text a little too high by default!)
+        // (otherwise a Text+SameLine+ControllerButton sequence will have the text a little too high by default!)
         // See 'Demo->Layout->Text Baseline Alignment' for details.
         ImGui::AlignTextToFramePadding();
         ImGui::Text("Hold to repeat:");
@@ -728,7 +728,7 @@ static void ShowDemoWindowWidgets()
                 {
                     ImGui::Text("blah blah");
                     ImGui::SameLine();
-                    if (ImGui::SmallButton("button")) {}
+                    if (ImGui::SmallButton("ControllerButton")) {}
                     ImGui::TreePop();
                 }
             }
@@ -827,7 +827,7 @@ static void ShowDemoWindowWidgets()
             for (int i = 0; i < 5; i++)
                 ImGui::Text("Some content %d", i);
         }
-        if (ImGui::CollapsingHeader("Header with a close button", &closable_group))
+        if (ImGui::CollapsingHeader("Header with a close ControllerButton", &closable_group))
         {
             ImGui::Text("IsItemHovered: %d", ImGui::IsItemHovered());
             for (int i = 0; i < 5; i++)
@@ -850,7 +850,7 @@ static void ShowDemoWindowWidgets()
             ImGui::TreePop();
         }
         ImGui::Bullet(); ImGui::Text("Bullet point 3 (two calls)");
-        ImGui::Bullet(); ImGui::SmallButton("Button");
+        ImGui::Bullet(); ImGui::SmallButton("ControllerButton");
         ImGui::TreePop();
     }
 
@@ -1430,7 +1430,7 @@ static void ShowDemoWindowWidgets()
             ImGui::TreePop();
         }
 
-        if (ImGui::TreeNode("Advanced & Close Button"))
+        if (ImGui::TreeNode("Advanced & Close ControllerButton"))
         {
             // Expose a couple of the available flags. In most cases you may just call BeginTabBar() with no flags (0).
             static ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_Reorderable;
@@ -1498,7 +1498,7 @@ static void ShowDemoWindowWidgets()
 
             if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
             {
-                // Demo a Leading TabItemButton(): click the "?" button to open a menu
+                // Demo a Leading TabItemButton(): click the "?" ControllerButton to open a menu
                 if (show_leading_button)
                     if (ImGui::TabItemButton("?", ImGuiTabItemFlags_Leading | ImGuiTabItemFlags_NoTooltip))
                         ImGui::OpenPopup("MyHelpMenu");
@@ -1508,7 +1508,7 @@ static void ShowDemoWindowWidgets()
                     ImGui::EndPopup();
                 }
 
-                // Demo Trailing Tabs: click the "+" button to add a new tab (in your app you may want to use a font icon instead of the "+")
+                // Demo Trailing Tabs: click the "+" ControllerButton to add a new tab (in your app you may want to use a font icon instead of the "+")
                 // Note that we submit it before the regular tabs, but because of the ImGuiTabItemFlags_Trailing flag it will always appear at the end.
                 if (show_trailing_button)
                     if (ImGui::TabItemButton("+", ImGuiTabItemFlags_Trailing | ImGuiTabItemFlags_NoTooltip))
@@ -1651,14 +1651,14 @@ static void ShowDemoWindowWidgets()
         ImGui::Text("Color widget with Float Display:");
         ImGui::ColorEdit4("MyColor##2f", (float*)&color, ImGuiColorEditFlags_Float | misc_flags);
 
-        ImGui::Text("Color button with Picker:");
+        ImGui::Text("Color ControllerButton with Picker:");
         ImGui::SameLine(); HelpMarker(
             "With the ImGuiColorEditFlags_NoInputs flag you can hide all the slider/text inputs.\n"
             "With the ImGuiColorEditFlags_NoLabel flag you can pass a non-empty label which will only "
             "be used for the tooltip and picker popup.");
         ImGui::ColorEdit4("MyColor##3", (float*)&color, ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel | misc_flags);
 
-        ImGui::Text("Color button with Custom Picker Popup:");
+        ImGui::Text("Color ControllerButton with Custom Picker Popup:");
 
         // Generate a default palette. The palette will persist and can be edited.
         static bool saved_palette_init = true;
@@ -1725,7 +1725,7 @@ static void ShowDemoWindowWidgets()
             ImGui::EndPopup();
         }
 
-        ImGui::Text("Color button only:");
+        ImGui::Text("Color ControllerButton only:");
         static bool no_border = false;
         ImGui::Checkbox("ImGuiColorEditFlags_NoBorder", &no_border);
         ImGui::ColorButton("MyColor##3c", *(ImVec4*)&color, misc_flags | (no_border ? ImGuiColorEditFlags_NoBorder : 0), ImVec2(80, 80));
@@ -2170,7 +2170,7 @@ static void ShowDemoWindowWidgets()
         // Select an item type
         const char* item_names[] =
         {
-            "Text", "Button", "Button (w/ repeat)", "Checkbox", "SliderFloat", "InputText", "InputFloat",
+            "Text", "ControllerButton", "ControllerButton (w/ repeat)", "Checkbox", "SliderFloat", "InputText", "InputFloat",
             "InputFloat3", "ColorEdit4", "MenuItem", "TreeNode", "TreeNode (w/ double-click)", "Combo", "ListBox"
         };
         static int item_type = 1;
@@ -2184,17 +2184,17 @@ static void ShowDemoWindowWidgets()
         static float col4f[4] = { 1.0f, 0.5, 0.0f, 1.0f };
         static char str[16] = {};
         if (item_type == 0) { ImGui::Text("ITEM: Text"); }                                              // Testing text items with no identifier/interaction
-        if (item_type == 1) { ret = ImGui::Button("ITEM: Button"); }                                    // Testing button
-        if (item_type == 2) { ImGui::PushButtonRepeat(true); ret = ImGui::Button("ITEM: Button"); ImGui::PopButtonRepeat(); } // Testing button (with repeater)
+        if (item_type == 1) { ret = ImGui::Button("ITEM: ControllerButton"); }                                    // Testing ControllerButton
+        if (item_type == 2) { ImGui::PushButtonRepeat(true); ret = ImGui::Button("ITEM: ControllerButton"); ImGui::PopButtonRepeat(); } // Testing ControllerButton (with repeater)
         if (item_type == 3) { ret = ImGui::Checkbox("ITEM: Checkbox", &b); }                            // Testing checkbox
         if (item_type == 4) { ret = ImGui::SliderFloat("ITEM: SliderFloat", &col4f[0], 0.0f, 1.0f); }   // Testing basic item
         if (item_type == 5) { ret = ImGui::InputText("ITEM: InputText", &str[0], IM_ARRAYSIZE(str)); }  // Testing input text (which handles tabbing)
         if (item_type == 6) { ret = ImGui::InputFloat("ITEM: InputFloat", col4f, 1.0f); }               // Testing +/- buttons on scalar input
         if (item_type == 7) { ret = ImGui::InputFloat3("ITEM: InputFloat3", col4f); }                   // Testing multi-component items (IsItemXXX flags are reported merged)
         if (item_type == 8) { ret = ImGui::ColorEdit4("ITEM: ColorEdit4", col4f); }                     // Testing multi-component items (IsItemXXX flags are reported merged)
-        if (item_type == 9) { ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menu item (they use ImGuiButtonFlags_PressedOnRelease button policy)
+        if (item_type == 9) { ret = ImGui::MenuItem("ITEM: MenuItem"); }                                // Testing menu item (they use ImGuiButtonFlags_PressedOnRelease ControllerButton policy)
         if (item_type == 10){ ret = ImGui::TreeNode("ITEM: TreeNode"); if (ret) ImGui::TreePop(); }     // Testing tree node
-        if (item_type == 11){ ret = ImGui::TreeNodeEx("ITEM: TreeNode w/ ImGuiTreeNodeFlags_OpenOnDoubleClick", ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_NoTreePushOnOpen); } // Testing tree node with ImGuiButtonFlags_PressedOnDoubleClick button policy.
+        if (item_type == 11){ ret = ImGui::TreeNodeEx("ITEM: TreeNode w/ ImGuiTreeNodeFlags_OpenOnDoubleClick", ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_NoTreePushOnOpen); } // Testing tree node with ImGuiButtonFlags_PressedOnDoubleClick ControllerButton policy.
         if (item_type == 12){ const char* items[] = { "Apple", "Banana", "Cherry", "Kiwi" }; static int current = 1; ret = ImGui::Combo("ITEM: Combo", &current, items, IM_ARRAYSIZE(items)); }
         if (item_type == 13){ const char* items[] = { "Apple", "Banana", "Cherry", "Kiwi" }; static int current = 1; ret = ImGui::ListBox("ITEM: ListBox", &current, items, IM_ARRAYSIZE(items), IM_ARRAYSIZE(items)); }
 
@@ -2490,14 +2490,14 @@ static void ShowDemoWindowLayout()
         ImGui::Text("More spacing: Hello"); ImGui::SameLine(0, 20);
         ImGui::TextColored(ImVec4(1,1,0,1), "Sailor");
 
-        // Button
+        // ControllerButton
         ImGui::AlignTextToFramePadding();
         ImGui::Text("Normal buttons"); ImGui::SameLine();
         ImGui::Button("Banana"); ImGui::SameLine();
         ImGui::Button("Apple"); ImGui::SameLine();
         ImGui::Button("Corniflower");
 
-        // Button
+        // ControllerButton
         ImGui::Text("Small buttons"); ImGui::SameLine();
         ImGui::SmallButton("Like this one"); ImGui::SameLine();
         ImGui::Text("can fit within a text block.");
@@ -2558,7 +2558,7 @@ static void ShowDemoWindowLayout()
             ImGui::PushID(n);
             ImGui::Button("Box", button_sz);
             float last_button_x2 = ImGui::GetItemRectMax().x;
-            float next_button_x2 = last_button_x2 + style.ItemSpacing.x + button_sz.x; // Expected position if next button was on same line
+            float next_button_x2 = last_button_x2 + style.ItemSpacing.x + button_sz.x; // Expected position if next ControllerButton was on same line
             if (n + 1 < buttons_count && next_button_x2 < window_visible_x2)
                 ImGui::SameLine();
             ImGui::PopID();
@@ -2625,7 +2625,7 @@ static void ShowDemoWindowLayout()
 
             ImGui::Text("KO Blahblah"); ImGui::SameLine();
             ImGui::Button("Some framed item"); ImGui::SameLine();
-            HelpMarker("Baseline of button will look misaligned with text..");
+            HelpMarker("Baseline of ControllerButton will look misaligned with text..");
 
             // If your line starts with text, call AlignTextToFramePadding() to align text to upcoming widgets.
             // (because we don't know what's coming after the Text() statement, we need to move the text baseline
@@ -2681,18 +2681,18 @@ static void ShowDemoWindowLayout()
             ImGui::BulletText("Misc items:");
             ImGui::Indent();
 
-            // SmallButton() sets FramePadding to zero. Text baseline is aligned to match baseline of previous Button.
+            // SmallButton() sets FramePadding to zero. Text baseline is aligned to match baseline of previous ControllerButton.
             ImGui::Button("80x80", ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::Button("50x50", ImVec2(50, 50));
             ImGui::SameLine();
-            ImGui::Button("Button()");
+            ImGui::Button("ControllerButton()");
             ImGui::SameLine();
             ImGui::SmallButton("SmallButton()");
 
             // Tree
             const float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
-            ImGui::Button("Button##1");
+            ImGui::Button("ControllerButton##1");
             ImGui::SameLine(0.0f, spacing);
             if (ImGui::TreeNode("Node##1"))
             {
@@ -2709,7 +2709,7 @@ static void ShowDemoWindowLayout()
             // Common mistake to avoid: if we want to SameLine after TreeNode we need to do it before we add
             // other contents below the node.
             bool node_open = ImGui::TreeNode("Node##2");
-            ImGui::SameLine(0.0f, spacing); ImGui::Button("Button##2");
+            ImGui::SameLine(0.0f, spacing); ImGui::Button("ControllerButton##2");
             if (node_open)
             {
                 // Placeholder tree data
@@ -2719,13 +2719,13 @@ static void ShowDemoWindowLayout()
             }
 
             // Bullet
-            ImGui::Button("Button##3");
+            ImGui::Button("ControllerButton##3");
             ImGui::SameLine(0.0f, spacing);
             ImGui::BulletText("Bullet text");
 
             ImGui::AlignTextToFramePadding();
             ImGui::BulletText("Node");
-            ImGui::SameLine(0.0f, spacing); ImGui::Button("Button##4");
+            ImGui::SameLine(0.0f, spacing); ImGui::Button("ControllerButton##4");
             ImGui::Unindent();
         }
 
@@ -2862,7 +2862,7 @@ static void ShowDemoWindowLayout()
         ImGui::BeginChild("scrolling", scrolling_child_size, true, ImGuiWindowFlags_HorizontalScrollbar);
         for (int line = 0; line < lines; line++)
         {
-            // Display random stuff. For the sake of this trivial demo we are using basic Button() + SameLine()
+            // Display random stuff. For the sake of this trivial demo we are using basic ControllerButton() + SameLine()
             // If you want to create your own time line for a real application you may be better off manipulating
             // the cursor position yourself, aka using SetCursorPos/SetCursorScreenPos to position the widgets
             // yourself. You may also want to use the lower-level ImDrawList API.
@@ -2929,7 +2929,7 @@ static void ShowDemoWindowLayout()
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 0));
             HelpMarker("Test of different widgets react and impact the work rectangle growing when horizontal scrolling is enabled.\n\nUse 'Metrics->Tools->Show windows rectangles' to visualize rectangles.");
             ImGui::Checkbox("H-scrollbar", &show_h_scrollbar);
-            ImGui::Checkbox("Button", &show_button);            // Will grow contents size (unless explicitly overwritten)
+            ImGui::Checkbox("ControllerButton", &show_button);            // Will grow contents size (unless explicitly overwritten)
             ImGui::Checkbox("Tree nodes", &show_tree_nodes);    // Will grow contents size and display highlight over full width
             ImGui::Checkbox("Text wrapped", &show_text_wrapped);// Will grow and use contents size
             ImGui::Checkbox("Columns", &show_columns);          // Will use contents size
@@ -2951,7 +2951,7 @@ static void ShowDemoWindowLayout()
             ImGui::Separator();
             if (show_button)
             {
-                ImGui::Button("this is a 300-wide button", ImVec2(300, 0));
+                ImGui::Button("this is a 300-wide ControllerButton", ImVec2(300, 0));
             }
             if (show_tree_nodes)
             {
@@ -3093,9 +3093,9 @@ static void ShowDemoWindowPopups()
     // popups at any time.
 
     // Typical use for regular windows:
-    //   bool my_tool_is_active = false; if (ImGui::Button("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Begin("My Tool", &my_tool_is_active) { [...] } End();
+    //   bool my_tool_is_active = false; if (ImGui::ControllerButton("Open")) my_tool_is_active = true; [...] if (my_tool_is_active) Begin("My Tool", &my_tool_is_active) { [...] } End();
     // Typical use for popups:
-    //   if (ImGui::Button("Open")) ImGui::OpenPopup("MyPopup"); if (ImGui::BeginPopup("MyPopup") { [...] EndPopup(); }
+    //   if (ImGui::ControllerButton("Open")) ImGui::OpenPopup("MyPopup"); if (ImGui::BeginPopup("MyPopup") { [...] EndPopup(); }
 
     // With popups we have to go through a library call (here OpenPopup) to manipulate the visibility state.
     // This may be a bit confusing at first but it should quickly make sense. Follow on the examples below.
@@ -3110,7 +3110,7 @@ static void ShowDemoWindowPopups()
         const char* names[] = { "Bream", "Haddock", "Mackerel", "Pollock", "Tilefish" };
         static bool toggles[] = { true, false, false, false, false };
 
-        // Simple selection popup (if you want to show the current selection inside the Button itself,
+        // Simple selection popup (if you want to show the current selection inside the ControllerButton itself,
         // you may want to build a string using the "###" operator to preserve a constant ID with a variable label)
         if (ImGui::Button("Select.."))
             ImGui::OpenPopup("my_select_popup");
@@ -3199,18 +3199,18 @@ static void ShowDemoWindowPopups()
         }
 
         // We can also use OpenPopupOnItemClick() which is the same as BeginPopupContextItem() but without the
-        // Begin() call. So here we will make it that clicking on the text field with the right mouse button (1)
+        // Begin() call. So here we will make it that clicking on the text field with the right mouse ControllerButton (1)
         // will toggle the visibility of the popup above.
         ImGui::Text("(You can also right-click me to open the same popup as above.)");
         ImGui::OpenPopupOnItemClick("item context menu", 1);
 
-        // When used after an item that has an ID (e.g.Button), we can skip providing an ID to BeginPopupContextItem().
+        // When used after an item that has an ID (e.g.ControllerButton), we can skip providing an ID to BeginPopupContextItem().
         // BeginPopupContextItem() will use the last item ID as the popup ID.
-        // In addition here, we want to include your editable label inside the button label.
+        // In addition here, we want to include your editable label inside the ControllerButton label.
         // We use the ### operator to override the ID (read FAQ about ID for details)
         static char name[32] = "Label1";
         char buf[64];
-        sprintf(buf, "Button: %s###Button", name); // ### operator override ID ignoring the preceding label
+        sprintf(buf, "ControllerButton: %s###ControllerButton", name); // ### operator override ID ignoring the preceding label
         ImGui::Button(buf);
         if (ImGui::BeginPopupContextItem())
         {
@@ -3280,7 +3280,7 @@ static void ShowDemoWindowPopups()
             if (ImGui::Button("Add another modal.."))
                 ImGui::OpenPopup("Stacked 2");
 
-            // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close button which
+            // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close ControllerButton which
             // will close the popup. Note that the visibility state of popups is owned by imgui, so the input value
             // of the bool actually doesn't matter here.
             bool unused_open = true;
@@ -3979,7 +3979,7 @@ static void ShowDemoWindowTables()
         ImGui::PushID("Advanced");
         ImGui::PushItemWidth(TEXT_BASE_WIDTH * 30);
         EditTableSizingFlags(&flags);
-        ImGui::Combo("Contents", &contents_type, "Show width\0Short Text\0Long Text\0Button\0Fill Button\0InputText\0");
+        ImGui::Combo("Contents", &contents_type, "Show width\0Short Text\0Long Text\0Button\0Fill ControllerButton\0InputText\0");
         if (contents_type == CT_FillButton)
         {
             ImGui::SameLine();
@@ -4673,7 +4673,7 @@ static void ShowDemoWindowTables()
         // [2.1] Right-click on the TableHeadersRow() line to open the default table context menu.
         // [2.2] Right-click on the ".." to open a custom popup
         // [2.3] Right-click in columns to open another custom popup
-        HelpMarker("Demonstrate mixing table context menu (over header), item context button (over button) and custom per-colum context menu (over column body).");
+        HelpMarker("Demonstrate mixing table context menu (over header), item context ControllerButton (over ControllerButton) and custom per-colum context menu (over column body).");
         ImGuiTableFlags flags2 = ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingFixedFit | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Borders;
         if (ImGui::BeginTable("table_context_menu_2", COLUMNS_COUNT, flags2))
         {
@@ -4698,7 +4698,7 @@ static void ShowDemoWindowTables()
                     ImGui::SmallButton("..");
                     if (ImGui::BeginPopupContextItem())
                     {
-                        ImGui::Text("This is the popup for Button(\"..\") in Cell %d,%d", column, row);
+                        ImGui::Text("This is the popup for ControllerButton(\"..\") in Cell %d,%d", column, row);
                         if (ImGui::Button("Close"))
                             ImGui::CloseCurrentPopup();
                         ImGui::EndPopup();
@@ -4873,7 +4873,7 @@ static void ShowDemoWindowTables()
 
         enum ContentsType { CT_Text, CT_Button, CT_SmallButton, CT_FillButton, CT_Selectable, CT_SelectableSpanRow };
         static int contents_type = CT_SelectableSpanRow;
-        const char* contents_type_names[] = { "Text", "Button", "SmallButton", "FillButton", "Selectable", "Selectable (span row)" };
+        const char* contents_type_names[] = { "Text", "ControllerButton", "SmallButton", "FillButton", "Selectable", "Selectable (span row)" };
         static int freeze_cols = 1;
         static int freeze_rows = 1;
         static int items_count = IM_ARRAYSIZE(template_items_names) * 2;
@@ -5116,7 +5116,7 @@ static void ShowDemoWindowTables()
 
                     // Here we demonstrate marking our data set as needing to be sorted again if we modified a quantity,
                     // and we are currently sorting on the column showing the Quantity.
-                    // To avoid triggering a sort while holding the button, we only trigger it when the button has been released.
+                    // To avoid triggering a sort while holding the ControllerButton, we only trigger it when the ControllerButton has been released.
                     // You will probably need a more advanced system in your code if you want to automatically sort when a specific entry changes.
                     if (ImGui::TableSetColumnIndex(2))
                     {
@@ -5195,7 +5195,7 @@ static void ShowDemoWindowColumns()
             char label[32];
             sprintf(label, "Item %d", n);
             if (ImGui::Selectable(label)) {}
-            //if (ImGui::Button(label, ImVec2(-FLT_MIN,0.0f))) {}
+            //if (ImGui::ControllerButton(label, ImVec2(-FLT_MIN,0.0f))) {}
             ImGui::NextColumn();
         }
         ImGui::Columns(1);
@@ -5254,7 +5254,7 @@ static void ShowDemoWindowColumns()
             ImGui::Text("Avail %.2f", ImGui::GetContentRegionAvail().x);
             ImGui::Text("Offset %.2f", ImGui::GetColumnOffset());
             ImGui::Text("Long text that is likely to clip");
-            ImGui::Button("Button", ImVec2(-FLT_MIN, 0.0f));
+            ImGui::Button("ControllerButton", ImVec2(-FLT_MIN, 0.0f));
             ImGui::NextColumn();
         }
         ImGui::Columns(1);
@@ -5403,8 +5403,8 @@ static void ShowDemoWindowMisc()
         ImGui::Text("WantSetMousePos: %d", io.WantSetMousePos);
         ImGui::Text("NavActive: %d, NavVisible: %d", io.NavActive, io.NavVisible);
 
-        // Display Keyboard/Mouse state
-        if (ImGui::TreeNode("Keyboard, Mouse & Navigation State"))
+        // Display KeyboardKey/Mouse state
+        if (ImGui::TreeNode("KeyboardKey, Mouse & Navigation State"))
         {
             if (ImGui::IsMousePosValid())
                 ImGui::Text("Mouse pos: (%g, %g)", io.MousePos.x, io.MousePos.y);
@@ -5459,7 +5459,7 @@ static void ShowDemoWindowMisc()
             bool focus_2 = ImGui::Button("Focus on 2"); ImGui::SameLine();
             bool focus_3 = ImGui::Button("Focus on 3");
             int has_focus = 0;
-            static char buf[128] = "click on a button to set focus";
+            static char buf[128] = "click on a ControllerButton to set focus";
 
             if (focus_1) ImGui::SetKeyboardFocusHere();
             ImGui::InputText("1", buf, IM_ARRAYSIZE(buf));
@@ -5506,7 +5506,7 @@ static void ShowDemoWindowMisc()
 
             ImGui::Button("Drag Me");
             if (ImGui::IsItemActive())
-                ImGui::GetForegroundDrawList()->AddLine(io.MouseClickedPos[0], io.MousePos, ImGui::GetColorU32(ImGuiCol_Button), 4.0f); // Draw a line between the button and the mouse cursor
+                ImGui::GetForegroundDrawList()->AddLine(io.MouseClickedPos[0], io.MousePos, ImGui::GetColorU32(ImGuiCol_Button), 4.0f); // Draw a line between the ControllerButton and the mouse cursor
 
             // Drag operations gets "unlocked" when the mouse has moved past a certain threshold
             // (the default threshold is stored in io.MouseDragThreshold). You can request a lower or higher
@@ -5858,7 +5858,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
     ImGui::SameLine();
     { bool border = (style.PopupBorderSize > 0.0f);  if (ImGui::Checkbox("PopupBorder",  &border)) { style.PopupBorderSize  = border ? 1.0f : 0.0f; } }
 
-    // Save/Revert button
+    // Save/Revert ControllerButton
     if (ImGui::Button("Save Ref"))
         *ref = ref_saved_style = style;
     ImGui::SameLine();
@@ -5907,7 +5907,7 @@ void ImGui::ShowStyleEditor(ImGuiStyle* ref)
                 style.WindowMenuButtonPosition = window_menu_button_position - 1;
             ImGui::Combo("ColorButtonPosition", (int*)&style.ColorButtonPosition, "Left\0Right\0");
             ImGui::SliderFloat2("ButtonTextAlign", (float*)&style.ButtonTextAlign, 0.0f, 1.0f, "%.2f");
-            ImGui::SameLine(); HelpMarker("Alignment applies when a button is larger than its text content.");
+            ImGui::SameLine(); HelpMarker("Alignment applies when a ControllerButton is larger than its text content.");
             ImGui::SliderFloat2("SelectableTextAlign", (float*)&style.SelectableTextAlign, 0.0f, 1.0f, "%.2f");
             ImGui::SameLine(); HelpMarker("Alignment applies when a selectable is larger than its text content.");
             ImGui::Text("Safe Area Padding");
@@ -6690,7 +6690,7 @@ static void ShowExampleAppLog(bool* p_open)
 {
     static ExampleAppLog log;
 
-    // For the demo: add a debug button _BEFORE_ the normal log window contents
+    // For the demo: add a debug ControllerButton _BEFORE_ the normal log window contents
     // We take advantage of a rarely used feature: multiple calls to Begin()/End() are appending to the _same_ window.
     // Most of the contents of the window will be added by the log.Draw() call.
     ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
@@ -7440,7 +7440,7 @@ struct ExampleAppDocuments
 
 // [Optional] Notify the system of Tabs/Windows closure that happened outside the regular tab interface.
 // If a tab has been closed programmatically (aka closed from another source such as the Checkbox() in the demo,
-// as opposed to clicking on the regular tab closing button) and stops being submitted, it will take a frame for
+// as opposed to clicking on the regular tab closing ControllerButton) and stops being submitted, it will take a frame for
 // the tab bar to notice its absence. During this frame there will be a gap in the tab bar, and if the tab that has
 // disappeared was the selected one, the tab bar will report no selected tab during the frame. This will effectively
 // give the impression of a flicker for one frame.
