@@ -80,14 +80,16 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 
+	auto qBert = std::make_shared<GameObject>();
+	auto* pQBertRenderComponent = new RenderComponent();
+	qBert->AddComponent(pQBertRenderComponent);
+	scene.Add(qBert);
+	
+	//Adding input
 	auto& input = InputManager::GetInstance();
 
-	ActionInfo testAction{};
-	testAction.ControllerButton = ControllerButton::ButtonA;
-	testAction.KeyboardKey = SDL_SCANCODE_1;
-	testAction.InputState = InputState::Down;
-	
-	input.AddInput(testAction, new Fire());
+	const ActionInfo testAction{ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up};
+	input.AddInput(testAction, new Kill(qBert));
 	
 }
 

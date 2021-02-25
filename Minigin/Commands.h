@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "GameObject.h"
+
 class Command
 {
 public:
@@ -60,4 +62,23 @@ public:
     Fart(Fart&& other) = delete;
     Fart& operator=(const Fart& other) = delete;
     Fart& operator=(Fart&& other) = delete;
+};
+
+class Kill final : public Command
+{
+public:
+    Kill(std::shared_ptr<dae::GameObject> pObject) : Command(), pObjectToKill(pObject) {}
+    void Execute() override
+    {
+        std::cout << "Killing object" << std::endl;
+	    /*TO DO: add notifier here*/
+    };
+
+    Kill(const Kill& other) = delete;
+    Kill(Kill&& other) = delete;
+    Kill& operator=(const Kill& other) = delete;
+    Kill& operator=(Kill&& other) = delete;
+
+private:
+    std::shared_ptr<dae::GameObject> pObjectToKill = nullptr;
 };

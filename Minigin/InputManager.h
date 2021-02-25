@@ -35,6 +35,12 @@ namespace dae
 
 	struct ActionInfo
 	{
+		ActionInfo(const ControllerButton& cButton, const SDL_Scancode& key, const InputState& state)
+			:ControllerButton(cButton)
+			, KeyboardKey(key)
+			, InputState(state)
+		{}
+		
 		ControllerButton ControllerButton;
 		SDL_Scancode KeyboardKey;
 		InputState InputState;
