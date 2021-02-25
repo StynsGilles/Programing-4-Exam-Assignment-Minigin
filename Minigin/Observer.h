@@ -2,14 +2,19 @@
 
 namespace dae
 {
+    class GameObject;
+	
     enum class Event
     {
-        PlayerDied
+        PlayerDied,
+        PlayerLostHP,
+    	IncreaseScore
     };
 
     class Observer
     {
     public:
+        Observer() {}
         virtual ~Observer() {}
         virtual void onNotify(GameObject* entity, Event event) = 0;
 

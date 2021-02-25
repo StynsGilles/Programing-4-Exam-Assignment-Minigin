@@ -14,6 +14,9 @@ namespace dae
 
         void Damage(const int& amount);
         void LoseLives(const int& amount);
+        int GetHealth() const;
+        int GetMaxHealth() const;
+        int GetLivesRemaining() const;
 		
         HealthComponent(const HealthComponent& other) = delete;
         HealthComponent(HealthComponent&& other) = delete;

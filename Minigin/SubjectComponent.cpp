@@ -37,7 +37,5 @@ void dae::SubjectComponent::removeObserver(Observer* observer)
 void dae::SubjectComponent::Notify(GameObject* object, Event event)
 {
 	for (Observer* o : m_pObservers)
-	{
 		o->onNotify(object, event);
-	}
 }

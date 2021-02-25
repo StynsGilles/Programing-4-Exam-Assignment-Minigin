@@ -45,21 +45,9 @@ void dae::Renderer::Render() const
 	ImGui_ImplSDL2_NewFrame(m_Window);
 	ImGui::NewFrame();
 	SceneManager::GetInstance().Render();
-	ImGui::Begin("Options");
-	ImGui::SetWindowPos({50.f, 200.f});
-	if (ImGui::Button("single player", {200.f, 50.f}))
-	{
-		std::cout << "Starting single player game" << std::endl;
-	}
-	if (ImGui::Button("co-op", { 200.f, 50.f }))
-	{
-		std::cout << "Starting co-op game" << std::endl;
-	};
-	if (ImGui::Button("versus", { 200.f, 50.f }))
-	{
-		std::cout << "Starting versus game" << std::endl;
-	}
-	ImGui::End();
+	
+	RenderHUD();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	
@@ -77,6 +65,99 @@ void dae::Renderer::Destroy()
 		SDL_DestroyRenderer(m_Renderer);
 		m_Renderer = nullptr;
 	}
+}
+
+void dae::Renderer::InitPlayerValues(int index, int curHealth, int maxHealth, int lives, int score)
+{
+	switch (index)
+	{
+	case 1:
+		m_Player1Health = curHealth;
+		m_Player1MaxHealth = maxHealth;
+		m_Player1LivesRemaining = lives;
+		m_Player1Score = score;
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+}
+
+void dae::Renderer::UpdateLives(int index, int lives)
+{
+	switch (index)
+	{
+	case 1:
+		m_Player1LivesRemaining = lives;
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+}
+
+void dae::Renderer::UpdateHealth(int index, int health)
+{
+	switch (index)
+	{
+	case 1:
+		m_Player1Health = health;
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+}
+
+void dae::Renderer::UpdateScore(int index, int score)
+{
+	switch (index)
+	{
+	case 1:
+		m_Player1Score = score;
+		break;
+	case 2:
+		break;
+	default:
+		break;
+	}
+}
+
+void dae::Renderer::RenderHUD() const
+{
+	ImGui::Begin("Options");
+	ImGui::SetWindowPos({ 50.f, 200.f });
+	if (ImGui::Button("single player", { 200.f, 50.f }))
+	{
+		std::cout << "Starting single player game" << std::endl;
+	}
+	if (ImGui::Button("co-op", { 200.f, 50.f }))
+	{
+		std::cout << "Starting co-op game" << std::endl;
+	};
+	if (ImGui::Button("versus", { 200.f, 50.f }))
+	{
+		std::cout << "Starting versus game" << std::endl;
+	}
+	ImGui::End();
+
+	std::string playerIndex{ "Player 1" };
+	ImGui::Begin(playerIndex.c_str());
+
+	std::string health{ "Health: " + std::to_string(m_Player1Health) + "/" + std::to_string(m_Player1MaxHealth) };
+	ImGui::Text(health.c_str());
+
+	std::string livesRemaining{ "remaining lives: " + std::to_string(m_Player1LivesRemaining) };
+	ImGui::Text(livesRemaining.c_str());
+
+	std::string score{ "Score: " + std::to_string(m_Player1Score) };
+	ImGui::Text(score.c_str());
+	
+	ImGui::SetWindowPos({ 10.f, 50.f });
+	ImGui::End();
 }
 
 void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const

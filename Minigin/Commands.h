@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "GameObject.h"
+#include "HealthComponent.h"
+#include "ScoreComponent.h"
 
 class Command
 {
@@ -67,10 +69,12 @@ public:
 class Kill final : public Command
 {
 public:
-    Kill(std::shared_ptr<dae::GameObject> pObject) : Command(), pObjectToKill(pObject) {}
+    Kill(std::weak_ptr<dae::GameObject> pObject) : Command(), pObjectToKill(pObject) {}
     void Execute() override
     {
-        pObjectToKill->Delete();
+    	//Try to see if the object still exists by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedObject = pObjectToKill.lock())
+            pSharedObject->GetComponent<dae::HealthComponent>()->LoseLives(1);
     };
 
     Kill(const Kill& other) = delete;
@@ -79,5 +83,43 @@ public:
     Kill& operator=(Kill&& other) = delete;
 
 private:
-    std::shared_ptr<dae::GameObject> pObjectToKill = nullptr;
+	std::weak_ptr<dae::GameObject> pObjectToKill;
+};
+
+class Damage final : public Command
+{
+public:
+    Damage(std::weak_ptr<dae::GameObject> pObject) : Command(), pObjectToDamage(pObject) {}
+    void Execute() override
+    {
+        //Try to see if the object still exists by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedObject = pObjectToDamage.lock())
+            pSharedObject->GetComponent<dae::HealthComponent>()->Damage(1);
+    };
+
+    Damage(const Damage& other) = delete;
+    Damage(Damage&& other) = delete;
+    Damage& operator=(const Damage& other) = delete;
+    Damage& operator=(Damage&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> pObjectToDamage;
+};
+
+class Score final : public Command
+{
+public:
+    Score(std::weak_ptr<dae::GameObject> pObject) : Command(), pObjectToAwardTo(pObject) {}
+    void Execute() override
+    {
+        //Try to see if the object still exists by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedObject = pObjectToAwardTo.lock())
+            pSharedObject->GetComponent<dae::ScoreComponent>()->AddToScore(25);
+    };
+
+    Score(const Score& other) = delete;
+    Score(Score&& other) = delete;
+    Score& operator=(const Score& other) = delete;
+    Score& operator=(Score&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> pObjectToAwardTo;
 };

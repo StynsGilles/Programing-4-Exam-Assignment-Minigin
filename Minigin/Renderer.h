@@ -17,6 +17,11 @@ namespace dae
 		void Render() const;
 		void Destroy();
 
+		void InitPlayerValues(int index, int curHealth, int maxHealth, int lives, int score);
+		void UpdateLives(int index, int lives);
+		void UpdateHealth(int index, int health);
+		void UpdateScore(int index, int score);
+		void RenderHUD() const;
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
 		void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
 
@@ -26,6 +31,11 @@ namespace dae
 
 		SDL_Window* m_Window{};
 		SDL_Renderer* m_Renderer{};
+
+		int m_Player1Health = 0;
+		int m_Player1MaxHealth = 0;
+		int m_Player1LivesRemaining = 0;
+		int m_Player1Score = 0;
 	};
 }
 

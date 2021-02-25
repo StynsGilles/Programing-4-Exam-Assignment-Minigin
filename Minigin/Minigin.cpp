@@ -15,6 +15,8 @@
 #include "FPSComponent.h"
 #include "SubjectComponent.h"
 #include "HealthComponent.h"
+#include "PlayerObserver.h"
+#include "ScoreComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -48,7 +50,12 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-	
+	auto& renderer = Renderer::GetInstance();
+	//Create observers
+
+	PlayerObserver* pPlayerObserver = new dae::PlayerObserver();
+
+	//Create objects
 	auto go = std::make_shared<GameObject>();
 	RenderComponent* pBackgroundTextureComponent = new RenderComponent();
 	pBackgroundTextureComponent->SetTexture("background.jpg");
@@ -86,18 +93,27 @@ void dae::Minigin::LoadGame() const
 	auto* pQBertRenderComponent = new RenderComponent();
 	auto* pQBertSubjectComponent = new SubjectComponent();
 	auto* pQBertHealthComponent = new HealthComponent();
+	auto* pQBertScoreComponent = new ScoreComponent();
 	pQBertRenderComponent->SetTexture("Qbert.png");
+	pQBertSubjectComponent->addObserver(pPlayerObserver);
 	qBert->AddComponent(pQBertRenderComponent);
 	qBert->AddComponent(pQBertSubjectComponent);
 	qBert->AddComponent(pQBertHealthComponent);
+	qBert->AddComponent(pQBertScoreComponent);
+	renderer.InitPlayerValues(1, pQBertHealthComponent->GetHealth(), pQBertHealthComponent->GetMaxHealth(), pQBertHealthComponent->GetLivesRemaining(), pQBertScoreComponent->GetScore());
 	scene.Add(qBert);
 	
 	//Adding input
 	auto& input = InputManager::GetInstance();
 
-	const ActionInfo testAction{ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up};
-	input.AddInput(0, testAction, new Kill(qBert));
-	
+	const ActionInfo killQbertAction{ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up};
+	input.AddInput(0, killQbertAction, new Kill(qBert));
+
+	const ActionInfo damageQbertAction{ ControllerButton::ButtonB, SDL_SCANCODE_2, InputState::Up };
+	input.AddInput(0, damageQbertAction, new Damage(qBert));
+
+	const ActionInfo awardScoreAction{ ControllerButton::ButtonX, SDL_SCANCODE_3, InputState::Up };
+	input.AddInput(0, awardScoreAction, new Score(qBert));
 }
 
 void dae::Minigin::Cleanup()
