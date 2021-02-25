@@ -13,6 +13,8 @@
 #include "RenderComponent.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
+#include "SubjectComponent.h"
+#include "HealthComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -82,14 +84,19 @@ void dae::Minigin::LoadGame() const
 
 	auto qBert = std::make_shared<GameObject>();
 	auto* pQBertRenderComponent = new RenderComponent();
+	auto* pQBertSubjectComponent = new SubjectComponent();
+	auto* pQBertHealthComponent = new HealthComponent();
+	pQBertRenderComponent->SetTexture("Qbert.png");
 	qBert->AddComponent(pQBertRenderComponent);
+	qBert->AddComponent(pQBertSubjectComponent);
+	qBert->AddComponent(pQBertHealthComponent);
 	scene.Add(qBert);
 	
 	//Adding input
 	auto& input = InputManager::GetInstance();
 
 	const ActionInfo testAction{ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up};
-	input.AddInput(testAction, new Kill(qBert));
+	input.AddInput(0, testAction, new Kill(qBert));
 	
 }
 

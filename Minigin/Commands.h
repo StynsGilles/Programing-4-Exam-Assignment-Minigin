@@ -70,8 +70,7 @@ public:
     Kill(std::shared_ptr<dae::GameObject> pObject) : Command(), pObjectToKill(pObject) {}
     void Execute() override
     {
-        std::cout << "Killing object" << std::endl;
-	    /*TO DO: add notifier here*/
+        pObjectToKill->Delete();
     };
 
     Kill(const Kill& other) = delete;

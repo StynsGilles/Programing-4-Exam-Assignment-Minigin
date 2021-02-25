@@ -4,7 +4,6 @@
 namespace dae
 {
 	class TextComponent;
-	class GameObject;
 	class FPSComponent : public BaseComponent
 	{
     public:

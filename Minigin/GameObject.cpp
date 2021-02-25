@@ -57,5 +57,6 @@ bool dae::GameObject::GetMarkedForDeletion() const
 
 void dae::GameObject::Delete()
 {
+	std::cout << "Killing object" << std::endl;
 	m_MarkedForDeletion = true;
 }

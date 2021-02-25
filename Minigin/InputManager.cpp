@@ -4,19 +4,24 @@
 
 bool dae::InputManager::ProcessInput()
 {
-	ProcessController();
+	ProcessControllers();
 	const bool keepPlaying = HandleKeyBoard();
-	const bool keepPlayingController = HandleCommands();
+	//Handle player 1 commands
+	HandleCommands(m_CommandsPlayer1);
+	//Handle player 2 commands
+	HandleCommands(m_CommandsPlayer2);
 
-	return keepPlaying && keepPlayingController;
+	return keepPlaying;
 }
 
-void dae::InputManager::ProcessController()
+void dae::InputManager::ProcessControllers()
 {
 	m_PreviousState = m_CurrentState;
+	m_PreviousStatePlayer2 = m_CurrentStatePlayer2;
 	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
 	DWORD dwResult{};
 	dwResult = XInputGetState(0, &m_CurrentState);
+	dwResult = XInputGetState(1, &m_CurrentStatePlayer2);
 }
 
 bool dae::InputManager::HandleKeyBoard()
@@ -28,7 +33,7 @@ bool dae::InputManager::HandleKeyBoard()
 
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 		{
-			for (ControllerCommandMap::const_iterator commandIt = m_Commands.begin(); commandIt != m_Commands.end(); ++commandIt)
+			for (CommandMap::const_iterator commandIt = m_CommandsPlayer1.begin(); commandIt != m_CommandsPlayer1.end(); ++commandIt)
 			{
 				if ((*commandIt).first.KeyboardKey == e.key.keysym.scancode
 					&& (*commandIt).first.InputState == InputState::Pressed
@@ -39,7 +44,7 @@ bool dae::InputManager::HandleKeyBoard()
 
 		if (e.type == SDL_KEYUP)
 		{
-			for (ControllerCommandMap::const_iterator commandIt = m_Commands.begin(); commandIt != m_Commands.end(); ++commandIt)
+			for (CommandMap::const_iterator commandIt = m_CommandsPlayer1.begin(); commandIt != m_CommandsPlayer1.end(); ++commandIt)
 			{
 				if ((*commandIt).first.KeyboardKey == e.key.keysym.scancode
 					&& (*commandIt).first.InputState == InputState::Up
@@ -49,7 +54,7 @@ bool dae::InputManager::HandleKeyBoard()
 		}
 	}
 
-	for (ControllerCommandMap::const_iterator commandIt = m_Commands.begin(); commandIt != m_Commands.end(); ++commandIt)
+	for (CommandMap::const_iterator commandIt = m_CommandsPlayer1.begin(); commandIt != m_CommandsPlayer1.end(); ++commandIt)
 	{
 		switch ((*commandIt).first.InputState)
 		{
@@ -64,9 +69,9 @@ bool dae::InputManager::HandleKeyBoard()
 	return true;
 }
 
-bool dae::InputManager::HandleCommands()
+void dae::InputManager::HandleCommands(const CommandMap& commandMap)
 {
-	for (ControllerCommandMap::const_iterator commandIt = m_Commands.begin(); commandIt != m_Commands.end(); ++commandIt)
+	for (CommandMap::const_iterator commandIt = commandMap.begin(); commandIt != commandMap.end(); ++commandIt)
 	{
 		switch ((*commandIt).first.InputState)
 		{
@@ -84,8 +89,6 @@ bool dae::InputManager::HandleCommands()
 			break;
 		}
 	}
-
-	return true;
 }
 
 bool dae::InputManager::IsPressed(const ControllerButton& button) const
@@ -111,7 +114,20 @@ bool dae::InputManager::IsKeyDown(const SDL_Scancode& key) const
 	return pStates[key];
 }
 
-void dae::InputManager::AddInput(const ActionInfo& button, Command* pCommand)
+void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand)
 {
-	m_Commands.insert(std::make_pair(button, pCommand));
+	switch (controllerIndex)
+	{
+	case 0:
+		m_CommandsPlayer1.insert(std::make_pair(button, pCommand));
+		break;
+	case 1:
+		m_CommandsPlayer2.insert(std::make_pair(button, pCommand));
+		break;
+	default:
+		break;
+	}
+
+	
+
 }

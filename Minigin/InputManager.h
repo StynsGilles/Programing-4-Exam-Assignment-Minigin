@@ -32,11 +32,11 @@ namespace dae
 		PressedAndUp,
 		Down
 	};
-
+	
 	struct ActionInfo
 	{
 		ActionInfo(const ControllerButton& cButton, const SDL_Scancode& key, const InputState& state)
-			:ControllerButton(cButton)
+			: ControllerButton(cButton)
 			, KeyboardKey(key)
 			, InputState(state)
 		{}
@@ -59,17 +59,19 @@ namespace dae
 		bool IsDown(const ControllerButton& button) const;
 		bool IsReleased(const ControllerButton& button) const;
 		bool IsKeyDown(const SDL_Scancode& key) const;
-		void AddInput(const ActionInfo& button, Command* pCommand);
+		void AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand);
 
 	private:
-		void ProcessController();
+		void ProcessControllers();
 		bool HandleKeyBoard();
-		bool HandleCommands();
-		
-		using ControllerCommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
-		ControllerCommandMap m_Commands{};
+		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
+		void HandleCommands(const CommandMap& commandMap);
+
+		CommandMap m_CommandsPlayer1{};
+		CommandMap m_CommandsPlayer2{};
 		XINPUT_STATE m_PreviousState{};
 		XINPUT_STATE m_CurrentState{};
+		XINPUT_STATE m_PreviousStatePlayer2{};
+		XINPUT_STATE m_CurrentStatePlayer2{};
 	};
-
 }
