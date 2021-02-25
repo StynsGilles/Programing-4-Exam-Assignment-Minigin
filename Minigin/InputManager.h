@@ -55,9 +55,9 @@ namespace dae
 	{
 	public:
 		bool ProcessInput();
-		bool IsPressed(const ControllerButton& button) const;
-		bool IsDown(const ControllerButton& button) const;
-		bool IsReleased(const ControllerButton& button) const;
+		bool IsPressed(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
+		bool IsDown(const ControllerButton& button, const XINPUT_STATE& currentState) const;
+		bool IsReleased(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
 		bool IsKeyDown(const SDL_Scancode& key) const;
 		void AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand);
 
@@ -65,7 +65,7 @@ namespace dae
 		void ProcessControllers();
 		bool HandleKeyBoard();
 		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
-		void HandleCommands(const CommandMap& commandMap);
+		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
 
 		CommandMap m_CommandsPlayer1{};
 		CommandMap m_CommandsPlayer2{};

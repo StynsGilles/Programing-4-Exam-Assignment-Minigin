@@ -8,7 +8,8 @@
 #include "RenderComponent.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
-	: m_NeedsUpdate(true)
+	: BaseComponent()
+	, m_NeedsUpdate(true)
 	, m_Text(text)
 	, m_Font(font)
 	, m_Color(SDL_Color{ 255, 255, 255 })

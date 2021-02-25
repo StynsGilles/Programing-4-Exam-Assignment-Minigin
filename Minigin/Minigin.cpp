@@ -15,6 +15,7 @@
 #include "FPSComponent.h"
 #include "SubjectComponent.h"
 #include "HealthComponent.h"
+#include "PlayerIndexComponent.h"
 #include "PlayerObserver.h"
 #include "ScoreComponent.h"
 
@@ -53,7 +54,7 @@ void dae::Minigin::LoadGame() const
 	auto& renderer = Renderer::GetInstance();
 	//Create observers
 
-	PlayerObserver* pPlayerObserver = new dae::PlayerObserver();
+	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
 
 	//Create objects
 	auto go = std::make_shared<GameObject>();
@@ -90,30 +91,54 @@ void dae::Minigin::LoadGame() const
 	scene.Add(fps);
 
 	auto qBert = std::make_shared<GameObject>();
+	auto* pQBertIndexComponent = new PlayerIndexComponent(1);
 	auto* pQBertRenderComponent = new RenderComponent();
 	auto* pQBertSubjectComponent = new SubjectComponent();
 	auto* pQBertHealthComponent = new HealthComponent();
 	auto* pQBertScoreComponent = new ScoreComponent();
 	pQBertRenderComponent->SetTexture("Qbert.png");
 	pQBertSubjectComponent->addObserver(pPlayerObserver);
+	qBert->AddComponent(pQBertIndexComponent);
 	qBert->AddComponent(pQBertRenderComponent);
 	qBert->AddComponent(pQBertSubjectComponent);
 	qBert->AddComponent(pQBertHealthComponent);
 	qBert->AddComponent(pQBertScoreComponent);
-	renderer.InitPlayerValues(1, pQBertHealthComponent->GetHealth(), pQBertHealthComponent->GetMaxHealth(), pQBertHealthComponent->GetLivesRemaining(), pQBertScoreComponent->GetScore());
+	renderer.InitPlayerValues(pQBertIndexComponent->GetIndex(), pQBertHealthComponent->GetHealth(), pQBertHealthComponent->GetMaxHealth(), pQBertHealthComponent->GetLivesRemaining(), pQBertScoreComponent->GetScore());
 	scene.Add(qBert);
+
+	auto evilQBert = std::make_shared<GameObject>();
+	auto* pEvilQBertIndexComponent = new PlayerIndexComponent(2);
+	auto* pEvilQBertRenderComponent = new RenderComponent();
+	auto* pEvilQBertSubjectComponent = new SubjectComponent();
+	auto* pEvilQBertHealthComponent = new HealthComponent();
+	auto* pEvilQBertScoreComponent = new ScoreComponent();
+	pEvilQBertRenderComponent->SetTexture("evilQbert.png");
+	pEvilQBertSubjectComponent->addObserver(pPlayerObserver);
+	evilQBert->AddComponent(pEvilQBertIndexComponent);
+	evilQBert->AddComponent(pEvilQBertRenderComponent);
+	evilQBert->AddComponent(pEvilQBertSubjectComponent);
+	evilQBert->AddComponent(pEvilQBertHealthComponent);
+	evilQBert->AddComponent(pEvilQBertScoreComponent);
+	renderer.InitPlayerValues(pEvilQBertIndexComponent->GetIndex(), pEvilQBertHealthComponent->GetHealth(), pEvilQBertHealthComponent->GetMaxHealth(), pEvilQBertHealthComponent->GetLivesRemaining(), pEvilQBertScoreComponent->GetScore());
+	scene.Add(evilQBert);
+
 	
 	//Adding input
 	auto& input = InputManager::GetInstance();
 
-	const ActionInfo killQbertAction{ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up};
-	input.AddInput(0, killQbertAction, new Kill(qBert));
-
+	const ActionInfo killQbertAction{ ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up };
 	const ActionInfo damageQbertAction{ ControllerButton::ButtonB, SDL_SCANCODE_2, InputState::Up };
-	input.AddInput(0, damageQbertAction, new Damage(qBert));
-
 	const ActionInfo awardScoreAction{ ControllerButton::ButtonX, SDL_SCANCODE_3, InputState::Up };
+	
+	//Player 1
+	input.AddInput(0, killQbertAction, new Kill(qBert));
+	input.AddInput(0, damageQbertAction, new Damage(qBert));
 	input.AddInput(0, awardScoreAction, new Score(qBert));
+
+	//Player 2
+	input.AddInput(1, killQbertAction, new Kill(evilQBert));
+	input.AddInput(1, damageQbertAction, new Damage(evilQBert));
+	input.AddInput(1, awardScoreAction, new Score(evilQBert));
 }
 
 void dae::Minigin::Cleanup()

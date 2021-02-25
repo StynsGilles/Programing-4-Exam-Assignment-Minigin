@@ -7,9 +7,9 @@ bool dae::InputManager::ProcessInput()
 	ProcessControllers();
 	const bool keepPlaying = HandleKeyBoard();
 	//Handle player 1 commands
-	HandleCommands(m_CommandsPlayer1);
+	HandleCommands(m_CommandsPlayer1, m_CurrentState, m_PreviousState);
 	//Handle player 2 commands
-	HandleCommands(m_CommandsPlayer2);
+	HandleCommands(m_CommandsPlayer2, m_CurrentStatePlayer2, m_PreviousStatePlayer2);
 
 	return keepPlaying;
 }
@@ -69,43 +69,43 @@ bool dae::InputManager::HandleKeyBoard()
 	return true;
 }
 
-void dae::InputManager::HandleCommands(const CommandMap& commandMap)
+void dae::InputManager::HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState)
 {
 	for (CommandMap::const_iterator commandIt = commandMap.begin(); commandIt != commandMap.end(); ++commandIt)
 	{
 		switch ((*commandIt).first.InputState)
 		{
 		case InputState::Up:
-			if (IsReleased((*commandIt).first.ControllerButton)) (*commandIt).second->Execute();
+			if (IsReleased((*commandIt).first.ControllerButton, currentState, previousState)) (*commandIt).second->Execute();
 			break;
 		case InputState::Down:
-			if (IsDown((*commandIt).first.ControllerButton)) (*commandIt).second->Execute();
+			if (IsDown((*commandIt).first.ControllerButton, currentState)) (*commandIt).second->Execute();
 			break;
 		case InputState::Pressed:
-			if (IsPressed((*commandIt).first.ControllerButton)) (*commandIt).second->Execute();
+			if (IsPressed((*commandIt).first.ControllerButton, currentState, previousState)) (*commandIt).second->Execute();
 			break;
 		case InputState::PressedAndUp:
-			if (IsReleased((*commandIt).first.ControllerButton) || IsPressed((*commandIt).first.ControllerButton)) (*commandIt).second->Execute();
+			if (IsReleased((*commandIt).first.ControllerButton, currentState, previousState) || IsPressed((*commandIt).first.ControllerButton, currentState, previousState)) (*commandIt).second->Execute();
 			break;
 		}
 	}
 }
 
-bool dae::InputManager::IsPressed(const ControllerButton& button) const
+bool dae::InputManager::IsPressed(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const
 {
-	return m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button) &&
-		!(m_PreviousState.Gamepad.wButtons & static_cast<WORD>(button));
+	return currentState.Gamepad.wButtons & static_cast<WORD>(button) &&
+		!(previousState.Gamepad.wButtons & static_cast<WORD>(button));
 }
 
-bool dae::InputManager::IsDown(const ControllerButton& button) const
+bool dae::InputManager::IsDown(const ControllerButton& button, const XINPUT_STATE& currentState) const
 {
-	return m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button);
+	return currentState.Gamepad.wButtons & static_cast<WORD>(button);
 }
 
-bool dae::InputManager::IsReleased(const ControllerButton& button) const
+bool dae::InputManager::IsReleased(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const
 {
-	return !(m_CurrentState.Gamepad.wButtons & static_cast<WORD>(button)) &&
-		m_PreviousState.Gamepad.wButtons & static_cast<WORD>(button);
+	return !(currentState.Gamepad.wButtons & static_cast<WORD>(button)) &&
+		previousState.Gamepad.wButtons & static_cast<WORD>(button);
 }
 
 bool dae::InputManager::IsKeyDown(const SDL_Scancode& key) const
@@ -127,7 +127,4 @@ void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& b
 	default:
 		break;
 	}
-
-	
-
 }
