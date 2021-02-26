@@ -36,6 +36,10 @@ namespace dae
 		int m_Player1MaxHealth = 0;
 		int m_Player1LivesRemaining = 0;
 		int m_Player1Score = 0;
+		int m_Player2Health = 0;
+		int m_Player2MaxHealth = 0;
+		int m_Player2LivesRemaining = 0;
+		int m_Player2Score = 0;
 	};
 }
 

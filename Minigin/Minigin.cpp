@@ -51,10 +51,7 @@ void dae::Minigin::Initialize()
 void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-	auto& renderer = Renderer::GetInstance();
 	//Create observers
-
-	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
 
 	//Create objects
 	auto go = std::make_shared<GameObject>();
@@ -90,6 +87,15 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 
+	InitPlayers(scene);
+}
+
+void dae::Minigin::InitPlayers(Scene& scene) const
+{
+	auto& renderer = Renderer::GetInstance();
+	
+	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
+	
 	auto qBert = std::make_shared<GameObject>();
 	auto* pQBertIndexComponent = new PlayerIndexComponent(1);
 	auto* pQBertRenderComponent = new RenderComponent();
@@ -122,14 +128,14 @@ void dae::Minigin::LoadGame() const
 	renderer.InitPlayerValues(pEvilQBertIndexComponent->GetIndex(), pEvilQBertHealthComponent->GetHealth(), pEvilQBertHealthComponent->GetMaxHealth(), pEvilQBertHealthComponent->GetLivesRemaining(), pEvilQBertScoreComponent->GetScore());
 	scene.Add(evilQBert);
 
-	
+
 	//Adding input
 	auto& input = InputManager::GetInstance();
 
 	const ActionInfo killQbertAction{ ControllerButton::ButtonA, SDL_SCANCODE_1, InputState::Up };
 	const ActionInfo damageQbertAction{ ControllerButton::ButtonB, SDL_SCANCODE_2, InputState::Up };
 	const ActionInfo awardScoreAction{ ControllerButton::ButtonX, SDL_SCANCODE_3, InputState::Up };
-	
+
 	//Player 1
 	input.AddInput(0, killQbertAction, new Kill(qBert));
 	input.AddInput(0, damageQbertAction, new Damage(qBert));
@@ -140,6 +146,7 @@ void dae::Minigin::LoadGame() const
 	input.AddInput(1, damageQbertAction, new Damage(evilQBert));
 	input.AddInput(1, awardScoreAction, new Score(evilQBert));
 }
+
 
 void dae::Minigin::Cleanup()
 {
@@ -178,6 +185,5 @@ void dae::Minigin::Run()
 			this_thread::sleep_for(sleepTime);
 		}
 	}
-
 	Cleanup();
 }

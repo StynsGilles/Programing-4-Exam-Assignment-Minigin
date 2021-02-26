@@ -2,6 +2,9 @@
 struct SDL_Window;
 namespace dae
 {
+	class Renderer;
+	class Scene;
+
 	class Minigin
 	{
 	public:
@@ -10,6 +13,7 @@ namespace dae
 		void Cleanup();
 		void Run();
 	private:
+		void InitPlayers(Scene& scene) const;
 		SDL_Window* m_Window{};
 	};
 }
