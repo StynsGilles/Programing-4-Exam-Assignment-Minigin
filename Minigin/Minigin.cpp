@@ -165,6 +165,12 @@ void dae::Minigin::Run()
 	 
 	LoadGame();
 	{
+		//explain how to play the game
+		std::cout << "Welcome to QBert! " << std::endl;
+		std::cout << "This game can be played with 2 players and the controls are as follows:" << std::endl;
+		std::cout << "A: make your QBert lose a life, B: Make your QBert lose 1 hit point, X: Score some points" << std::endl;
+		std::cout << "Player 1 can also use respectively 1, 2 and 3 on the keyboard to do the same thing." << std::endl;
+		
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
