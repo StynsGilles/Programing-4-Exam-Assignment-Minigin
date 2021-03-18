@@ -123,6 +123,12 @@
     <ClInclude Include="PlayerIndexComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">

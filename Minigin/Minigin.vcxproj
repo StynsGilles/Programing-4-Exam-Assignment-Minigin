@@ -218,7 +218,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="SubjectComponent.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
