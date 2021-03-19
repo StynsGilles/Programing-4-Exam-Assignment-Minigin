@@ -9,6 +9,7 @@ public:
 	virtual ~MuteSoundSystem() = default;
 	
 	void PlaySound(const std::string& soundName) override;
+	void PlayMusic(const std::string& musicName) override;
 	void PauseSound() override;
 	void IncreaseVolume() override;
 	void DecreaseVolume() override;

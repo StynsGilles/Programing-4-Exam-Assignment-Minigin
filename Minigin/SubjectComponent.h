@@ -13,8 +13,8 @@ namespace dae
         void Update() override;
     	void Render() const override;
     	
-        void addObserver(std::shared_ptr<Observer> observer);
-        void removeObserver(std::shared_ptr<Observer> observer);
+        void AddObserver(std::shared_ptr<Observer> observer);
+        void RemoveObserver(std::shared_ptr<Observer> observer);
         void Notify(GameObject* object, Event event);
     	
         SubjectComponent(const SubjectComponent& other) = delete;

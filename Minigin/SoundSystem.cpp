@@ -18,7 +18,12 @@ SoundSystem::~SoundSystem()
 
 void SoundSystem::PlaySound(const std::string& soundName)
 {
-	dae::playMusic(soundName.c_str(), m_Volume);
+	dae::playSound(soundName.c_str(), m_Volume);
+}
+
+void SoundSystem::PlayMusic(const std::string& musicName)
+{
+	dae::playMusic(musicName.c_str(), m_Volume);
 }
 
 void SoundSystem::PauseSound()

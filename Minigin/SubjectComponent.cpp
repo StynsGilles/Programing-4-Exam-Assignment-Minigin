@@ -20,12 +20,12 @@ void dae::SubjectComponent::Render() const
 {
 }
 
-void dae::SubjectComponent::addObserver(std::shared_ptr<Observer> observer)
+void dae::SubjectComponent::AddObserver(std::shared_ptr<Observer> observer)
 {
 	m_pObservers.push_back(std::move(observer));
 }
 
-void dae::SubjectComponent::removeObserver(std::shared_ptr<Observer> observer)
+void dae::SubjectComponent::RemoveObserver(std::shared_ptr<Observer> observer)
 {
 	m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), observer));
 }

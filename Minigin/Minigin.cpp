@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "Minigin.h"
 #include <chrono>
+#include <functional>
 #include <thread>
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -20,6 +21,7 @@
 #include "ScoreComponent.h"
 #include "SoundSystem.h"
 #include "ServiceLocator.h"
+#include "SoundQueue.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -47,7 +49,7 @@ void dae::Minigin::Initialize()
 
 	Renderer::GetInstance().Init(m_Window);
 
-	ServiceLocator::RegisterSoundSystem(new SoundSystem());
+	 ServiceLocator::RegisterSoundSystem(std::make_unique<SoundSystem>());
 }
 
 /**
@@ -98,8 +100,8 @@ void dae::Minigin::LoadGame() const
 void dae::Minigin::InitPlayers(Scene& scene) const
 {
 	auto& renderer = Renderer::GetInstance();
-	
-	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
+
+	auto pPlayer1Observer =  std::make_shared<PlayerObserver>();
 	
 	auto qBert = std::make_shared<GameObject>();
 	auto* pQBertIndexComponent = new PlayerIndexComponent(1);
@@ -108,15 +110,23 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	auto* pQBertHealthComponent = new HealthComponent();
 	auto* pQBertScoreComponent = new ScoreComponent();
 	pQBertRenderComponent->SetTexture("Qbert.png");
-	pQBertSubjectComponent->addObserver(pPlayerObserver);
+	pQBertSubjectComponent->AddObserver(pPlayer1Observer);
 	qBert->AddComponent(pQBertIndexComponent);
 	qBert->AddComponent(pQBertRenderComponent);
 	qBert->AddComponent(pQBertSubjectComponent);
 	qBert->AddComponent(pQBertHealthComponent);
 	qBert->AddComponent(pQBertScoreComponent);
-	renderer.InitPlayerValues(pQBertIndexComponent->GetIndex(), pQBertHealthComponent->GetHealth(), pQBertHealthComponent->GetMaxHealth(), pQBertHealthComponent->GetLivesRemaining(), pQBertScoreComponent->GetScore());
 	scene.Add(qBert);
 
+	auto player1HUD = std::make_shared<GameObject>();
+	player1HUD->AddComponent(pPlayer1Observer);
+	scene.Add(player1HUD);
+	
+	pPlayer1Observer->InitValues(qBert);
+	pPlayer1Observer->SetPosition(10, 50);
+
+	auto pPlayer2Observer = std::make_shared<dae::PlayerObserver>();
+	
 	auto evilQBert = std::make_shared<GameObject>();
 	auto* pEvilQBertIndexComponent = new PlayerIndexComponent(2);
 	auto* pEvilQBertRenderComponent = new RenderComponent();
@@ -124,16 +134,21 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	auto* pEvilQBertHealthComponent = new HealthComponent();
 	auto* pEvilQBertScoreComponent = new ScoreComponent();
 	pEvilQBertRenderComponent->SetTexture("evilQbert.png");
-	pEvilQBertSubjectComponent->addObserver(pPlayerObserver);
+	pEvilQBertSubjectComponent->AddObserver(pPlayer2Observer);
 	evilQBert->AddComponent(pEvilQBertIndexComponent);
 	evilQBert->AddComponent(pEvilQBertRenderComponent);
 	evilQBert->AddComponent(pEvilQBertSubjectComponent);
 	evilQBert->AddComponent(pEvilQBertHealthComponent);
 	evilQBert->AddComponent(pEvilQBertScoreComponent);
-	renderer.InitPlayerValues(pEvilQBertIndexComponent->GetIndex(), pEvilQBertHealthComponent->GetHealth(), pEvilQBertHealthComponent->GetMaxHealth(), pEvilQBertHealthComponent->GetLivesRemaining(), pEvilQBertScoreComponent->GetScore());
 	scene.Add(evilQBert);
 
-
+	auto player2HUD = std::make_shared<GameObject>();
+	player2HUD->AddComponent(pPlayer2Observer);
+	scene.Add(player2HUD);
+	
+	pPlayer1Observer->InitValues(evilQBert);
+	pPlayer1Observer->SetPosition(200, 50);
+	
 	//Adding input
 	auto& input = InputManager::GetInstance();
 
@@ -156,6 +171,7 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 void dae::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
+	SoundQueue::GetInstance().StopRunning();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	SDL_Quit();
@@ -180,6 +196,10 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
+		auto& soundQueue = SoundQueue::GetInstance();
+
+		std::thread soundThread(std::bind(&SoundQueue::ProcessQueue, &soundQueue));
+		soundThread.detach();
 		
 		bool doContinue = true;
 		while (doContinue)

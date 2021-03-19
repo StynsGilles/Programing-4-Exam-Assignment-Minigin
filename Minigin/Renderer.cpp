@@ -67,72 +67,6 @@ void dae::Renderer::Destroy()
 	}
 }
 
-void dae::Renderer::InitPlayerValues(int index, int curHealth, int maxHealth, int lives, int score)
-{
-	switch (index)
-	{
-	case 1:
-		m_Player1Health = curHealth;
-		m_Player1MaxHealth = maxHealth;
-		m_Player1LivesRemaining = lives;
-		m_Player1Score = score;
-		break;
-	case 2:
-		m_Player2Health = curHealth;
-		m_Player2MaxHealth = maxHealth;
-		m_Player2LivesRemaining = lives;
-		m_Player2Score = score;
-		break;
-	default:
-		break;
-	}
-}
-
-void dae::Renderer::UpdateLives(int index, int lives)
-{
-	switch (index)
-	{
-	case 1:
-		m_Player1LivesRemaining = lives;
-		break;
-	case 2:
-		m_Player2LivesRemaining = lives;
-		break;
-	default:
-		break;
-	}
-}
-
-void dae::Renderer::UpdateHealth(int index, int health)
-{
-	switch (index)
-	{
-	case 1:
-		m_Player1Health = health;
-		break;
-	case 2:
-		m_Player2Health = health;
-		break;
-	default:
-		break;
-	}
-}
-
-void dae::Renderer::UpdateScore(int index, int score)
-{
-	switch (index)
-	{
-	case 1:
-		m_Player1Score = score;
-		break;
-	case 2:
-		m_Player2Score = score;
-		break;
-	default:
-		break;
-	}
-}
-
 void dae::Renderer::RenderHUD() const
 {
 	ImGui::Begin("Options");
@@ -149,36 +83,6 @@ void dae::Renderer::RenderHUD() const
 	{
 		std::cout << "Starting versus game" << std::endl;
 	}
-	ImGui::End();
-
-	std::string playerIndex{ "Player 1" };
-	ImGui::Begin(playerIndex.c_str());
-
-	std::string health{ "Health: " + std::to_string(m_Player1Health) + "/" + std::to_string(m_Player1MaxHealth) };
-	ImGui::Text(health.c_str());
-
-	std::string livesRemaining{ "remaining lives: " + std::to_string(m_Player1LivesRemaining) };
-	ImGui::Text(livesRemaining.c_str());
-
-	std::string score{ "Score: " + std::to_string(m_Player1Score) };
-	ImGui::Text(score.c_str());
-	
-	ImGui::SetWindowPos({ 10.f, 50.f });
-	ImGui::End();
-
-	playerIndex = "Player 2";
-	ImGui::Begin(playerIndex.c_str());
-
-	health = "Health: " + std::to_string(m_Player2Health) + "/" + std::to_string(m_Player2MaxHealth);
-	ImGui::Text(health.c_str());
-
-	livesRemaining = "remaining lives: " + std::to_string(m_Player2LivesRemaining);
-	ImGui::Text(livesRemaining.c_str());
-
-	score = "Score: " + std::to_string(m_Player2Score);
-	ImGui::Text(score.c_str());
-	
-	ImGui::SetWindowPos({ 450.f, 50.f });
 	ImGui::End();
 }
 

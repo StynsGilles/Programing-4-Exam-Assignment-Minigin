@@ -138,6 +138,9 @@
     <ClInclude Include="SoundSystem.h">
       <Filter>Sound Systems</Filter>
     </ClInclude>
+    <ClInclude Include="SoundQueue.h">
+      <Filter>Sound Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -231,6 +234,12 @@
       <Filter>Sound Systems</Filter>
     </ClCompile>
     <ClCompile Include="MuteSoundSystem.cpp">
+      <Filter>Sound Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundQueue.cpp">
+      <Filter>Sound Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
       <Filter>Sound Systems</Filter>
     </ClCompile>
   </ItemGroup>

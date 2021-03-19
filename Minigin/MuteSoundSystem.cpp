@@ -11,6 +11,11 @@ void MuteSoundSystem::PlaySound(const std::string& soundName)
 	std::cout << "Playing the sound: " << soundName << std::endl;
 }
 
+void MuteSoundSystem::PlayMusic(const std::string& musicName)
+{
+	std::cout << "Playing the music: " << musicName << std::endl;
+}
+
 void MuteSoundSystem::PauseSound()
 {
 	std::cout << "Pausing sounds" << std::endl;

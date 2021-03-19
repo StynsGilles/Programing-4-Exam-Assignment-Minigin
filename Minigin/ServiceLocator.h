@@ -3,10 +3,9 @@
 
 class ServiceLocator
 {
-	static ISoundSystem* ss_service;
+	static std::unique_ptr<ISoundSystem> ss_service;
 public:
-	static ISoundSystem* GetSoundSystem() { return ss_service; }
-	static void RegisterSoundSystem(ISoundSystem* ss) { ss_service = ss; }
+	static std::unique_ptr<ISoundSystem>& GetSoundSystem() { return ss_service; }
+	static void RegisterSoundSystem(std::unique_ptr<ISoundSystem>& ss) { ss_service = std::move(ss); }
+	static void RegisterSoundSystem(std::unique_ptr<ISoundSystem>&& ss) { ss_service = std::move(ss); }
 };
-
-ISoundSystem* ServiceLocator::ss_service{};
