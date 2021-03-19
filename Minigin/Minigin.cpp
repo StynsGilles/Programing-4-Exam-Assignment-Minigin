@@ -99,9 +99,7 @@ void dae::Minigin::LoadGame() const
 
 void dae::Minigin::InitPlayers(Scene& scene) const
 {
-	auto& renderer = Renderer::GetInstance();
-
-	auto pPlayer1Observer =  std::make_shared<PlayerObserver>();
+	auto pPlayer1Observer = new PlayerObserver();
 	
 	auto qBert = std::make_shared<GameObject>();
 	auto* pQBertIndexComponent = new PlayerIndexComponent(1);
@@ -125,7 +123,7 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	pPlayer1Observer->InitValues(qBert);
 	pPlayer1Observer->SetPosition(10, 50);
 
-	auto pPlayer2Observer = std::make_shared<dae::PlayerObserver>();
+	auto pPlayer2Observer = new PlayerObserver();
 	
 	auto evilQBert = std::make_shared<GameObject>();
 	auto* pEvilQBertIndexComponent = new PlayerIndexComponent(2);
@@ -146,8 +144,8 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	player2HUD->AddComponent(pPlayer2Observer);
 	scene.Add(player2HUD);
 	
-	pPlayer1Observer->InitValues(evilQBert);
-	pPlayer1Observer->SetPosition(200, 50);
+	pPlayer2Observer->InitValues(evilQBert);
+	pPlayer2Observer->SetPosition(400, 50);
 	
 	//Adding input
 	auto& input = InputManager::GetInstance();

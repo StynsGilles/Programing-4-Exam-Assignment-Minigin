@@ -38,6 +38,10 @@ void dae::PlayerObserver::onNotify(GameObject* entity, Event event)
 	}
 }
 
+void dae::PlayerObserver::Update()
+{
+}
+
 void dae::PlayerObserver::Render() const
 {
 	const std::string playerIndex{ "Player "+std::to_string(m_PlayerIndex) };
