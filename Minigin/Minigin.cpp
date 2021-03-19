@@ -18,13 +18,16 @@
 #include "PlayerIndexComponent.h"
 #include "PlayerObserver.h"
 #include "ScoreComponent.h"
+#include "SoundSystem.h"
+#include "ServiceLocator.h"
 
 using namespace std;
 using namespace std::chrono;
 
 void dae::Minigin::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	_putenv("SDL_AUDIODRIVER=DirectSound");
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
@@ -43,6 +46,8 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+
+	ServiceLocator::RegisterSoundSystem(new SoundSystem());
 }
 
 /**
@@ -175,7 +180,7 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
-
+		
 		bool doContinue = true;
 		while (doContinue)
 		{

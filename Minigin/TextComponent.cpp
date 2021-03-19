@@ -3,7 +3,6 @@
 #include <SDL_ttf.h>
 #include "Renderer.h"
 #include "TextComponent.h"
-
 #include "GameObject.h"
 #include "RenderComponent.h"
 

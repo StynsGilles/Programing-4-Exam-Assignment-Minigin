@@ -25,6 +25,9 @@
     <Filter Include="Observers">
       <UniqueIdentifier>{ee8d56bb-599d-4758-a3b7-6ba5fc1bb062}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound Systems">
+      <UniqueIdentifier>{44091842-d592-4cd0-853d-43f551c2ca77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -123,11 +126,17 @@
     <ClInclude Include="PlayerIndexComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="SoundSystem.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ISoundSystem.h">
+      <Filter>Sound Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="MuteSoundSystem.h">
+      <Filter>Sound Systems</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
-      <Filter>Header Files</Filter>
+      <Filter>Sound Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>Sound Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +226,12 @@
     </ClCompile>
     <ClCompile Include="PlayerIndexComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>Sound Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="MuteSoundSystem.cpp">
+      <Filter>Sound Systems</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
