@@ -6,10 +6,10 @@
 #include "PlayerIndexComponent.h"
 #include "Renderer.h"
 #include "ScoreComponent.h"
+#include "TextComponent.h"
 
 dae::PlayerObserver::PlayerObserver()
 	: Observer()
-	, BaseComponent()
 {
 }
 
@@ -17,62 +17,71 @@ dae::PlayerObserver::~PlayerObserver()
 {
 }
 
-void dae::PlayerObserver::onNotify(GameObject* entity, Event event)
+void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 {
 	switch (event)
 	{
 	case Event::PlayerDied:
-		std::cout << "PlayerDied" << std::endl;
-		m_PlayerLivesRemaining = entity->GetComponent<HealthComponent>()->GetLivesRemaining();
+		UpdateLivesText(pEntity);
 		break;
 	case Event::PlayerLostHP:
-		std::cout << "Lost hp" << std::endl;
-		m_PlayerHealth = entity->GetComponent<HealthComponent>()->GetHealth();
+		UpdateHealthText(pEntity);
 		break;
 	case Event::IncreaseScore:
-		std::cout << "Increasing score" << std::endl;
-		m_PlayerScore = entity->GetComponent<ScoreComponent>()->GetScore();
+		UpdateScoreText(pEntity);
 		break;
 	default:
 		break;
 	}
 }
 
-void dae::PlayerObserver::Update()
+void dae::PlayerObserver::UpdateHealthText(GameObject* pEntity)
 {
+	std::cout << "Lost hp" << std::endl;
+	auto* healthText = m_HealthObject->GetComponent<TextComponent>();
+	auto* healthComp = pEntity->GetComponent<HealthComponent>();
+	if (healthText && healthComp)
+	{
+		const std::string healthString = "Health: " + std::to_string(healthComp->GetHealth()) + "/" + std::to_string(healthComp->GetMaxHealth());
+		healthText->SetText(healthString);
+	}
 }
 
-void dae::PlayerObserver::Render() const
+void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 {
-	const std::string playerIndex{ "Player "+std::to_string(m_PlayerIndex) };
-	ImGui::Begin(playerIndex.c_str());
-
-	const std::string health{ "Health: " + std::to_string(m_PlayerHealth) + "/" + std::to_string(m_PlayerMaxHealth) };
-	ImGui::Text(health.c_str());
-
-	const std::string livesRemaining{ "remaining lives: " + std::to_string(m_PlayerLivesRemaining) };
-	ImGui::Text(livesRemaining.c_str());
-
-	const  std::string score{ "Score: " + std::to_string(m_PlayerScore) };
-	ImGui::Text(score.c_str());
-
-	ImGui::SetWindowPos({ m_PosX, m_PosY });
-	ImGui::End();
+	std::cout << "PlayerDied" << std::endl;
+	auto* livesRemainingText = m_LivesObject->GetComponent<TextComponent>();
+	auto* healthLivesComp = pEntity->GetComponent<HealthComponent>();
+	if (livesRemainingText && healthLivesComp)
+	{
+		const std::string livesString = "Remaining lives: " + std::to_string(healthLivesComp->GetLivesRemaining());
+		livesRemainingText->SetText(livesString);
+	}
 }
 
-void dae::PlayerObserver::SetPosition(float x, float y)
+void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 {
-	m_PosX = x;
-	m_PosY = y;
+	std::cout << "Increasing score" << std::endl;
+	auto* scoreText = m_HealthObject->GetComponent<TextComponent>();
+	auto* scoreComp = pEntity->GetComponent<ScoreComponent>();
+	if (scoreText && scoreComp)
+	{
+		const std::string scoreString = "Score: " + std::to_string(scoreComp->GetScore());
+		scoreText->SetText(scoreString);
+	}
 }
 
-void dae::PlayerObserver::InitValues(std::shared_ptr<GameObject> pPlayer)
+void dae::PlayerObserver::SetHealthObject(std::shared_ptr<GameObject> pHealth)
 {
-	m_PlayerIndex = pPlayer->GetComponent<PlayerIndexComponent>()->GetIndex();
-	auto playerHealth = pPlayer->GetComponent<HealthComponent>();
-	m_PlayerHealth = playerHealth->GetHealth();
-	m_PlayerMaxHealth = playerHealth->GetMaxHealth();
-	m_PlayerLivesRemaining = playerHealth->GetLivesRemaining();
-	auto playerScore = pPlayer->GetComponent<ScoreComponent>();
-	m_PlayerScore = playerScore->GetScore();
+	m_HealthObject = pHealth;
+}
+
+void dae::PlayerObserver::SetLivesObject(std::shared_ptr<GameObject> pLives)
+{
+	m_LivesObject = pLives;
+}
+
+void dae::PlayerObserver::SetScorebject(std::shared_ptr<GameObject> pScore)
+{
+	m_ScoreObject = pScore;
 }

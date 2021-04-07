@@ -94,12 +94,13 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 
-	InitPlayers(scene);
+	InitPlayers(scene, font);
 }
 
-void dae::Minigin::InitPlayers(Scene& scene) const
+void dae::Minigin::InitPlayers(Scene& scene, const shared_ptr<Font> font) const
 {
-	auto pPlayer1Observer = new PlayerObserver();
+	//Player 1
+	auto pPlayer1Observer = std::make_shared<dae::PlayerObserver>();
 	
 	auto qBert = std::make_shared<GameObject>();
 	auto* pQBertIndexComponent = new PlayerIndexComponent(1);
@@ -108,22 +109,62 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	auto* pQBertHealthComponent = new HealthComponent();
 	auto* pQBertScoreComponent = new ScoreComponent();
 	pQBertRenderComponent->SetTexture("Qbert.png");
+	pQBertRenderComponent->SetDimensions(50, 50);
 	pQBertSubjectComponent->AddObserver(pPlayer1Observer);
 	qBert->AddComponent(pQBertIndexComponent);
 	qBert->AddComponent(pQBertRenderComponent);
 	qBert->AddComponent(pQBertSubjectComponent);
 	qBert->AddComponent(pQBertHealthComponent);
 	qBert->AddComponent(pQBertScoreComponent);
+	qBert->SetPosition(50, 200);
 	scene.Add(qBert);
 
-	auto player1HUD = std::make_shared<GameObject>();
-	player1HUD->AddComponent(pPlayer1Observer);
-	scene.Add(player1HUD);
+	//Player 1 HUD
+	//Title
+	auto player1HUDTitle = std::make_shared<GameObject>();
+	std::string player1HUDTitleString = "Player 1";
+	auto* pPlayer1HUDTitleText = new TextComponent(player1HUDTitleString, font);
+	auto* pPlayer1HUDTitleRender = new RenderComponent();
+	player1HUDTitle->AddComponent(pPlayer1HUDTitleText);
+	player1HUDTitle->AddComponent(pPlayer1HUDTitleRender);
+	player1HUDTitle->SetPosition(10, 50);
+	scene.Add(player1HUDTitle);
 	
-	pPlayer1Observer->InitValues(qBert);
-	pPlayer1Observer->SetPosition(10, 50);
+	//Health
+	auto player1Health = std::make_shared<GameObject>();
+	std::string player1HealthString = "Health: " + std::to_string(pQBertHealthComponent->GetHealth()) + "/" + std::to_string(pQBertHealthComponent->GetMaxHealth());
+	auto* pPlayer1HealthText = new TextComponent(player1HealthString, font);
+	auto* pPlayer1HealthRender = new RenderComponent();
+	player1Health->AddComponent(pPlayer1HealthText);
+	player1Health->AddComponent(pPlayer1HealthRender);
+	player1Health->SetPosition(10, 80);
+	scene.Add(player1Health);
+	pPlayer1Observer->SetHealthObject(player1Health);
+	
+	//Lives remaining
+	auto player1Lives = std::make_shared<GameObject>();
+	const std::string player1LivesString = "Remaining lives: " + std::to_string(pQBertHealthComponent->GetLivesRemaining());
+	auto* pPlayer1LivesText = new TextComponent(player1LivesString, font);
+	auto* pPlayer1LivesRender = new RenderComponent();
+	player1Lives->AddComponent(pPlayer1LivesText);
+	player1Lives->AddComponent(pPlayer1LivesRender);
+	player1Lives->SetPosition(10, 110);
+	scene.Add(player1Lives);
+	pPlayer1Observer->SetLivesObject(player1Lives);
+	
+	//Score
+	auto player1Score = std::make_shared<GameObject>();
+	const std::string player1ScoreString = "Score: " + std::to_string(pQBertScoreComponent->GetScore());
+	auto* pPlayer1ScoreText = new TextComponent(player1ScoreString, font);
+	auto* pPlayer1ScoreRender = new RenderComponent();
+	player1Score->AddComponent(pPlayer1ScoreText);
+	player1Score->AddComponent(pPlayer1ScoreRender);
+	player1Score->SetPosition(10, 140);
+	scene.Add(player1Score);
+	pPlayer1Observer->SetScorebject(player1Score);
 
-	auto pPlayer2Observer = new PlayerObserver();
+	//Player 2
+	auto pPlayer2Observer = std::make_shared<dae::PlayerObserver>();
 	
 	auto evilQBert = std::make_shared<GameObject>();
 	auto* pEvilQBertIndexComponent = new PlayerIndexComponent(2);
@@ -132,20 +173,59 @@ void dae::Minigin::InitPlayers(Scene& scene) const
 	auto* pEvilQBertHealthComponent = new HealthComponent();
 	auto* pEvilQBertScoreComponent = new ScoreComponent();
 	pEvilQBertRenderComponent->SetTexture("evilQbert.png");
+	pEvilQBertRenderComponent->SetDimensions(50, 50);
 	pEvilQBertSubjectComponent->AddObserver(pPlayer2Observer);
 	evilQBert->AddComponent(pEvilQBertIndexComponent);
 	evilQBert->AddComponent(pEvilQBertRenderComponent);
 	evilQBert->AddComponent(pEvilQBertSubjectComponent);
 	evilQBert->AddComponent(pEvilQBertHealthComponent);
 	evilQBert->AddComponent(pEvilQBertScoreComponent);
+	evilQBert->SetPosition(400, 200);
 	scene.Add(evilQBert);
 
-	auto player2HUD = std::make_shared<GameObject>();
-	player2HUD->AddComponent(pPlayer2Observer);
-	scene.Add(player2HUD);
+	//Player 2 HUD
+	//Title
+	auto player2HUDTitle = std::make_shared<GameObject>();
+	std::string player2HUDTitleString = "Player 2";
+	auto* pPlayer2HUDTitleText = new TextComponent(player2HUDTitleString, font);
+	auto* pPlayer2HUDTitleRender = new RenderComponent();
+	player2HUDTitle->AddComponent(pPlayer2HUDTitleText);
+	player2HUDTitle->AddComponent(pPlayer2HUDTitleRender);
+	player2HUDTitle->SetPosition(400, 50);
+	scene.Add(player2HUDTitle);
+
+	//Health
+	auto player2Health = std::make_shared<GameObject>();
+	std::string player2HealthString = "Health: " + std::to_string(pEvilQBertHealthComponent->GetHealth()) + "/" + std::to_string(pEvilQBertHealthComponent->GetMaxHealth());
+	auto* pPlayer2HealthText = new TextComponent(player2HealthString, font);
+	auto* pPlayer2HealthRender = new RenderComponent();
+	player2Health->AddComponent(pPlayer2HealthText);
+	player2Health->AddComponent(pPlayer2HealthRender);
+	player2Health->SetPosition(400, 80);
+	scene.Add(player2Health);
+	pPlayer2Observer->SetHealthObject(player2Health);
 	
-	pPlayer2Observer->InitValues(evilQBert);
-	pPlayer2Observer->SetPosition(400, 50);
+	//Lives remaining
+	auto player2Lives = std::make_shared<GameObject>();
+	const std::string player2LivesString = "Remaining lives: " + std::to_string(pEvilQBertHealthComponent->GetLivesRemaining());
+	auto* pPlayer2LivesText = new TextComponent(player2LivesString, font);
+	auto* pPlayer2LivesRender = new RenderComponent();
+	player2Lives->AddComponent(pPlayer2LivesText);
+	player2Lives->AddComponent(pPlayer2LivesRender);
+	player2Lives->SetPosition(400, 110);
+	scene.Add(player2Lives);
+	pPlayer2Observer->SetLivesObject(player2Lives);
+
+	//Score
+	auto player2Score = std::make_shared<GameObject>();
+	const std::string player2ScoreString = "Score: " + std::to_string(pEvilQBertScoreComponent->GetScore());
+	auto* pPlayer2ScoreText = new TextComponent(player2ScoreString, font);
+	auto* pPlayer2ScoreRender = new RenderComponent();
+	player2Score->AddComponent(pPlayer2ScoreText);
+	player2Score->AddComponent(pPlayer2ScoreRender);
+	player2Score->SetPosition(400, 140);
+	scene.Add(player2Score);
+	pPlayer2Observer->SetScorebject(player2Score);
 	
 	//Adding input
 	auto& input = InputManager::GetInstance();

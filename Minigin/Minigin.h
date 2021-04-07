@@ -2,6 +2,7 @@
 struct SDL_Window;
 namespace dae
 {
+	class Font;
 	class Renderer;
 	class Scene;
 
@@ -13,7 +14,7 @@ namespace dae
 		void Cleanup();
 		void Run();
 	private:
-		void InitPlayers(Scene& scene) const;
+		void InitPlayers(Scene& scene, const std::shared_ptr<Font> font) const;
 		SDL_Window* m_Window{};
 	};
 }

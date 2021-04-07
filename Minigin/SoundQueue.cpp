@@ -35,7 +35,8 @@ void dae::SoundQueue::ProcessQueue()
 
 			m_AudioQueue.pop();
 		}
-		auto sleepTime = duration_cast<duration<float>>(Time::GetInstance().GetPreviousTime() + milliseconds(int(Time::GetInstance().GetMsPerFrame())) - high_resolution_clock::now());
+		auto sleepTime = duration_cast<duration<float>>(Time::GetInstance().GetPreviousTime()
+			+ milliseconds(int(Time::GetInstance().GetMsPerFrame())) - high_resolution_clock::now());
 		std::this_thread::sleep_for(sleepTime);
 	}
 }

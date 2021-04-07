@@ -8,17 +8,15 @@ namespace dae
 	
 	class PlayerObserver final
 		: public Observer
-		, public BaseComponent
     {
     public:
         PlayerObserver();
         virtual ~PlayerObserver();
-    	void onNotify(GameObject* entity, Event event) override;
-
-        void Update() override;
-        void Render() const override;
-        void SetPosition(float x, float y);
-        void InitValues(std::shared_ptr<GameObject> pPlayer);
+    	void onNotify(GameObject* pEntity, Event event) override;
+        
+        void SetHealthObject(std::shared_ptr<GameObject> pHealth);
+        void SetLivesObject(std::shared_ptr<GameObject> pLives);
+        void SetScorebject(std::shared_ptr<GameObject> pScore);
 		
         PlayerObserver(const PlayerObserver& other) = delete;
         PlayerObserver(PlayerObserver&& other) = delete;
@@ -26,11 +24,12 @@ namespace dae
         PlayerObserver& operator=(PlayerObserver&& other) = delete;
 
 	private:
-        int m_PlayerIndex;
-        int m_PlayerHealth;
-        int m_PlayerMaxHealth;
-        int m_PlayerLivesRemaining;
-        int m_PlayerScore;
-        float m_PosX, m_PosY;
+        std::shared_ptr<GameObject> m_HealthObject;
+        std::shared_ptr<GameObject> m_LivesObject;
+        std::shared_ptr<GameObject> m_ScoreObject;
+
+        void UpdateHealthText(GameObject* pEntity);
+        void UpdateLivesText(GameObject* pEntity);
+        void UpdateScoreText(GameObject* pEntity);
     };
 }

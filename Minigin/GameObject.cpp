@@ -12,25 +12,25 @@ void dae::GameObject::RemoveComponent(BaseComponent* pComponent)
 
 dae::GameObject::~GameObject()
 {
-	for (BaseComponent* component : m_pComponents)
+	for (BaseComponent* pComponent : m_pComponents)
 	{
-		delete component;
+		delete pComponent;
 	}
 };
 
 void dae::GameObject::Update()
 {
-	for (BaseComponent* component : m_pComponents)
+	for (BaseComponent* pComponent : m_pComponents)
 	{
-		component->Update();
+		pComponent->Update();
 	}
 }
 
 void dae::GameObject::Render() const
 {
-	for (BaseComponent* component : m_pComponents)
+	for (BaseComponent* pComponent : m_pComponents)
 	{
-		component->Render();
+		pComponent->Render();
 	}
 }
 
