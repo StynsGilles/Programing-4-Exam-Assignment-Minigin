@@ -62,7 +62,7 @@ void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 {
 	std::cout << "Increasing score" << std::endl;
-	auto* scoreText = m_HealthObject->GetComponent<TextComponent>();
+	auto* scoreText = m_ScoreObject->GetComponent<TextComponent>();
 	auto* scoreComp = pEntity->GetComponent<ScoreComponent>();
 	if (scoreText && scoreComp)
 	{

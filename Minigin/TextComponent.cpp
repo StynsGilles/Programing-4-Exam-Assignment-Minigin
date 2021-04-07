@@ -25,6 +25,7 @@ void dae::TextComponent::Update()
 	{
 		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_Color);
 		if (surf == nullptr) throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+
 		
 		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
 		if (texture == nullptr)	throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());

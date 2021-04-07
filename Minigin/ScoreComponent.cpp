@@ -3,7 +3,7 @@
 #include "Observer.h"
 #include "SubjectComponent.h"
 #include "GameObject.h"
-#include "SoundQueue.h"
+#include "ServiceLocator.h"
 
 dae::ScoreComponent::ScoreComponent()
 	: BaseComponent()
@@ -27,8 +27,7 @@ void dae::ScoreComponent::AddToScore(int score)
 {
 	m_Score += score;
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::IncreaseScore);
-	AudioData scoreSound{ AudioType::Effect, "../Data/Sounds/shine.wav" };
-	SoundQueue::GetInstance().AddToQueue(scoreSound);
+	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/shine.wav");
 }
 
 int dae::ScoreComponent::GetScore() const

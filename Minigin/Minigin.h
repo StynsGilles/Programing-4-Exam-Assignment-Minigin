@@ -14,7 +14,7 @@ namespace dae
 		void Cleanup();
 		void Run();
 	private:
-		void InitPlayers(Scene& scene, const std::shared_ptr<Font> font) const;
+		void InitPlayers(Scene& scene) const;
 		SDL_Window* m_Window{};
 	};
 }

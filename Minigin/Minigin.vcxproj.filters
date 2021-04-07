@@ -138,7 +138,7 @@
     <ClInclude Include="SoundSystem.h">
       <Filter>Sound Systems</Filter>
     </ClInclude>
-    <ClInclude Include="SoundQueue.h">
+    <ClInclude Include="NullSoundSystem.h">
       <Filter>Sound Systems</Filter>
     </ClInclude>
   </ItemGroup>
@@ -236,10 +236,10 @@
     <ClCompile Include="MuteSoundSystem.cpp">
       <Filter>Sound Systems</Filter>
     </ClCompile>
-    <ClCompile Include="SoundQueue.cpp">
+    <ClCompile Include="ServiceLocator.cpp">
       <Filter>Sound Systems</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceLocator.cpp">
+    <ClCompile Include="NullSoundSystem.cpp">
       <Filter>Sound Systems</Filter>
     </ClCompile>
   </ItemGroup>

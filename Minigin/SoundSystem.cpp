@@ -5,40 +5,94 @@ namespace dae
 #include "audio.c"
 }
 
-SoundSystem::SoundSystem()
+dae::SoundSystem::SoundSystem()
 	: m_Volume{ 100 }
 {
-	dae::initAudio();
+	initAudio();
+	m_SoundThread = std::thread([this]() { this->Update(); });
 }
 
-SoundSystem::~SoundSystem()
+dae::SoundSystem::~SoundSystem()
 {
-	dae::endAudio();
+	m_ClosingGame = true;
+	m_ConditionVariable.notify_one();
+	endAudio();
+	m_SoundThread.join();
 }
 
-void SoundSystem::PlaySound(const std::string& soundName)
+void dae::SoundSystem::Update()
 {
-	dae::playSound(soundName.c_str(), m_Volume);
+	do
+	{		
+		std::unique_lock<std::mutex> mLock{ m_Mutex };
+		if (m_ClosingGame)
+		{
+			break;
+		}
+		
+		if (!m_AudioQueue.empty())
+		{
+			auto audio = m_AudioQueue.front();
+			m_AudioQueue.pop();
+
+			switch (audio.AudioType)
+			{
+			case AudioType::Effect:
+				playSound(audio.FileName.c_str(), m_Volume);
+				break;
+			case AudioType::Music:
+				playMusic(audio.FileName.c_str(), m_Volume);
+				break;
+			default:
+				std::cout << "Sound was not an effect or music." << std::endl;
+				break;
+			}
+		}
+
+		if (m_AudioQueue.empty())
+			m_ConditionVariable.wait(mLock);
+		
+	} while (!m_AudioQueue.empty());
 }
 
-void SoundSystem::PlayMusic(const std::string& musicName)
+void dae::SoundSystem::PlaySound(const std::string& soundName)
 {
-	dae::playMusic(musicName.c_str(), m_Volume);
+	AudioData audioData;
+	audioData.FileName = soundName;
+	audioData.AudioType = AudioType::Effect;
+	std::lock_guard<std::mutex> mLock{ m_Mutex };
+	m_AudioQueue.push(audioData);
+	m_ConditionVariable.notify_one();
 }
 
-void SoundSystem::PauseSound()
+void dae::SoundSystem::PlayMusic(const std::string& musicName)
 {
-	dae::pauseAudio();
+	AudioData audioData;
+	audioData.FileName = musicName;
+	audioData.AudioType = AudioType::Music;
+	std::lock_guard<std::mutex> mLock{ m_Mutex };
+	m_AudioQueue.push(audioData);
+	m_ConditionVariable.notify_one();
 }
 
-void SoundSystem::IncreaseVolume()
+void dae::SoundSystem::PauseSound()
+{
+	pauseAudio();
+}
+
+void dae::SoundSystem::UnpauseSound()
+{
+	unpauseAudio();
+}
+
+void dae::SoundSystem::IncreaseVolume()
 {
 	m_Volume += 5;
 	if (m_Volume > 100)
 		m_Volume = 100;
 }
 
-void SoundSystem::DecreaseVolume()
+void dae::SoundSystem::DecreaseVolume()
 {
 	m_Volume -= 5;
 	if (m_Volume < 0)

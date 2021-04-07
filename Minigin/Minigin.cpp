@@ -21,7 +21,6 @@
 #include "ScoreComponent.h"
 #include "SoundSystem.h"
 #include "ServiceLocator.h"
-#include "SoundQueue.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -94,11 +93,13 @@ void dae::Minigin::LoadGame() const
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 
-	InitPlayers(scene, font);
+	InitPlayers(scene);
 }
 
-void dae::Minigin::InitPlayers(Scene& scene, const shared_ptr<Font> font) const
+void dae::Minigin::InitPlayers(Scene& scene) const
 {
+	const auto hudFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	
 	//Player 1
 	auto pPlayer1Observer = std::make_shared<dae::PlayerObserver>();
 	
@@ -123,43 +124,43 @@ void dae::Minigin::InitPlayers(Scene& scene, const shared_ptr<Font> font) const
 	//Title
 	auto player1HUDTitle = std::make_shared<GameObject>();
 	std::string player1HUDTitleString = "Player 1";
-	auto* pPlayer1HUDTitleText = new TextComponent(player1HUDTitleString, font);
+	auto* pPlayer1HUDTitleText = new TextComponent(player1HUDTitleString, hudFont);
 	auto* pPlayer1HUDTitleRender = new RenderComponent();
 	player1HUDTitle->AddComponent(pPlayer1HUDTitleText);
 	player1HUDTitle->AddComponent(pPlayer1HUDTitleRender);
-	player1HUDTitle->SetPosition(10, 50);
+	player1HUDTitle->SetPosition(10, 60);
 	scene.Add(player1HUDTitle);
 	
 	//Health
 	auto player1Health = std::make_shared<GameObject>();
 	std::string player1HealthString = "Health: " + std::to_string(pQBertHealthComponent->GetHealth()) + "/" + std::to_string(pQBertHealthComponent->GetMaxHealth());
-	auto* pPlayer1HealthText = new TextComponent(player1HealthString, font);
+	auto* pPlayer1HealthText = new TextComponent(player1HealthString, hudFont);
 	auto* pPlayer1HealthRender = new RenderComponent();
 	player1Health->AddComponent(pPlayer1HealthText);
 	player1Health->AddComponent(pPlayer1HealthRender);
-	player1Health->SetPosition(10, 80);
+	player1Health->SetPosition(10, 90);
 	scene.Add(player1Health);
 	pPlayer1Observer->SetHealthObject(player1Health);
 	
 	//Lives remaining
 	auto player1Lives = std::make_shared<GameObject>();
 	const std::string player1LivesString = "Remaining lives: " + std::to_string(pQBertHealthComponent->GetLivesRemaining());
-	auto* pPlayer1LivesText = new TextComponent(player1LivesString, font);
+	auto* pPlayer1LivesText = new TextComponent(player1LivesString, hudFont);
 	auto* pPlayer1LivesRender = new RenderComponent();
 	player1Lives->AddComponent(pPlayer1LivesText);
 	player1Lives->AddComponent(pPlayer1LivesRender);
-	player1Lives->SetPosition(10, 110);
+	player1Lives->SetPosition(10, 120);
 	scene.Add(player1Lives);
 	pPlayer1Observer->SetLivesObject(player1Lives);
 	
 	//Score
 	auto player1Score = std::make_shared<GameObject>();
 	const std::string player1ScoreString = "Score: " + std::to_string(pQBertScoreComponent->GetScore());
-	auto* pPlayer1ScoreText = new TextComponent(player1ScoreString, font);
+	auto* pPlayer1ScoreText = new TextComponent(player1ScoreString, hudFont);
 	auto* pPlayer1ScoreRender = new RenderComponent();
 	player1Score->AddComponent(pPlayer1ScoreText);
 	player1Score->AddComponent(pPlayer1ScoreRender);
-	player1Score->SetPosition(10, 140);
+	player1Score->SetPosition(10, 150);
 	scene.Add(player1Score);
 	pPlayer1Observer->SetScorebject(player1Score);
 
@@ -187,43 +188,43 @@ void dae::Minigin::InitPlayers(Scene& scene, const shared_ptr<Font> font) const
 	//Title
 	auto player2HUDTitle = std::make_shared<GameObject>();
 	std::string player2HUDTitleString = "Player 2";
-	auto* pPlayer2HUDTitleText = new TextComponent(player2HUDTitleString, font);
+	auto* pPlayer2HUDTitleText = new TextComponent(player2HUDTitleString, hudFont);
 	auto* pPlayer2HUDTitleRender = new RenderComponent();
 	player2HUDTitle->AddComponent(pPlayer2HUDTitleText);
 	player2HUDTitle->AddComponent(pPlayer2HUDTitleRender);
-	player2HUDTitle->SetPosition(400, 50);
+	player2HUDTitle->SetPosition(400, 60);
 	scene.Add(player2HUDTitle);
 
 	//Health
 	auto player2Health = std::make_shared<GameObject>();
 	std::string player2HealthString = "Health: " + std::to_string(pEvilQBertHealthComponent->GetHealth()) + "/" + std::to_string(pEvilQBertHealthComponent->GetMaxHealth());
-	auto* pPlayer2HealthText = new TextComponent(player2HealthString, font);
+	auto* pPlayer2HealthText = new TextComponent(player2HealthString, hudFont);
 	auto* pPlayer2HealthRender = new RenderComponent();
 	player2Health->AddComponent(pPlayer2HealthText);
 	player2Health->AddComponent(pPlayer2HealthRender);
-	player2Health->SetPosition(400, 80);
+	player2Health->SetPosition(400, 90);
 	scene.Add(player2Health);
 	pPlayer2Observer->SetHealthObject(player2Health);
 	
 	//Lives remaining
 	auto player2Lives = std::make_shared<GameObject>();
 	const std::string player2LivesString = "Remaining lives: " + std::to_string(pEvilQBertHealthComponent->GetLivesRemaining());
-	auto* pPlayer2LivesText = new TextComponent(player2LivesString, font);
+	auto* pPlayer2LivesText = new TextComponent(player2LivesString, hudFont);
 	auto* pPlayer2LivesRender = new RenderComponent();
 	player2Lives->AddComponent(pPlayer2LivesText);
 	player2Lives->AddComponent(pPlayer2LivesRender);
-	player2Lives->SetPosition(400, 110);
+	player2Lives->SetPosition(400, 120);
 	scene.Add(player2Lives);
 	pPlayer2Observer->SetLivesObject(player2Lives);
 
 	//Score
 	auto player2Score = std::make_shared<GameObject>();
 	const std::string player2ScoreString = "Score: " + std::to_string(pEvilQBertScoreComponent->GetScore());
-	auto* pPlayer2ScoreText = new TextComponent(player2ScoreString, font);
+	auto* pPlayer2ScoreText = new TextComponent(player2ScoreString, hudFont);
 	auto* pPlayer2ScoreRender = new RenderComponent();
 	player2Score->AddComponent(pPlayer2ScoreText);
 	player2Score->AddComponent(pPlayer2ScoreRender);
-	player2Score->SetPosition(400, 140);
+	player2Score->SetPosition(400, 150);
 	scene.Add(player2Score);
 	pPlayer2Observer->SetScorebject(player2Score);
 	
@@ -249,7 +250,6 @@ void dae::Minigin::InitPlayers(Scene& scene, const shared_ptr<Font> font) const
 void dae::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
-	SoundQueue::GetInstance().StopRunning();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	SDL_Quit();
@@ -274,10 +274,7 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
-		auto& soundQueue = SoundQueue::GetInstance();
-
-		std::thread soundThread(std::bind(&SoundQueue::ProcessQueue, &soundQueue));
-		soundThread.detach();
+		ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
 		
 		bool doContinue = true;
 		while (doContinue)
@@ -287,7 +284,8 @@ void dae::Minigin::Run()
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
 			sceneManager.RemoveDeadObjects();
-
+			
+			
 			renderer.Render();
 			
 			auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
