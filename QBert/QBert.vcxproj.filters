@@ -41,5 +41,8 @@
     <ClInclude Include="..\Minigin\ScoreComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="GameCommands.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
