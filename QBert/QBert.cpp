@@ -27,9 +27,10 @@
 void LoadGame();
 void InitPlayers(dae::Scene& scene);
 
-int main()
+int main(int, char* [])
 {
 	dae::Minigin engine;
+	engine.Initialize();
 	LoadGame();
 	engine.Run();
 	return 0;
@@ -40,6 +41,8 @@ int main()
  */
 void LoadGame()
 {
+	// tell the resource manager where he can find the game data
+	dae::ResourceManager::GetInstance().Init("../Data/");
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SoundSystem>());
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
 

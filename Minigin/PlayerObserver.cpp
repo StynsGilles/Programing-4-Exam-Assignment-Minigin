@@ -1,9 +1,9 @@
-#include <MiniginPCH.h>
+#include "MiniginPCH.h"
 #include "PlayerObserver.h"
-#include <GameObject.h>
+#include "GameObject.h"
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
-#include <TextComponent.h>
+#include "TextComponent.h"
 
 dae::PlayerObserver::PlayerObserver()
 	: Observer()

@@ -49,39 +49,33 @@ void dae::Minigin::Cleanup()
 
 void dae::Minigin::Run()
 {
-	Initialize();
+	//explain how to play the game
+	std::cout << "Welcome to QBert! " << std::endl;
+	std::cout << "This game can be played with 2 players and the controls are as follows:" << std::endl;
+	std::cout << "A: make your QBert lose a life, B: Make your QBert lose 1 hit point, X: Score some points" << std::endl;
+	std::cout << "Player 1 can also use respectively 1, 2 and 3 on the keyboard to do the same thing." << std::endl;
 
-	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
+	auto& renderer = Renderer::GetInstance();
+	auto& sceneManager = SceneManager::GetInstance();
+	auto& input = InputManager::GetInstance();
+	auto& time = GameTime::GetInstance();
+	ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
 
+	bool doContinue = true;
+	while (doContinue)
 	{
-		//explain how to play the game
-		std::cout << "Welcome to QBert! " << std::endl;
-		std::cout << "This game can be played with 2 players and the controls are as follows:" << std::endl;
-		std::cout << "A: make your QBert lose a life, B: Make your QBert lose 1 hit point, X: Score some points" << std::endl;
-		std::cout << "Player 1 can also use respectively 1, 2 and 3 on the keyboard to do the same thing." << std::endl;
+		time.Update();
 
-		auto& renderer = Renderer::GetInstance();
-		auto& sceneManager = SceneManager::GetInstance();
-		auto& input = InputManager::GetInstance();
-		auto& time = GameTime::GetInstance();
-		ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
-
-		bool doContinue = true;
-		while (doContinue)
-		{
-			time.Update();
-
-			doContinue = input.ProcessInput();
-			sceneManager.Update();
-			sceneManager.RemoveDeadObjects();
+		doContinue = input.ProcessInput();
+		sceneManager.Update();
+		sceneManager.RemoveDeadObjects();
 
 
-			renderer.Render();
+		renderer.Render();
 
-			auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
-			this_thread::sleep_for(sleepTime);
-		}
+		auto sleepTime = duration_cast<duration<float>>(time.GetPreviousTime() + milliseconds(int(time.GetMsPerFrame())) - high_resolution_clock::now());
+		this_thread::sleep_for(sleepTime);
 	}
+
 	Cleanup();
 }
