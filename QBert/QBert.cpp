@@ -21,7 +21,6 @@
 #include <TextComponent.h>
 #include <ServiceLocator.h>
 #include <SoundSystem.h>
-#include "../3rdParty/SDL2/include/SDL_pixels.h"
 #include <Scene.h>
 #include "GameCommands.h"
 

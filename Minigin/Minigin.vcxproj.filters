@@ -111,9 +111,6 @@
     <ClInclude Include="SubjectComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerObserver.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
     <ClInclude Include="ISoundSystem.h">
       <Filter>Sound Systems</Filter>
     </ClInclude>
@@ -205,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="SubjectComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerObserver.cpp">
-      <Filter>Observers</Filter>
     </ClCompile>
     <ClCompile Include="SoundSystem.cpp">
       <Filter>Sound Systems</Filter>
