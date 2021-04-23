@@ -1,7 +1,6 @@
 #pragma once
 #include <condition_variable>
 #include <queue>
-
 #include "ISoundSystem.h"
 namespace dae
 {

@@ -1,8 +1,7 @@
-#include "MiniginPCH.h"
+#include <MiniginPCH.h>
 #include "HealthComponent.h"
-
-#include "GameObject.h"
-#include "SubjectComponent.h"
+#include <GameObject.h>
+#include <SubjectComponent.h>
 
 dae::HealthComponent::HealthComponent()
 	: BaseComponent()
@@ -25,7 +24,7 @@ void dae::HealthComponent::Render() const
 {
 }
 
-void dae::HealthComponent::Damage(const int& amount)
+void dae::HealthComponent::Damage(int amount)
 {
 	m_CurrentHealth -= amount;
 	if (m_CurrentHealth>m_MaxHealth)
@@ -35,7 +34,7 @@ void dae::HealthComponent::Damage(const int& amount)
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerLostHP);
 }
 
-void dae::HealthComponent::LoseLives(const int& amount)
+void dae::HealthComponent::LoseLives(int amount)
 {
 	m_LivesRemaining -= amount;
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerDied);

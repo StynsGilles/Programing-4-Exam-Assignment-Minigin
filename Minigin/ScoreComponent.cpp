@@ -1,9 +1,9 @@
-#include "MiniginPCH.h"
+#include <MiniginPCH.h>
 #include "ScoreComponent.h"
-#include "Observer.h"
-#include "SubjectComponent.h"
-#include "GameObject.h"
-#include "ServiceLocator.h"
+#include <Observer.h>
+#include <SubjectComponent.h>
+#include <GameObject.h>
+#include <ServiceLocator.h>
 
 dae::ScoreComponent::ScoreComponent()
 	: BaseComponent()

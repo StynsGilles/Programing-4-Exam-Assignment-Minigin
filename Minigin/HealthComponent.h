@@ -1,8 +1,8 @@
 #pragma once
-#include "BaseComponent.h"
+#include <BaseComponent.h>
 
 namespace dae
-{
+{	
 	class HealthComponent : public BaseComponent
     {
     public:
@@ -12,8 +12,8 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 
-        void Damage(const int& amount);
-        void LoseLives(const int& amount);
+        void Damage(int amount);
+        void LoseLives(int amount);
         int GetHealth() const;
         int GetMaxHealth() const;
         int GetLivesRemaining() const;

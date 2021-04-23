@@ -63,7 +63,7 @@
     <ClInclude Include="Minigin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="GameTime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-master\imconfig.h">
@@ -111,20 +111,11 @@
     <ClInclude Include="Observer.h">
       <Filter>Observers</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="SubjectComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerObserver.h">
       <Filter>Observers</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerIndexComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ISoundSystem.h">
       <Filter>Sound Systems</Filter>
@@ -170,13 +161,10 @@
     <ClCompile Include="Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="GameTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-master\imgui.cpp">
@@ -215,20 +203,11 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="SubjectComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerObserver.cpp">
       <Filter>Observers</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerIndexComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="SoundSystem.cpp">
       <Filter>Sound Systems</Filter>

@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
-#include "Time.h"
+#include "GameTime.h"
 
 bool dae::InputManager::ProcessInput()
 {

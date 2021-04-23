@@ -1,4 +1,4 @@
-#include "MiniginPCH.h"
+#include <MiniginPCH.h>
 #include "PlayerIndexComponent.h"
 
 dae::PlayerIndexComponent::PlayerIndexComponent(int index)

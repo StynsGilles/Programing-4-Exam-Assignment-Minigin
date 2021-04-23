@@ -1,29 +1,29 @@
 #include "MiniginPCH.h"
-#include "Time.h"
+#include "GameTime.h"
 
-void Time::Update()
+void GameTime::Update()
 {
 	const auto currentTime = std::chrono::high_resolution_clock::now();
 	m_DeltaTime = std::chrono::duration<float>(currentTime - m_PreviousTime).count();
 	m_PreviousTime = currentTime;
 }
 
-float Time::GetDeltaTime() const
+float GameTime::GetDeltaTime() const
 {
 	return m_DeltaTime;
 }
 
-std::chrono::steady_clock::time_point Time::GetPreviousTime() const
+std::chrono::steady_clock::time_point GameTime::GetPreviousTime() const
 {
 	return m_PreviousTime;
 }
 
-int Time::GetFPS() const
+int GameTime::GetFPS() const
 {
 	return int(1.f / m_DeltaTime);
 }
 
-int Time::GetMsPerFrame() const
+int GameTime::GetMsPerFrame() const
 {
 	return m_MsPerFrame;
 }
