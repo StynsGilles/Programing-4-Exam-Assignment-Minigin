@@ -1,7 +1,7 @@
 #include "MiniginPCH.h"
 #include "SubjectComponent.h"
-#include "Observer.h"
 #include "GameObject.h"
+#include "Observer.h"
 
 dae::SubjectComponent::SubjectComponent()
 	: BaseComponent()

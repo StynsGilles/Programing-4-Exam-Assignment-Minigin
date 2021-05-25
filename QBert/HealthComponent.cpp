@@ -1,7 +1,8 @@
-#include <MiniginPCH.h>
+#include "pch.h"
 #include "HealthComponent.h"
 #include <GameObject.h>
 #include <SubjectComponent.h>
+#include <Observer.h>
 
 dae::HealthComponent::HealthComponent()
 	: BaseComponent()

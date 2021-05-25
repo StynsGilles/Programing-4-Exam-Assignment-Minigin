@@ -44,10 +44,10 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 
 void dae::SceneManager::PreviousScene()
 {
-	size_t indexCurScene = -1;
+	int indexCurScene = -1;
 	if (std::shared_ptr<Scene> pSharedActiveScene = m_ActiveScene.lock())
 	{
-		for (size_t idx; idx < m_Scenes.size(); ++idx)
+		for (size_t idx = 0; idx < m_Scenes.size(); ++idx)
 		{
 			if (pSharedActiveScene == m_Scenes[idx])
 			{
@@ -56,9 +56,9 @@ void dae::SceneManager::PreviousScene()
 		}
 	}
 
-	size_t indexPrevScene = indexCurScene - 1;
+	const int indexPrevScene = indexCurScene - 1;
 	
-	if (0 <= indexPrevScene && indexPrevScene < m_Scenes.size())
+	if (0 <= indexPrevScene && indexPrevScene < (int)m_Scenes.size())
 	{
 		m_ActiveScene = m_Scenes[indexPrevScene];
 	}
@@ -66,10 +66,10 @@ void dae::SceneManager::PreviousScene()
 
 void dae::SceneManager::NextScene()
 {
-	size_t indexCurScene = -1;
+	int indexCurScene = -1;
 	if (std::shared_ptr<Scene> pSharedActiveScene = m_ActiveScene.lock())
 	{
-		for (size_t idx; idx < m_Scenes.size(); ++idx)
+		for (size_t idx = 0; idx < m_Scenes.size(); ++idx)
 		{
 			if (pSharedActiveScene == m_Scenes[idx])
 			{
@@ -78,9 +78,9 @@ void dae::SceneManager::NextScene()
 		}
 	}
 
-	size_t indexPrevScene = indexCurScene + 1;
+	const int indexPrevScene = indexCurScene + 1;
 
-	if (0 <= indexPrevScene && indexPrevScene < m_Scenes.size())
+	if (0 <= indexPrevScene && indexPrevScene < (int)m_Scenes.size())
 	{
 		m_ActiveScene = m_Scenes[indexPrevScene];
 	}

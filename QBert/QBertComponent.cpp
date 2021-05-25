@@ -1,7 +1,6 @@
+#include "pch.h"
 #include "QBertComponent.h"
-
 #include <SDL_render.h>
-
 #include "GameObject.h"
 
 dae::QBertComponent::QBertComponent()

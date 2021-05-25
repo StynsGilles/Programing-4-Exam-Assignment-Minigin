@@ -1,4 +1,4 @@
-#include <MiniginPCH.h>
+#include "pch.h"
 #include "ScoreComponent.h"
 #include <Observer.h>
 #include <SubjectComponent.h>

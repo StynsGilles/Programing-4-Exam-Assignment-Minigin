@@ -91,8 +91,8 @@
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\imgui-master;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_Audio;$(SolutionDir)3rdParty\glm;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,8 +117,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\imgui-master;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_Audio;$(SolutionDir)3rdParty\glm;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,8 +145,8 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\imgui-master;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_Audio;$(SolutionDir)3rdParty\glm;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,8 +171,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\imgui-master;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_Audio;$(SolutionDir)3rdParty\glm;$(SolutionDir)Minigin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeaderFile>MiniginPCH.h</PrecompiledHeaderFile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -191,22 +191,31 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Minigin\HealthComponent.cpp" />
-    <ClCompile Include="..\Minigin\PlayerIndexComponent.cpp" />
-    <ClCompile Include="..\Minigin\PlayerObserver.cpp" />
-    <ClCompile Include="..\Minigin\ScoreComponent.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
+    <ClCompile Include="LivesComponent.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PlayerIndexComponent.cpp" />
+    <ClCompile Include="PlayerObserver.cpp" />
     <ClCompile Include="QBert.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
+    <ClCompile Include="ScoreComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\HealthComponent.h" />
-    <ClInclude Include="..\Minigin\PlayerIndexComponent.h" />
-    <ClInclude Include="..\Minigin\PlayerObserver.h" />
-    <ClInclude Include="..\Minigin\ScoreComponent.h" />
     <ClInclude Include="GameCommands.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="LivesComponent.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerIndexComponent.h" />
+    <ClInclude Include="PlayerObserver.h" />
     <ClInclude Include="QBertComponent.h" />
+    <ClInclude Include="ScoreComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-#include <MiniginPCH.h>
+#include "pch.h"
 #include "PlayerObserver.h"
 #include <GameObject.h>
 #include "HealthComponent.h"

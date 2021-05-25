@@ -1,10 +1,12 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Observer.h"
 
 namespace dae
 {
-    class SubjectComponent final : public BaseComponent
+	enum class Event;
+	class Observer;
+
+	class SubjectComponent final : public BaseComponent
     {
     public:
         SubjectComponent();

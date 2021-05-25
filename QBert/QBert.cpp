@@ -1,4 +1,4 @@
-#include <MiniginPCH.h>
+#include "pch.h"
 #if _DEBUG
 // ReSharper disable once CppUnusedIncludeDirective
 #include <vld.h>
@@ -10,13 +10,12 @@
 #include <SceneManager.h>
 #include <RenderComponent.h>
 #include <ResourceManager.h>
-#include <string>
 #include <FPSComponent.h>
-#include <HealthComponent.h>
+#include "HealthComponent.h"
 #include <InputManager.h>
-#include <PlayerIndexComponent.h>
-#include <PlayerObserver.h>
-#include <ScoreComponent.h>
+#include "PlayerIndexComponent.h"
+#include "PlayerObserver.h"
+#include "ScoreComponent.h"
 #include <SubjectComponent.h>
 #include <TextComponent.h>
 #include <ServiceLocator.h>

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "LevelComponent.h"
 #include <iostream>
 #include <SDL_rect.h>
