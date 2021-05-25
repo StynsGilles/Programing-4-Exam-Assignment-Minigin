@@ -31,12 +31,14 @@ void dae::Minigin::Initialize()
 		480,
 		SDL_WINDOW_OPENGL
 	);
+	
 	if (m_Window == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+	dae::ResourceManager::GetInstance().Init("../Data/");
 }
 
 void dae::Minigin::Cleanup()
@@ -59,7 +61,7 @@ void dae::Minigin::Run()
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 	auto& time = GameTime::GetInstance();
-	ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
+	//ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
 
 	bool doContinue = true;
 	while (doContinue)
