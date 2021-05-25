@@ -35,6 +35,9 @@
     <ClCompile Include="..\Minigin\PlayerObserver.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\HealthComponent.h">
@@ -51,6 +54,9 @@
     </ClInclude>
     <ClInclude Include="..\Minigin\PlayerObserver.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

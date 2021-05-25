@@ -218,9 +218,9 @@ void InitPlayers(dae::Scene& scene)
 	//Adding input
 	auto& input = dae::InputManager::GetInstance();
 
-	const dae::ActionInfo killQbertAction{dae::ControllerButton::ButtonA, SDL_SCANCODE_1, dae::InputState::Up };
-	const dae::ActionInfo damageQbertAction{dae::ControllerButton::ButtonB, SDL_SCANCODE_2, dae::InputState::Up };
-	const dae::ActionInfo awardScoreAction{dae::ControllerButton::ButtonX, SDL_SCANCODE_3, dae::InputState::Up };
+	const dae::ActionInfo killQbertAction{ dae::ControllerButton::ButtonA, SDL_SCANCODE_1, dae::InputState::Up };
+	const dae::ActionInfo damageQbertAction{ dae::ControllerButton::ButtonB, SDL_SCANCODE_2, dae::InputState::Up };
+	const dae::ActionInfo awardScoreAction{ dae::ControllerButton::ButtonX, SDL_SCANCODE_3, dae::InputState::Up };
 
 	//Player 1
 	input.AddInput(0, killQbertAction, new Kill(qBert));

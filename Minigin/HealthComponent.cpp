@@ -27,7 +27,7 @@ void dae::HealthComponent::Render() const
 void dae::HealthComponent::Damage(int amount)
 {
 	m_CurrentHealth -= amount;
-	if (m_CurrentHealth>m_MaxHealth)
+	if (m_CurrentHealth > m_MaxHealth)
 		m_CurrentHealth = m_MaxHealth;
 	if (m_CurrentHealth <= 0)
 		LoseLives(1);
