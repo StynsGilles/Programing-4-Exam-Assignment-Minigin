@@ -116,7 +116,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 	
 	if (0 > newRow || newRow >= m_PyramidSize ||
 		0 > newCol || newCol >= m_PyramidSize)
-		return nullptr;
+		return GetTopCube();
 
 	if (m_Pyramid[newRow][newCol])
 	{
@@ -124,7 +124,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 		return m_Pyramid[newRow][newCol];
 	}
 	
-	return nullptr;
+	return GetTopCube();
 }
 
 void dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)

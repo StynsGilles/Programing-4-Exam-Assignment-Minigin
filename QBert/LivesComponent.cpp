@@ -28,7 +28,6 @@ void dae::LivesComponent::LoseLives(int amount)
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerDied);
 	if (m_LivesRemaining <= 0)
 	{
-		m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerLostHP);
 		m_pObject->Delete();
 	}
 }
