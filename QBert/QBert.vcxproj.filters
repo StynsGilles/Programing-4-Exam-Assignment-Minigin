@@ -20,9 +20,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="QBert.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Minigin\HealthComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -37,6 +34,12 @@
     </ClCompile>
     <ClCompile Include="LevelComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="QBertComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="QBert.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +59,9 @@
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="LevelComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

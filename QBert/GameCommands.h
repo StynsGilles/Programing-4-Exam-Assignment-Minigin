@@ -4,6 +4,8 @@
 #include <GameObject.h>
 #include "HealthComponent.h"
 #include "ScoreComponent.h"
+#include "QBertComponent.h"
+#include "LevelComponent.h"
 
 class Fire final : public Command
 {
@@ -109,4 +111,156 @@ public:
     Score& operator=(Score&& other) = delete;
 private:
     std::weak_ptr<dae::GameObject> pObjectToAwardTo;
+};
+
+class NorthEast final : public Command
+{
+public:
+    NorthEast(std::weak_ptr<dae::GameObject> pQbert, std::weak_ptr<dae::GameObject> pLevel)
+		: Command()
+		, m_pQbert(pQbert)
+		, m_pLevel(pLevel)
+    {}
+	
+    void Execute() override
+    {
+        //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        {
+	        if (std::shared_ptr<dae::GameObject> pSharedLevel = m_pLevel.lock())
+	        {
+                auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
+                auto* pLevelComp = pSharedLevel->GetComponent <dae::LevelComponent>();
+
+                auto* pCurrentCube = pQBertComp->GetCurrentCube();
+
+                auto* pNextCube= pLevelComp->GetNextCube(pCurrentCube, -1, 0);
+
+                if (pNextCube)
+                    pQBertComp->ChangeCube(pNextCube);
+	        }
+        }
+    };
+
+    NorthEast(const NorthEast& other) = delete;
+    NorthEast(NorthEast&& other) = delete;
+    NorthEast& operator=(const NorthEast& other) = delete;
+    NorthEast& operator=(NorthEast&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> m_pQbert;
+    std::weak_ptr<dae::GameObject> m_pLevel;
+};
+
+class SouthEast final : public Command
+{
+public:
+    SouthEast(std::weak_ptr<dae::GameObject> pQbert, std::weak_ptr<dae::GameObject> pLevel)
+        : Command()
+        , m_pQbert(pQbert)
+        , m_pLevel(pLevel)
+    {}
+
+    void Execute() override
+    {
+        //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        {
+            if (std::shared_ptr<dae::GameObject> pSharedLevel = m_pLevel.lock())
+            {
+                auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
+                auto* pLevelComp = pSharedLevel->GetComponent <dae::LevelComponent>();
+
+                auto* pCurrentCube = pQBertComp->GetCurrentCube();
+
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 1);
+
+                if (pNextCube)
+                    pQBertComp->ChangeCube(pNextCube);
+            }
+        }
+    };
+
+    SouthEast(const SouthEast& other) = delete;
+    SouthEast(SouthEast&& other) = delete;
+    SouthEast& operator=(const SouthEast& other) = delete;
+    SouthEast& operator=(SouthEast&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> m_pQbert;
+    std::weak_ptr<dae::GameObject> m_pLevel;
+};
+
+class NorthWest final : public Command
+{
+public:
+    NorthWest(std::weak_ptr<dae::GameObject> pQbert, std::weak_ptr<dae::GameObject> pLevel)
+        : Command()
+        , m_pQbert(pQbert)
+        , m_pLevel(pLevel)
+    {}
+
+    void Execute() override
+    {
+        //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        {
+            if (std::shared_ptr<dae::GameObject> pSharedLevel = m_pLevel.lock())
+            {
+                auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
+                auto* pLevelComp = pSharedLevel->GetComponent <dae::LevelComponent>();
+
+                auto* pCurrentCube = pQBertComp->GetCurrentCube();
+
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, -1);
+
+                if (pNextCube)
+                    pQBertComp->ChangeCube(pNextCube);
+            }
+        }
+    };
+
+    NorthWest(const NorthWest& other) = delete;
+    NorthWest(NorthWest&& other) = delete;
+    NorthWest& operator=(const NorthWest& other) = delete;
+    NorthWest& operator=(NorthWest&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> m_pQbert;
+    std::weak_ptr<dae::GameObject> m_pLevel;
+};
+
+class SouthWest final : public Command
+{
+public:
+    SouthWest(std::weak_ptr<dae::GameObject> pQbert, std::weak_ptr<dae::GameObject> pLevel)
+        : Command()
+        , m_pQbert(pQbert)
+        , m_pLevel(pLevel)
+    {}
+
+    void Execute() override
+    {
+        //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
+        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        {
+            if (std::shared_ptr<dae::GameObject> pSharedLevel = m_pLevel.lock())
+            {
+                auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
+                auto* pLevelComp = pSharedLevel->GetComponent <dae::LevelComponent>();
+
+                auto* pCurrentCube = pQBertComp->GetCurrentCube();
+
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 0);
+
+                if (pNextCube)
+                    pQBertComp->ChangeCube(pNextCube);
+            }
+        }
+    };
+
+    SouthWest(const SouthWest& other) = delete;
+    SouthWest(SouthWest&& other) = delete;
+    SouthWest& operator=(const SouthWest& other) = delete;
+    SouthWest& operator=(SouthWest&& other) = delete;
+private:
+    std::weak_ptr<dae::GameObject> m_pQbert;
+    std::weak_ptr<dae::GameObject> m_pLevel;
 };

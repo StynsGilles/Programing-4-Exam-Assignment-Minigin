@@ -1,6 +1,7 @@
 #pragma once
 #include "Transform.h"
 #include "BaseComponent.h"
+#include <vector>
 
 namespace dae
 {

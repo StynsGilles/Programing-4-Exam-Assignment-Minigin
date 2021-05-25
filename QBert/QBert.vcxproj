@@ -197,6 +197,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="..\Minigin\ScoreComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="QBert.cpp" />
+    <ClCompile Include="QBertComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\HealthComponent.h" />
@@ -205,6 +206,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="..\Minigin\ScoreComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="LevelComponent.h" />
+    <ClInclude Include="QBertComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
