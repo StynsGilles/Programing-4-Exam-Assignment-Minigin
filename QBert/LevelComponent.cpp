@@ -1,9 +1,7 @@
 #include "LevelComponent.h"
-
+#include <iostream>
 #include <SDL_rect.h>
 #include <SDL_render.h>
-
-
 #include "Renderer.h"
 #include "ResourceManager.h"
 
@@ -95,7 +93,7 @@ int dae::LevelComponent::GetPyramidSize() const
 	return m_PyramidSize;
 }
 
-dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange) const
+dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange)
 {
 	int currentRow = -1;
 	int currentCol = -1;
@@ -120,7 +118,52 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 		return nullptr;
 
 	if (m_Pyramid[newRow][newCol])
+	{
+		UpdateCubeColor(m_Pyramid[newRow][newCol]);
 		return m_Pyramid[newRow][newCol];
+	}
 	
 	return nullptr;
+}
+
+void dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
+{
+	if (m_pCube->reversible)
+	{
+		switch (m_pCube->stage)
+		{
+		case 0:
+			m_pCube->stage++;
+			break;
+		case 1:
+			m_pCube->stage--;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		if ((size_t)m_pCube->stage + 1 < m_pCube->pCubeTextures.size())
+			m_pCube->stage++;
+	}
+	CheckLevelFinished();
+}
+
+void dae::LevelComponent::CheckLevelFinished()
+{
+	bool levelFinished = true;
+	for (int row = 0; row < m_PyramidSize; ++row)
+	{
+		for (int col = 0; col <= row; ++col)
+		{
+			if ((size_t)m_Pyramid[row][col]->stage + 1 != m_Pyramid[row][col]->pCubeTextures.size())
+				levelFinished = false;
+		}
+	}
+	m_LevelFinished = levelFinished;
+	if (m_LevelFinished)
+	{
+		std::cout << "Congratulations!" << std::endl;
+	}
 }

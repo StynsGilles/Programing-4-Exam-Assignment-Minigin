@@ -24,27 +24,7 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube)
 {
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
-	{
-		if (m_pCurrentCube->reversible)
-		{
-			switch (m_pCurrentCube->stage)
-			{
-			case 0:
-				m_pCurrentCube->stage++;
-				break;
-			case 1:
-				m_pCurrentCube->stage--;
-				break;
-			default:
-				break;
-			}
-		}
-		else
-		{
-			if ((size_t)m_pCurrentCube->stage + 1 < m_pCurrentCube->pCubeTextures.size())
-				m_pCurrentCube->stage++;
-		}
-		
+	{		
 		SDL_Rect dst;
 		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 

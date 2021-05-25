@@ -39,3 +39,8 @@ void Scene::RemoveDeadObjects()
 		m_Objects.end());
 }
 
+std::string Scene::GetName() const
+{
+	return m_Name;
+}
+
