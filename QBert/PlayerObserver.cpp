@@ -2,6 +2,7 @@
 #include "PlayerObserver.h"
 #include <GameObject.h>
 #include "HealthComponent.h"
+#include "LivesComponent.h"
 #include "ScoreComponent.h"
 #include <TextComponent.h>
 
@@ -47,12 +48,12 @@ void dae::PlayerObserver::UpdateHealthText(GameObject* pEntity)
 void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 {
 	std::cout << "PlayerDied" << std::endl;
-	auto* livesRemainingText = m_LivesObject->GetComponent<TextComponent>();
-	auto* healthLivesComp = pEntity->GetComponent<HealthComponent>();
-	if (livesRemainingText && healthLivesComp)
+	auto* pLivesRemainingText = m_LivesObject->GetComponent<TextComponent>();
+	auto* pLivesComp = pEntity->GetComponent<LivesComponent>();
+	if (pLivesRemainingText && pLivesComp)
 	{
-		const std::string livesString = "Remaining lives: " + std::to_string(healthLivesComp->GetLivesRemaining());
-		livesRemainingText->SetText(livesString);
+		const std::string livesString = "Remaining lives: " + std::to_string(pLivesComp->GetLivesRemaining());
+		pLivesRemainingText->SetText(livesString);
 	}
 }
 

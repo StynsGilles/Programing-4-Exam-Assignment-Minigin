@@ -58,7 +58,6 @@
     <ClInclude Include="QBertComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
     <ClInclude Include="LivesComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -73,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="PlayerObserver.h">
       <Filter>Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

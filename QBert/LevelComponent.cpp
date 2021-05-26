@@ -78,8 +78,6 @@ void dae::LevelComponent::Render() const
 			default:
 				break;
 			}
-			
-
 		}
 	}
 }
@@ -94,7 +92,8 @@ int dae::LevelComponent::GetPyramidSize() const
 	return m_PyramidSize;
 }
 
-dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange)
+dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange, 
+	bool& fellOfPyramid, bool& positiveChange)
 {
 	int currentRow = -1;
 	int currentCol = -1;
@@ -116,18 +115,22 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 	
 	if (0 > newRow || newRow >= m_PyramidSize ||
 		0 > newCol || newCol >= m_PyramidSize)
+	{
+		fellOfPyramid = true;
 		return GetTopCube();
+	}
 
 	if (m_Pyramid[newRow][newCol])
 	{
-		UpdateCubeColor(m_Pyramid[newRow][newCol]);
+		positiveChange = UpdateCubeColor(m_Pyramid[newRow][newCol]);
 		return m_Pyramid[newRow][newCol];
 	}
 	
+	fellOfPyramid = true;
 	return GetTopCube();
 }
 
-void dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
+bool dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
 {
 	if (m_pCube->reversible)
 	{
@@ -135,20 +138,22 @@ void dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
 		{
 		case 0:
 			m_pCube->stage++;
-			break;
+			CheckLevelFinished();
+			return true;
 		case 1:
 			m_pCube->stage--;
-			break;
+			return false;
 		default:
-			break;
+			return false;
 		}
 	}
-	else
+	else if ((size_t)m_pCube->stage + 1 < m_pCube->pCubeTextures.size())
 	{
-		if ((size_t)m_pCube->stage + 1 < m_pCube->pCubeTextures.size())
-			m_pCube->stage++;
+		CheckLevelFinished();
+		m_pCube->stage++;
+		return true;
 	}
-	CheckLevelFinished();
+	return false;
 }
 
 void dae::LevelComponent::CheckLevelFinished()

@@ -31,7 +31,8 @@ namespace dae
 		void Render() const override;
 		LevelCube* GetTopCube() const;
 		int GetPyramidSize() const;
-		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange);
+		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange,
+			bool& fellOfPyramid, bool& positiveChange);
 
 		LevelComponent(const LevelComponent& other) = delete;
 		LevelComponent(LevelComponent&& other) = delete;
@@ -43,7 +44,7 @@ namespace dae
 		LevelCube* m_Pyramid[m_PyramidSize][m_PyramidSize];
 		bool m_LevelFinished = false;
 		
-		void UpdateCubeColor(LevelCube* m_pCube);
+		bool UpdateCubeColor(LevelCube* m_pCube);
 		void CheckLevelFinished();
 	};
 }

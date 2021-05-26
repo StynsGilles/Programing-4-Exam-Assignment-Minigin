@@ -134,10 +134,12 @@ public:
 
                 auto* pCurrentCube = pQBertComp->GetCurrentCube();
 
-                auto* pNextCube= pLevelComp->GetNextCube(pCurrentCube, -1, 0);
+                bool fellOf = false;
+                bool positiveChange = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, 0, fellOf, positiveChange);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
 	        }
         }
     };
@@ -172,10 +174,12 @@ public:
 
                 auto* pCurrentCube = pQBertComp->GetCurrentCube();
 
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 1);
+                bool fellOf = false;
+                bool positiveChange = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 1, fellOf, positiveChange);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
             }
         }
     };
@@ -210,10 +214,12 @@ public:
 
                 auto* pCurrentCube = pQBertComp->GetCurrentCube();
 
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, -1);
+                bool fellOf = false;
+                bool positiveChange = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, -1, fellOf, positiveChange);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
             }
         }
     };
@@ -248,10 +254,12 @@ public:
 
                 auto* pCurrentCube = pQBertComp->GetCurrentCube();
 
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 0);
+                bool fellOf = false;
+                bool positiveChange = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 0,fellOf, positiveChange);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
             }
         }
     };

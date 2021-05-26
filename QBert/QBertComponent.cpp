@@ -2,6 +2,8 @@
 #include "QBertComponent.h"
 #include <SDL_render.h>
 #include "GameObject.h"
+#include "LivesComponent.h"
+#include "ScoreComponent.h"
 
 dae::QBertComponent::QBertComponent()
 {
@@ -19,11 +21,17 @@ void dae::QBertComponent::Render() const
 {
 }
 
-void dae::QBertComponent::ChangeCube(LevelCube* pNewCube)
+void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange)
 {
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
-	{		
+	{
+		if (fellOf)
+			m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+
+		if (positiveChange)
+			m_pObject->GetComponent<ScoreComponent>()->AddToScore(m_ScorePerCubeChange);
+		
 		SDL_Rect dst;
 		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 

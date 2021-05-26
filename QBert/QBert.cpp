@@ -11,11 +11,7 @@
 #include <RenderComponent.h>
 #include <ResourceManager.h>
 #include <FPSComponent.h>
-#include "HealthComponent.h"
 #include <InputManager.h>
-#include "PlayerIndexComponent.h"
-#include "PlayerObserver.h"
-#include "ScoreComponent.h"
 #include <SubjectComponent.h>
 #include <TextComponent.h>
 #include <ServiceLocator.h>
@@ -23,6 +19,8 @@
 #include <Scene.h>
 #include "GameCommands.h"
 #include "LevelComponent.h"
+#include "LivesComponent.h"
+#include "PlayerObserver.h"
 #include "QBertComponent.h"
 
 void LoadGame();
@@ -79,19 +77,65 @@ void LoadGame()
 	fps->AddComponent(pFPSComponent);
 	scene.Add(fps);
 
+	//Level
 	auto pyramid = std::make_shared<dae::GameObject>();
 	auto* pLevelComponent = new dae::LevelComponent("Pink", "Yellow", true);
 	pyramid->AddComponent(pLevelComponent);
 	scene.Add(pyramid);
 
+	//Player
+	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
+	
 	auto QBert = std::make_shared<dae::GameObject>();
 	auto* pQBertComponent = new dae::QBertComponent();
 	auto* pQBertRenderComponent = new dae::RenderComponent("Qbert.png");
+	auto* pQBertLivesComponent = new dae::LivesComponent(3);
+	auto* pQBertScoreComponent = new dae::ScoreComponent();
+	auto* pQBertSubjectComponent = new dae::SubjectComponent();
 	QBert->AddComponent(pQBertComponent);
 	QBert->AddComponent(pQBertRenderComponent);
-	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube());
+	QBert->AddComponent(pQBertLivesComponent);
+	QBert->AddComponent(pQBertScoreComponent);
+	QBert->AddComponent(pQBertSubjectComponent);
+	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false);
+	pQBertSubjectComponent->AddObserver(pPlayerObserver);
 	scene.Add(QBert);
 
+	//Player HUD
+	const auto hudFont = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	
+	//Title
+	auto player1HUDTitle = std::make_shared<dae::GameObject>();
+	std::string player1HUDTitleString = "Player 1";
+	auto* pPlayer1HUDTitleText = new dae::TextComponent(player1HUDTitleString, hudFont);
+	auto* pPlayer1HUDTitleRender = new dae::RenderComponent();
+	player1HUDTitle->AddComponent(pPlayer1HUDTitleText);
+	player1HUDTitle->AddComponent(pPlayer1HUDTitleRender);
+	player1HUDTitle->SetPosition(10, 60);
+	scene.Add(player1HUDTitle);
+
+	//Lives remaining
+	auto player1Lives = std::make_shared<dae::GameObject>();
+	const std::string player1LivesString = "Remaining lives: " + std::to_string(pQBertLivesComponent->GetLivesRemaining());
+	auto* pPlayer1LivesText = new dae::TextComponent(player1LivesString, hudFont);
+	auto* pPlayer1LivesRender = new dae::RenderComponent();
+	player1Lives->AddComponent(pPlayer1LivesText);
+	player1Lives->AddComponent(pPlayer1LivesRender);
+	player1Lives->SetPosition(10, 120);
+	scene.Add(player1Lives);
+	pPlayerObserver->SetLivesObject(player1Lives);
+
+	//Score
+	auto player1Score = std::make_shared<dae::GameObject>();
+	const std::string player1ScoreString = "Score: " + std::to_string(pQBertScoreComponent->GetScore());
+	auto* pPlayer1ScoreText = new dae::TextComponent(player1ScoreString, hudFont);
+	auto* pPlayer1ScoreRender = new dae::RenderComponent();
+	player1Score->AddComponent(pPlayer1ScoreText);
+	player1Score->AddComponent(pPlayer1ScoreRender);
+	player1Score->SetPosition(10, 150);
+	scene.Add(player1Score);
+	pPlayerObserver->SetScorebject(player1Score);
+	
 	//Adding input
 	auto& input = dae::InputManager::GetInstance();
 
