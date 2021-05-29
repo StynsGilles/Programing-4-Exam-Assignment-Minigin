@@ -16,13 +16,12 @@ dae::SlickAndSamComponent::~SlickAndSamComponent()
 
 void dae::SlickAndSamComponent::Update()
 {
-	const float jumpInterval = 2.f;
 	m_JumpTimer += GameTime::GetInstance().GetDeltaTime();
 
-	if(m_JumpTimer>= jumpInterval)
+	if(m_JumpTimer>= m_JumpInterval)
 	{
 		Jump();
-		m_JumpTimer -= jumpInterval;
+		m_JumpTimer -= m_JumpInterval;
 	}
 }
 

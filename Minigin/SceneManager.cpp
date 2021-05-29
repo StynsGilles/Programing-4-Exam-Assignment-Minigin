@@ -29,6 +29,11 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 	return *scene;
 }
 
+dae::Scene& dae::SceneManager::GetCurrentScene() const
+{
+	return *m_ActiveScene.lock();
+}
+
 void dae::SceneManager::SetActiveScene(const std::string& name)
 {
 	for (auto& scene : m_Scenes)

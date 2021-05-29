@@ -18,7 +18,7 @@
 #include <SoundSystem.h>
 #include <Scene.h>
 
-#include "EnemySpawnerComponent.h"
+#include "SlickAndSamSpawnerComponent.h"
 #include "GameCommands.h"
 #include "LevelComponent.h"
 #include "LivesComponent.h"
@@ -89,18 +89,9 @@ void LoadGame()
 	//Enemies
 	//Slick and Sam spawner
 	auto SandSSpawner = std::make_shared<dae::GameObject>();
-	auto* pSandSSpawnComponent = new dae::EnemySpawnerComponent();
+	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent);
 	SandSSpawner->AddComponent(pSandSSpawnComponent);
 	scene.Add(SandSSpawner);
-
-	
-	auto Slick = std::make_shared<dae::GameObject>();
-	auto* pSlickComponent = new dae::SlickAndSamComponent(pLevelComponent);
-	auto* pSlickRenderComponent = new dae::RenderComponent("Slick.png");
-	Slick->AddComponent(pSlickComponent);
-	Slick->AddComponent(pSlickRenderComponent);
-	pSlickComponent->ChangeCube(pLevelComponent->GetCube(1, 0));
-	scene.Add(Slick);
 	
 	//Player
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();

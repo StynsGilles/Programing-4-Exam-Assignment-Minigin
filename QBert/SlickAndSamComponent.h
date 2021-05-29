@@ -26,6 +26,7 @@ namespace dae
 		LevelComponent* m_pPyramid = nullptr;
 		LevelCube* m_pCurrentCube = nullptr;
 
+		const float m_JumpInterval = 2.f;
 		float m_JumpTimer = 0.f;
 
 		void Jump();

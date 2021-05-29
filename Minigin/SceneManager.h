@@ -8,6 +8,7 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		Scene& GetCurrentScene() const;
 		void SetActiveScene(const std::string& name);
 		void PreviousScene();
 		void NextScene();

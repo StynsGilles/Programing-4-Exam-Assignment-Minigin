@@ -47,7 +47,7 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawnerComponent.cpp">
+    <ClCompile Include="SlickAndSamSpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="SlickAndSamComponent.cpp">
@@ -82,7 +82,7 @@
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawnerComponent.h">
+    <ClInclude Include="SlickAndSamSpawnerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SlickAndSamComponent.h">
