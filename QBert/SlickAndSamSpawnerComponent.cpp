@@ -6,6 +6,8 @@
 #include "LevelComponent.h"
 #include <GameObject.h>
 
+
+#include "EnemyPositionComponent.h"
 #include "GameTime.h"
 #include "Scene.h"
 
@@ -25,7 +27,7 @@ void dae::SlickAndSamSpawnerComponent::Update()
 	if (m_SpawnTimer >= m_SpawnInterval)
 	{
 		SpawnEnemy();
-		m_SpawnTimer -= m_SpawnInterval;
+		m_SpawnTimer = 0;
 	}
 }
 
@@ -36,10 +38,12 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy() const
 	auto& scene = SceneManager::GetInstance().GetCurrentScene();
 	auto Slick = std::make_shared<GameObject>();
 	auto* pSlickComponent = new SlickAndSamComponent(m_pPyramid);
+	auto* pPosComponent = new EnemyPositionComponent();
 	auto* pSlickRenderComponent = new RenderComponent("Slick.png");
 	Slick->AddComponent(pSlickComponent);
 	Slick->AddComponent(pSlickRenderComponent);
-	pSlickComponent->ChangeCube(m_pPyramid->GetCube(1, rand() % 2));
+	Slick->AddComponent(pPosComponent);
+	pPosComponent->ChangeCube(m_pPyramid->GetCube(1, rand() % 2));
 	scene.Add(Slick);
 }
 

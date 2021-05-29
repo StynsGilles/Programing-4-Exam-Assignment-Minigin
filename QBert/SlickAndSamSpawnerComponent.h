@@ -5,7 +5,7 @@ namespace dae
 {
 	class LevelComponent;
 
-	class SlickAndSamSpawnerComponent : public BaseComponent
+	class SlickAndSamSpawnerComponent final : public BaseComponent
 	{
 	public:
 		SlickAndSamSpawnerComponent(LevelComponent* pPyramid);

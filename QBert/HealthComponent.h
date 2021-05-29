@@ -3,7 +3,7 @@
 
 namespace dae
 {	
-	class HealthComponent : public BaseComponent
+	class HealthComponent final : public BaseComponent
     {
     public:
         HealthComponent();

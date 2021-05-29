@@ -18,6 +18,7 @@
 #include <SoundSystem.h>
 #include <Scene.h>
 
+#include "EnemyPositionComponent.h"
 #include "SlickAndSamSpawnerComponent.h"
 #include "GameCommands.h"
 #include "LevelComponent.h"
@@ -92,6 +93,31 @@ void LoadGame()
 	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent);
 	SandSSpawner->AddComponent(pSandSSpawnComponent);
 	scene.Add(SandSSpawner);
+	
+	//for (int idx = 0; idx < 10; ++idx)
+	//{
+	//	auto Slick = std::make_shared<dae::GameObject>();
+	//	auto* pSlickComponent = new dae::SlickAndSamComponent(pLevelComponent);
+	//	auto* pPosComponent = new dae::EnemyPositionComponent();
+	//	auto* pSlickRenderComponent = new dae::RenderComponent("Slick.png");
+	//	Slick->AddComponent(pSlickComponent);
+	//	Slick->AddComponent(pSlickRenderComponent);
+	//	Slick->AddComponent(pPosComponent);
+	//	pPosComponent->ChangeCube(pLevelComponent->GetCube(1, rand() % 2));
+	//	scene.Add(Slick);
+	//}
+
+	//Ugg + Wrong way
+	//Ugg
+	auto Ugg = std::make_shared<dae::GameObject>();
+	auto* pUggRenderComponent = new dae::RenderComponent("Ugg.png");
+	auto* pUggPosComponent = new dae::EnemyPositionComponent();
+	Ugg->AddComponent(pUggRenderComponent);
+	Ugg->AddComponent(pUggPosComponent);
+	pUggPosComponent->ChangeCube(pLevelComponent->GetCube(5, 5));
+	scene.Add(Ugg);
+
+	//Wrong way
 	
 	//Player
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();

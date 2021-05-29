@@ -53,6 +53,9 @@
     <ClCompile Include="SlickAndSamComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyPositionComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -86,6 +89,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SlickAndSamComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPositionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

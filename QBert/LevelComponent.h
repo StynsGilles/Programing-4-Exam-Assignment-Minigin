@@ -12,7 +12,7 @@ namespace dae
 		bool reversible = false;
 	};
 	
-	class LevelComponent : public BaseComponent
+	class LevelComponent final : public BaseComponent
 	{
 	public:
 		LevelComponent(const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
@@ -22,7 +22,7 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 		LevelCube* GetTopCube() const;
-		LevelCube* GetCube(int row, int col) const;
+		LevelCube* GetCube(int row = 0, int col = 0) const;
 		int GetPyramidSize() const;
 		LevelCube* GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange,
 			bool isSlickOrSam = false);

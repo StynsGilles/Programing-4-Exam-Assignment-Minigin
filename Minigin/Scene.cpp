@@ -13,12 +13,14 @@ Scene::~Scene() = default;
 void Scene::Add(const std::shared_ptr<GameObject>& object)
 {
 	m_Objects.push_back(object);
+	std::cout << "m_objects size: " << m_Objects.size() << std::endl;
 }
 
 void Scene::Update()
 {
 	for(auto& object : m_Objects)
 	{
+		std::cout << "updating object" << std::endl;
 		object->Update();
 	}
 }

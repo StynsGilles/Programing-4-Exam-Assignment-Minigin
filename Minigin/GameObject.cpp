@@ -20,9 +20,11 @@ dae::GameObject::~GameObject()
 
 void dae::GameObject::Update()
 {
+	std::cout << "number of components in this object: "<< m_pComponents.size() << std::endl;
 	for (BaseComponent* pComponent : m_pComponents)
 	{
-		pComponent->Update();
+		if (pComponent)
+			pComponent->Update();
 	}
 }
 
@@ -30,7 +32,8 @@ void dae::GameObject::Render() const
 {
 	for (BaseComponent* pComponent : m_pComponents)
 	{
-		pComponent->Render();
+		if (pComponent)
+			pComponent->Render();
 	}
 }
 
@@ -48,6 +51,7 @@ void dae::GameObject::AddComponent(BaseComponent* component)
 {
 	component->SetGameObject(this);
 	m_pComponents.push_back(component);
+	std::cout << "nr of added components: " << m_pComponents.size() << std::endl;
 }
 
 bool dae::GameObject::GetMarkedForDeletion() const
