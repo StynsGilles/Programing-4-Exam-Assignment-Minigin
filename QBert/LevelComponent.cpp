@@ -87,34 +87,48 @@ dae::LevelCube* dae::LevelComponent::GetTopCube() const
 	return m_Pyramid[0][0];
 }
 
+dae::LevelCube* dae::LevelComponent::GetCube(int row, int col) const
+{
+	if (row >= m_PyramidSize || row < 0)
+		return nullptr;
+
+	if (col >= m_PyramidSize || col < 0)
+		return nullptr;
+	
+	return m_Pyramid[row][col];
+}
+
 int dae::LevelComponent::GetPyramidSize() const
 {
 	return m_PyramidSize;
 }
 
+dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool isSlickOrSam)
+{
+	int newRow = -1;
+	int newCol = -1;
+
+	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
+
+	auto* pCube = GetCube(newRow, newCol);
+
+	if (pCube && isSlickOrSam)
+		pCube->stage = 0;
+	
+	return pCube;
+}
+
 dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange, 
 	bool& fellOfPyramid, bool& positiveChange)
-{
-	int currentRow = -1;
-	int currentCol = -1;
+{	
+	int newRow = -1;
+	int	newCol = -1;
 
-	for (int row = 0; row < m_PyramidSize; ++row)
-	{
-		for (int col = 0; col <= row; ++col)
-		{
-			if (m_Pyramid[row][col] == pCurrentCube)
-			{
-				currentRow = row;
-				currentCol = col;
-			}
-		}
-	}
+	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
 
-	int newRow = currentRow + rowChange;
-	int newCol = currentCol + colChange;
+	auto* pCube = GetCube(newRow, newCol);
 	
-	if (0 > newRow || newRow >= m_PyramidSize ||
-		0 > newCol || newCol >= m_PyramidSize)
+	if (pCube == nullptr)
 	{
 		fellOfPyramid = true;
 		return GetTopCube();
@@ -128,6 +142,27 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 	
 	fellOfPyramid = true;
 	return GetTopCube();
+}
+
+void dae::LevelComponent::GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange)
+{
+	int currentRow = -1;
+	int currentCol = -1;
+	
+	for (int row = 0; row < m_PyramidSize; ++row)
+	{
+		for (int col = 0; col <= row; ++col)
+		{
+			if (m_Pyramid[row][col] == pCurrentCube)
+			{
+				currentRow = row;
+				currentCol = col;
+			}
+		}
+	}
+
+	newRow = currentRow + rowChange;
+	newCol = currentCol + colChange;
 }
 
 bool dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)

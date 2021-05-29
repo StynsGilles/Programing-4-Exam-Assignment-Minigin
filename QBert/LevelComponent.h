@@ -1,14 +1,6 @@
 #pragma once
 #include <BaseComponent.h>
-#include <memory>
-#include <string>
 #include "Texture2D.h"
-#pragma warning(push)
-#pragma warning (disable: 4201)
-#include <vector>
-
-#include "glm/glm.hpp"
-#pragma warning(pop)
 
 namespace dae
 {
@@ -30,7 +22,10 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 		LevelCube* GetTopCube() const;
+		LevelCube* GetCube(int row, int col) const;
 		int GetPyramidSize() const;
+		LevelCube* GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange,
+			bool isSlickOrSam = false);
 		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange,
 			bool& fellOfPyramid, bool& positiveChange);
 
@@ -43,7 +38,8 @@ namespace dae
 		static const int m_PyramidSize = 7;
 		LevelCube* m_Pyramid[m_PyramidSize][m_PyramidSize];
 		bool m_LevelFinished = false;
-		
+
+		void GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange);
 		bool UpdateCubeColor(LevelCube* m_pCube);
 		void CheckLevelFinished();
 	};

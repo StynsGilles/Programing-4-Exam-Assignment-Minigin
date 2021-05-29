@@ -17,11 +17,14 @@
 #include <ServiceLocator.h>
 #include <SoundSystem.h>
 #include <Scene.h>
+
+#include "EnemySpawnerComponent.h"
 #include "GameCommands.h"
 #include "LevelComponent.h"
 #include "LivesComponent.h"
 #include "PlayerObserver.h"
 #include "QBertComponent.h"
+#include "SlickAndSamComponent.h"
 
 void LoadGame();
 
@@ -83,6 +86,22 @@ void LoadGame()
 	pyramid->AddComponent(pLevelComponent);
 	scene.Add(pyramid);
 
+	//Enemies
+	//Slick and Sam spawner
+	auto SandSSpawner = std::make_shared<dae::GameObject>();
+	auto* pSandSSpawnComponent = new dae::EnemySpawnerComponent();
+	SandSSpawner->AddComponent(pSandSSpawnComponent);
+	scene.Add(SandSSpawner);
+
+	
+	auto Slick = std::make_shared<dae::GameObject>();
+	auto* pSlickComponent = new dae::SlickAndSamComponent(pLevelComponent);
+	auto* pSlickRenderComponent = new dae::RenderComponent("Slick.png");
+	Slick->AddComponent(pSlickComponent);
+	Slick->AddComponent(pSlickRenderComponent);
+	pSlickComponent->ChangeCube(pLevelComponent->GetCube(1, 0));
+	scene.Add(Slick);
+	
 	//Player
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
 	

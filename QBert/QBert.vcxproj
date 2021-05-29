@@ -191,6 +191,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EnemySpawnerComponent.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
@@ -205,8 +206,10 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="QBert.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
+    <ClCompile Include="SlickAndSamComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EnemySpawnerComponent.h" />
     <ClInclude Include="GameCommands.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LevelComponent.h" />
@@ -216,6 +219,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="PlayerObserver.h" />
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
+    <ClInclude Include="SlickAndSamComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
