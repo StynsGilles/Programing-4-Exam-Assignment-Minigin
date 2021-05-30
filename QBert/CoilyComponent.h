@@ -3,6 +3,7 @@
 
 namespace dae
 {
+	struct LevelCube;
 	class LevelComponent;
 
 	enum class CoilyState
@@ -31,5 +32,6 @@ namespace dae
 		void Jump() override;
 		void CheckIfBottom();
 		void ChasePlayer();
+		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube);
 	};
 }

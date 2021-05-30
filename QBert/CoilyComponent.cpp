@@ -67,92 +67,90 @@ void dae::CoilyComponent::ChasePlayer()
 		auto* pQBertComp = QBert->GetComponent<QBertComponent>();
 		auto* pQBertCube = pQBertComp->GetCurrentCube();
 		auto* pCoilyCube = pPosComp->GetCurrentCube();
-		
-		const auto rowColQbert = m_pPyramid->GetRowColOfCube(pQBertCube);
-		const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
 
-		int rowChange = 0;
-		int colChange = 0;
-		
-		//QBert in a lower column than coily
-		if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
-		{
-			rowChange = -1;
-			colChange = -1;
-			
-		}
-		else if (rowColQbert.first == rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
-		{
-			rowChange = (rand() % 2) * 2 - 1;
-			switch (rowChange)
-			{
-			case -1:
-				colChange = -1;
-				break;
-			case 1:
-				colChange = 0;
-				break;
-			default:
-				break;
-			}
-			
-		}
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
-		{
-			rowChange = 1;
-		}
-		//QBert in a higher column than coily
-		else if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
-		{
-			rowChange = -1;
-		}
-		else if (rowColQbert.first == rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
-		{
-			rowChange = (rand() % 2) * 2 - 1;
-			switch (rowChange)
-			{
-			case -1:
-				colChange = 0;
-				break;
-			case 1:
-				colChange = 1;
-				break;
-			default:
-				break;
-			}
-		}
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
-		{
-			rowChange = 1;
-			colChange = rand()%2;
-		}
-		//QBert in the same column as coily
-		else if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second == rowColCoily.second)
-		{
-			rowChange = -1;
-		}
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second == rowColCoily.second)
-		{
-			rowChange = 1;
-		}
 		// same cube
-		else if (rowColQbert.first == rowColCoily.first &&
-			rowColQbert.second == rowColCoily.second)
+		if (pQBertCube == pCoilyCube)
 		{
 			//nothing for now
+			std::cout << "Qbert is on the same cube as Coily!" << std::endl;
+			return;
 		}
 
-		std::cout << "jumping in the direction of row change: " << rowChange << " and col change: " << colChange << std::endl;
-
-		LevelCube* pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, colChange);
-		pPosComp->ChangeCube(pNextCube);
+		LevelCube* pNextCube = GetNextCube(pCoilyCube, pQBertCube);
+		if (pNextCube)
+			pPosComp->ChangeCube(pNextCube);
 	}
+}
+
+dae::LevelCube* dae::CoilyComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube)
+{
+	const auto rowColQbert = m_pPyramid->GetRowColOfCube(pQBertCube);
+	const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
+
+	//QBert in a lower column than coily
+	if (rowColQbert.first < rowColCoily.first &&
+		rowColQbert.second < rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1);
+	if (rowColQbert.first == rowColCoily.first &&
+		rowColQbert.second < rowColCoily.second)
+	{
+		int rowChange = (rand() % 2) * 2 - 1;
+		LevelCube* pNextCube;
+		switch (rowChange)
+		{
+		case -1:
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, -1);
+			if (pNextCube)
+				return pNextCube;
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+		case 1:
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0);
+			if (pNextCube)
+				return pNextCube;
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1);
+		default:
+			return nullptr;
+		}
+
+	}
+	if (rowColQbert.first > rowColCoily.first &&
+		rowColQbert.second < rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+	//QBert in a higher column than coily
+	if (rowColQbert.first < rowColCoily.first &&
+		rowColQbert.second > rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+	if (rowColQbert.first == rowColCoily.first &&
+		rowColQbert.second > rowColCoily.second)
+	{
+		int rowChange = (rand() % 2) * 2 - 1;
+		LevelCube* pNextCube;
+		switch (rowChange)
+		{
+		case -1:
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0);
+			if (pNextCube)
+				return pNextCube;
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1);
+		case 1:
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 1);
+			if (pNextCube)
+				return pNextCube;
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+		default:
+			return nullptr;
+		}
+	}
+	if (rowColQbert.first > rowColCoily.first &&
+		rowColQbert.second > rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1);
+	//QBert in the same column as coily
+	if (rowColQbert.first < rowColCoily.first &&
+		rowColQbert.second == rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+	if (rowColQbert.first > rowColCoily.first &&
+		rowColQbert.second == rowColCoily.second)
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+
+	return nullptr;
 }
