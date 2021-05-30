@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "SlickAndSamComponent.h"
-#include <SDL_render.h>
 #include <GameTime.h>
-
 #include "EnemyPositionComponent.h"
 #include "GameObject.h"
 #include "LevelComponent.h"
@@ -29,29 +27,15 @@ void dae::SlickAndSamComponent::Update()
 
 void dae::SlickAndSamComponent::Jump()
 {
-	int randomNumber = rand() % 2;
-
 	auto* pPosComp = m_pObject->GetComponent<EnemyPositionComponent>();
 
 	if (pPosComp)
 	{
-		LevelCube* pNextCube = nullptr;
 		LevelCube* pCurrentCube = pPosComp->GetCurrentCube();
 
 		if (pCurrentCube)
 		{
-			switch (randomNumber)
-			{
-			case 0:
-				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, 0, true);
-				break;
-			case 1:
-				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, 1, true);
-				break;
-			default:
-				break;
-			}
-
+			LevelCube*  pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, rand() % 2, true);
 			pPosComp->ChangeCube(pNextCube);
 		}
 	}

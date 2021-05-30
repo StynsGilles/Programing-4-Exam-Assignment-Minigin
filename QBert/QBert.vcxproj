@@ -208,6 +208,8 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="QBertComponent.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="SlickAndSamComponent.cpp" />
+    <ClCompile Include="UggAndWrongComponent.cpp" />
+    <ClCompile Include="UggAndWrongSpawnerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyPositionComponent.h" />
@@ -222,6 +224,8 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="SlickAndSamComponent.h" />
+    <ClInclude Include="UggAndWrongComponent.h" />
+    <ClInclude Include="UggAndWrongSpawnerComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

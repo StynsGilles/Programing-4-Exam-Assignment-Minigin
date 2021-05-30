@@ -56,6 +56,12 @@
     <ClCompile Include="EnemyPositionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="UggAndWrongComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UggAndWrongSpawnerComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -94,5 +100,9 @@
     <ClInclude Include="EnemyPositionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="UggAndWrongComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UggAndWrongSpawnerComponent.h" />
   </ItemGroup>
 </Project>

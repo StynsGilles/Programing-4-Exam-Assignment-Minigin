@@ -4,7 +4,8 @@
 #include <GameObject.h>
 #include "LevelComponent.h"
 
-dae::EnemyPositionComponent::EnemyPositionComponent()
+dae::EnemyPositionComponent::EnemyPositionComponent(EnemyType enemyType)
+	: m_EnemyType(enemyType)
 {
 }
 
@@ -29,8 +30,26 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube)
 		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 
 		glm::vec3 pos = m_pCurrentCube->position;
-		pos.x += (float)dst.w / 3.f;
-		pos.y -= 5.f;
+
+		switch (m_EnemyType)
+		{
+		case EnemyType::top:
+			pos.x += (float)dst.w / 3.f;
+			pos.y -= 5.f;
+			break;
+		case EnemyType::left:
+			pos.x -= (float)dst.w / 6.f;
+			pos.y += 15.f;
+			break;
+		case EnemyType::right:
+			pos.x += ((float)dst.w / 3.f) * 2.f;
+			pos.y += 15.f;
+			break;
+		default:
+			pos.x += (float)dst.w / 3.f;
+			pos.y -= 5.f;
+			break;
+		}
 
 		UpdatePosition(pos);
 	}
@@ -41,6 +60,11 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube)
 dae::LevelCube* dae::EnemyPositionComponent::GetCurrentCube() const
 {
 	return m_pCurrentCube;
+}
+
+dae::EnemyType dae::EnemyPositionComponent::GetEnemyType() const
+{
+	return m_EnemyType;
 }
 
 void dae::EnemyPositionComponent::UpdatePosition(const glm::vec3& nextPosition)
