@@ -1,12 +1,12 @@
 #pragma once
-#include <BaseComponent.h>
+#include "EntityComponent.h"
 
 namespace dae
 {
 	class LevelComponent;
 	struct LevelCube;
 
-	class SlickAndSamComponent final : public BaseComponent
+	class SlickAndSamComponent  final : public EntityComponent
 	{
 	public:
 		SlickAndSamComponent(LevelComponent* pPyramid);
@@ -21,12 +21,7 @@ namespace dae
 		SlickAndSamComponent& operator=(SlickAndSamComponent&& other) = delete;
 
 	private:
-		LevelComponent* m_pPyramid = nullptr;
-
-		const float m_JumpInterval = 2.f;
-		float m_JumpTimer = 0.f;
-
-		void Jump();
+		void Jump() override;
 	};
 }
 

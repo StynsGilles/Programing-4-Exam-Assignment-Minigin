@@ -1,11 +1,11 @@
 #pragma once
-#include <BaseComponent.h>
+#include "EntityComponent.h"
 
 namespace dae
 {
 	class LevelComponent;
 
-	class UggAndWrongComponent final : public BaseComponent
+	class UggAndWrongComponent final : public EntityComponent
 	{
 	public:
 		UggAndWrongComponent(LevelComponent* pPyramid);
@@ -20,11 +20,6 @@ namespace dae
 		UggAndWrongComponent& operator=(UggAndWrongComponent&& other) = delete;
 
 	private:
-		LevelComponent* m_pPyramid = nullptr;
-
-		const float m_JumpInterval = 2.f;
-		float m_JumpTimer = 0.f;
-
-		void Jump();
+		void Jump() override;
 	};
 }

@@ -23,6 +23,9 @@ namespace dae
 		void Render() const override;
 		LevelCube* GetTopCube() const;
 		LevelCube* GetCube(int row = 0, int col = 0) const;
+		int GetRowOfCube(LevelCube* pCurrentCube) const;
+		int GetColOfCube(LevelCube* pCurrentCube) const;
+		std::pair<int, int> GetRowColOfCube(LevelCube* pCurrentCube) const;
 		int GetPyramidSize() const;
 		LevelCube* GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange,
 			bool isSlickOrSam = false);

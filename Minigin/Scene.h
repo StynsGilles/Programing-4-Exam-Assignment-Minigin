@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 #include "SceneManager.h"
 
 namespace dae
@@ -15,6 +16,15 @@ namespace dae
 		void Render() const;
 		void RemoveDeadObjects();
 		std::string	GetName() const;
+
+		template <typename T>
+		std::shared_ptr<GameObject> GetObjectOfType() const
+		{
+			for (auto object : m_Objects)
+				if (object->GetComponent<T>()) return object;
+
+			return nullptr;
+		}
 		
 		~Scene();
 		Scene(const Scene& other) = delete;

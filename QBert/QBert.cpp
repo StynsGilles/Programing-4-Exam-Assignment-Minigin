@@ -24,6 +24,8 @@
 #include "PlayerObserver.h"
 #include "QBertComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
+#include "CoilyComponent.h"
+#include "EnemyPositionComponent.h"
 
 void LoadGame();
 
@@ -81,7 +83,7 @@ void LoadGame()
 
 	//Level
 	auto pyramid = std::make_shared<dae::GameObject>();
-	auto* pLevelComponent = new dae::LevelComponent("Pink", "Yellow", true);
+	auto* pLevelComponent = new dae::LevelComponent("Pink", "Yellow");
 	pyramid->AddComponent(pLevelComponent);
 	scene.Add(pyramid);
 
@@ -97,6 +99,17 @@ void LoadGame()
 	auto* pUandWSpawnComponent = new dae::UggAndWrongSpawnerComponent(pLevelComponent);
 	UandWSpawner->AddComponent(pUandWSpawnComponent);
 	scene.Add(UandWSpawner);
+
+	//Coily
+	auto coily = std::make_shared<dae::GameObject>();
+	auto* pCoilyRenderComp = new dae::RenderComponent("Coily_Egg.png");
+	auto* pCoilyPosComp = new dae::EnemyPositionComponent(dae::EnemyType::top);
+	auto* pCoilyComp = new dae::CoilyComponent(pLevelComponent);
+	coily->AddComponent(pCoilyRenderComp);
+	coily->AddComponent(pCoilyPosComp);
+	coily->AddComponent(pCoilyComp);
+	pCoilyPosComp->ChangeCube(pLevelComponent->GetCube(2, 1));
+	scene.Add(coily);
 	
 	//Player
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();

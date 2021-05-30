@@ -1,12 +1,11 @@
 #include "pch.h"
 #include "UggAndWrongComponent.h"
-#include "GameTime.h"
 #include "EnemyPositionComponent.h"
 #include "LevelComponent.h"
 #include <GameObject.h>
 
 dae::UggAndWrongComponent::UggAndWrongComponent(LevelComponent* pPyramid)
-	: m_pPyramid(pPyramid)
+	: EntityComponent(pPyramid)
 {
 }
 
@@ -16,13 +15,7 @@ dae::UggAndWrongComponent::~UggAndWrongComponent()
 
 void dae::UggAndWrongComponent::Update()
 {
-	m_JumpTimer += GameTime::GetInstance().GetDeltaTime();
-
-	if (m_JumpTimer >= m_JumpInterval)
-	{
-		Jump();
-		m_JumpTimer -= m_JumpInterval;
-	}
+	JumpUpdate();
 }
 
 void dae::UggAndWrongComponent::Jump()

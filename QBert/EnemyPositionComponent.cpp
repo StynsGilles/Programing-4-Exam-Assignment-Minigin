@@ -35,7 +35,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube)
 		{
 		case EnemyType::top:
 			pos.x += (float)dst.w / 3.f;
-			pos.y -= 5.f;
+			pos.y -= (float)dst.h / 4.f;
 			break;
 		case EnemyType::left:
 			pos.x -= (float)dst.w / 6.f;

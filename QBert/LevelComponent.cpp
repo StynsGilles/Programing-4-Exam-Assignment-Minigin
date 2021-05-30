@@ -98,6 +98,37 @@ dae::LevelCube* dae::LevelComponent::GetCube(int row, int col) const
 	return m_Pyramid[row][col];
 }
 
+int dae::LevelComponent::GetRowOfCube(LevelCube* pCurrentCube) const
+{
+	for (int row = 0; row < m_PyramidSize; ++row)
+	{
+		for (int col = 0; col <= row; ++col)
+		{
+			if (m_Pyramid[row][col] == pCurrentCube)
+				return row;
+		}
+	}
+	return -1;
+}
+
+int dae::LevelComponent::GetColOfCube(LevelCube* pCurrentCube) const
+{
+	for (int row = 0; row < m_PyramidSize; ++row)
+	{
+		for (int col = 0; col <= row; ++col)
+		{
+			if (m_Pyramid[row][col] == pCurrentCube)
+				return col;
+		}
+	}
+	return -1;
+}
+
+std::pair<int, int> dae::LevelComponent::GetRowColOfCube(LevelCube* pCurrentCube) const
+{
+	return std::make_pair(GetRowOfCube(pCurrentCube), GetColOfCube(pCurrentCube));
+}
+
 int dae::LevelComponent::GetPyramidSize() const
 {
 	return m_PyramidSize;

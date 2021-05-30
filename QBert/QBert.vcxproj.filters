@@ -60,7 +60,13 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="UggAndWrongSpawnerComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +109,14 @@
     <ClInclude Include="UggAndWrongComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="UggAndWrongSpawnerComponent.h" />
+    <ClInclude Include="UggAndWrongSpawnerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
