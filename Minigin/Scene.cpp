@@ -13,24 +13,31 @@ Scene::~Scene() = default;
 void Scene::Add(const std::shared_ptr<GameObject>& object)
 {
 	m_Objects.push_back(object);
-	std::cout << "m_objects size: " << m_Objects.size() << std::endl;
 }
+
+//void dae::Scene::AddAtRunTime(const std::shared_ptr<GameObject>& object)
+//{
+//	m_NewObjects.push_back(object);
+//}
 
 void Scene::Update()
 {
-	for(auto& object : m_Objects)
-	{
-		std::cout << "updating object" << std::endl;
-		object->Update();
-	}
+	for (size_t idx = 0; idx < m_Objects.size(); ++idx)
+		m_Objects[idx]->Update();
+
+	//if (m_NewObjects.size() > 0)
+	//{
+	//	for (size_t idx = 0; idx < m_NewObjects.size(); ++idx)
+	//		m_Objects.push_back(m_NewObjects[idx]);
+
+	//	m_NewObjects.clear();
+	//}
 }
 
 void Scene::Render() const
 {
 	for (const auto& object : m_Objects)
-	{
 		object->Render();
-	}
 }
 
 void Scene::RemoveDeadObjects()

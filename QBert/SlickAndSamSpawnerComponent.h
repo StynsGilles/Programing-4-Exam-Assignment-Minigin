@@ -13,7 +13,8 @@ namespace dae
 
 		void Update() override;
 		void Render() const override;
-
+		void SpawnEnemy() const;
+		
 		SlickAndSamSpawnerComponent(const SlickAndSamSpawnerComponent& other) = delete;
 		SlickAndSamSpawnerComponent(SlickAndSamSpawnerComponent&& other) = delete;
 		SlickAndSamSpawnerComponent& operator=(const SlickAndSamSpawnerComponent& other) = delete;
@@ -22,9 +23,8 @@ namespace dae
 	private:
 		LevelComponent* m_pPyramid = nullptr;
 
-		const float m_SpawnInterval = 5.f;
+		const float m_SpawnInterval = 0.5f;
 		float m_SpawnTimer = 0.f;
 
-		void SpawnEnemy() const;
 	};
 }

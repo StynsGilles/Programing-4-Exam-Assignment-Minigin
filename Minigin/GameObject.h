@@ -36,7 +36,7 @@ namespace dae
 
 	private:
 		bool m_MarkedForDeletion = false;
-		std::vector<BaseComponent*> m_pComponents;
+		std::vector<BaseComponent*> m_pComponents{};
 		Transform m_Transform;
 	};
 }

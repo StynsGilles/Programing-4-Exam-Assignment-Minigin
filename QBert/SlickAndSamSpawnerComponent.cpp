@@ -5,11 +5,11 @@
 #include "SlickAndSamComponent.h"
 #include "LevelComponent.h"
 #include <GameObject.h>
-
-
 #include "EnemyPositionComponent.h"
 #include "GameTime.h"
 #include "Scene.h"
+
+int counter = 0;
 
 dae::SlickAndSamSpawnerComponent::SlickAndSamSpawnerComponent(LevelComponent* pPyramid)
 	: m_pPyramid(pPyramid)
@@ -27,15 +27,13 @@ void dae::SlickAndSamSpawnerComponent::Update()
 	if (m_SpawnTimer >= m_SpawnInterval)
 	{
 		SpawnEnemy();
-		m_SpawnTimer = 0;
+		m_SpawnTimer = 0.f;
 	}
 }
 
 void dae::SlickAndSamSpawnerComponent::SpawnEnemy() const
 {
-	std::cout << "spawning Slick" << std::endl;
-
-	auto& scene = SceneManager::GetInstance().GetCurrentScene();
+	auto scene = SceneManager::GetInstance().GetCurrentScene();
 	auto Slick = std::make_shared<GameObject>();
 	auto* pSlickComponent = new SlickAndSamComponent(m_pPyramid);
 	auto* pPosComponent = new EnemyPositionComponent();
@@ -44,7 +42,8 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy() const
 	Slick->AddComponent(pSlickRenderComponent);
 	Slick->AddComponent(pPosComponent);
 	pPosComponent->ChangeCube(m_pPyramid->GetCube(1, rand() % 2));
-	scene.Add(Slick);
+	scene->Add(Slick);
+	//scene->AddAtRunTime(Slick);
 }
 
 void dae::SlickAndSamSpawnerComponent::Render() const

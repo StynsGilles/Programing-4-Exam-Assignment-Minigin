@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
-		Scene& GetCurrentScene() const;
+		std::shared_ptr<dae::Scene> GetCurrentScene() const;
 		void SetActiveScene(const std::string& name);
 		void PreviousScene();
 		void NextScene();
@@ -21,6 +21,6 @@ namespace dae
 		friend class Singleton<SceneManager>;
 		SceneManager() = default;
 		std::vector<std::shared_ptr<Scene>> m_Scenes;
-		std::weak_ptr<Scene> m_ActiveScene;
+		std::shared_ptr<Scene> m_ActiveScene;
 	};
 }

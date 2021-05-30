@@ -93,6 +93,11 @@ void LoadGame()
 	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent);
 	SandSSpawner->AddComponent(pSandSSpawnComponent);
 	scene.Add(SandSSpawner);
+
+	//for (int idx = 0; idx < 10; ++idx)
+	//{
+	//	pSandSSpawnComponent->SpawnEnemy();
+	//}
 	
 	//for (int idx = 0; idx < 10; ++idx)
 	//{
