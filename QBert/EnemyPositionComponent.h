@@ -3,6 +3,8 @@
 
 namespace dae
 {
+	class LevelComponent;
+
 	enum class EnemyType
 	{
 		top,
@@ -15,7 +17,7 @@ namespace dae
 	class EnemyPositionComponent final : public BaseComponent
 	{
 	public:
-		explicit EnemyPositionComponent(EnemyType enemyType);
+		explicit EnemyPositionComponent(EnemyType enemyType, LevelComponent* pPyramid);
 		virtual ~EnemyPositionComponent();
 
 		void Update() override;
@@ -30,6 +32,8 @@ namespace dae
 		EnemyPositionComponent& operator=(EnemyPositionComponent&& other) = delete;
 
 	private:
+		LevelComponent* m_pPyramid = nullptr;
+		
 		LevelCube* m_pCurrentCube = nullptr;
 		EnemyType m_EnemyType;
 		

@@ -19,10 +19,8 @@ namespace dae
 		template <typename T>
 		T* GetComponent() const
 		{
-			for (BaseComponent* component: m_pComponents)
-			{
+			for (BaseComponent* component : m_pComponents)
 				if (dynamic_cast<T*>(component)) return (T*)component;
-			}
 			return nullptr;
 		}
 		void RemoveComponent(BaseComponent* pComponent);

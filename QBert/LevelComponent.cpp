@@ -3,8 +3,13 @@
 #include <iostream>
 #include <SDL_rect.h>
 #include <SDL_render.h>
+#include "EnemyPositionComponent.h"
+#include "EntityComponent.h"
+#include "GameObject.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 dae::LevelComponent::LevelComponent(const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
 {
@@ -134,7 +139,8 @@ int dae::LevelComponent::GetPyramidSize() const
 	return m_PyramidSize;
 }
 
-dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool isSlickOrSam)
+dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool& isOccupied,
+	const EnemyType& enemyType, bool isSlickOrSam)
 {
 	int newRow = -1;
 	int newCol = -1;
@@ -142,9 +148,65 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
 
 	auto* pCube = GetCube(newRow, newCol);
+	
+	if (pCube)
+	{
+		switch (enemyType)
+		{
+		case EnemyType::top:
+			if (pCube->entity)
+			{
+				isOccupied = true;
+				//if (!pCube->entity->GetComponent<QBertComponent>())
+				return nullptr;
+			}
+			else
+				isOccupied = false;
 
-	if (pCube && isSlickOrSam)
-		pCube->stage = 0;
+			if (isSlickOrSam)
+				pCube->stage = 0;
+			break;
+		case EnemyType::left:
+		{
+			auto* pLeftCube = GetCube(newRow + 1, newCol);
+			if (pLeftCube && pLeftCube->entity)
+			{
+				isOccupied = true;
+				//if (!pLeftCube->entity->GetComponent<QBertComponent>())
+				return nullptr;
+			}
+			else
+				isOccupied = false;
+		}
+		break;
+		case EnemyType::right:
+		{
+			auto* pRightCube = GetCube(newRow + 1, newCol + 1);
+			if (pRightCube && pRightCube->entity)
+			{
+				isOccupied = true;
+				//if (!pLeftCube->entity->GetComponent<QBertComponent>())
+				return nullptr;
+			}
+			else
+				isOccupied = false;
+		}
+		break;
+		default:
+			if (pCube->entity)
+			{
+				isOccupied = true;
+				//if (!pCube->entity->GetComponent<QBertComponent>())
+				return nullptr;
+			}
+			else
+				isOccupied = false;
+
+			if (isSlickOrSam)
+				pCube->stage = 0;
+			break;
+		}
+	}
 	
 	return pCube;
 }
@@ -175,7 +237,25 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 	return GetTopCube();
 }
 
-void dae::LevelComponent::GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange)
+dae::LevelCube* dae::LevelComponent::GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const
+{
+	int newRow = -1;
+	int	newCol = -1;
+
+	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
+
+	auto* pCube = GetCube(newRow, newCol);
+
+	return pCube;
+}
+
+void dae::LevelComponent::ClearBoard()
+{
+	auto scene = SceneManager::GetInstance().GetCurrentScene();
+	auto enemy = scene->GetObjectOfType<EntityComponent>();
+}
+
+void dae::LevelComponent::GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange) const
 {
 	int currentRow = -1;
 	int currentCol = -1;

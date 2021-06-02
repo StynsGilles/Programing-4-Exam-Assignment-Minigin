@@ -76,50 +76,55 @@ void dae::CoilyComponent::ChasePlayer()
 			return;
 		}
 
-		LevelCube* pNextCube = GetNextCube(pCoilyCube, pQBertCube);
-		if (pNextCube)
+		bool isOccupied = false;
+		LevelCube* pNextCube = GetNextCube(pCoilyCube, pQBertCube, isOccupied);
+		if (pNextCube && !isOccupied)
 			pPosComp->ChangeCube(pNextCube);
 	}
 }
 
-dae::LevelCube* dae::CoilyComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube)
+dae::LevelCube* dae::CoilyComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied)
 {
 	const auto rowColQbert = m_pPyramid->GetRowColOfCube(pQBertCube);
 	const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
 
+	auto enemyType = m_pObject->GetComponent<EnemyPositionComponent>()->GetEnemyType();
+	
 	//QBert in a lower column than coily
 	if (rowColQbert.first < rowColCoily.first &&
 		rowColQbert.second < rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1);
+	{
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1, isOccupied, enemyType);
+	}
 	if (rowColQbert.first == rowColCoily.first &&
 		rowColQbert.second < rowColCoily.second)
 	{
+		LevelCube* pNextCube = nullptr;
 		int rowChange = (rand() % 2) * 2 - 1;
-		LevelCube* pNextCube;
+
 		switch (rowChange)
 		{
 		case -1:
-			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, -1);
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, -1, isOccupied, enemyType);
 			if (pNextCube)
 				return pNextCube;
-			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+			return  m_pPyramid->GetNextCubeEnemy(pCoilyCube, -rowChange, 0, isOccupied, enemyType);
 		case 1:
-			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0);
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0, isOccupied, enemyType);
 			if (pNextCube)
 				return pNextCube;
-			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1);
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -rowChange, -1, isOccupied, enemyType);
 		default:
 			return nullptr;
 		}
-
 	}
 	if (rowColQbert.first > rowColCoily.first &&
 		rowColQbert.second < rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0, isOccupied, enemyType);
 	//QBert in a higher column than coily
 	if (rowColQbert.first < rowColCoily.first &&
 		rowColQbert.second > rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0, isOccupied, enemyType);
 	if (rowColQbert.first == rowColCoily.first &&
 		rowColQbert.second > rowColCoily.second)
 	{
@@ -128,29 +133,29 @@ dae::LevelCube* dae::CoilyComponent::GetNextCube(LevelCube* pCoilyCube, LevelCub
 		switch (rowChange)
 		{
 		case -1:
-			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0);
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 0, isOccupied, enemyType);
 			if (pNextCube)
 				return pNextCube;
-			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1);
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -rowChange, 1, isOccupied, enemyType);
 		case 1:
-			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 1);
+			pNextCube = m_pPyramid->GetNextCubeEnemy(pCoilyCube, rowChange, 1, isOccupied, enemyType);
 			if (pNextCube)
 				return pNextCube;
-			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+			return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -rowChange, 0, isOccupied, enemyType);
 		default:
 			return nullptr;
 		}
 	}
 	if (rowColQbert.first > rowColCoily.first &&
 		rowColQbert.second > rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1);
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1, isOccupied, enemyType);
 	//QBert in the same column as coily
 	if (rowColQbert.first < rowColCoily.first &&
 		rowColQbert.second == rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0);
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0, isOccupied, enemyType);
 	if (rowColQbert.first > rowColCoily.first &&
 		rowColQbert.second == rowColCoily.second)
-		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0);
+		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0, isOccupied, enemyType);
 
 	return nullptr;
 }

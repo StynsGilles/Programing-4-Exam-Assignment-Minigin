@@ -23,6 +23,9 @@ void dae::QBertComponent::Render() const
 
 void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange)
 {
+	if (m_pCurrentCube)
+		m_pCurrentCube->entity = nullptr;
+	
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
@@ -31,6 +34,8 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 
 		if (positiveChange)
 			m_pObject->GetComponent<ScoreComponent>()->AddToScore(m_ScorePerCubeChange);
+
+		m_pCurrentCube->entity = m_pObject;
 		
 		SDL_Rect dst;
 		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);

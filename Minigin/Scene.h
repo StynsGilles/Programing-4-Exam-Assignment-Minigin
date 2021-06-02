@@ -22,7 +22,6 @@ namespace dae
 		{
 			for (auto object : m_Objects)
 				if (object->GetComponent<T>()) return object;
-
 			return nullptr;
 		}
 		

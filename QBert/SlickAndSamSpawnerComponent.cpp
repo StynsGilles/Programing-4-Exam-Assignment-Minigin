@@ -34,7 +34,7 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy()
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 	auto newEnemy = std::make_shared<GameObject>();
 	auto* pSandSComponent = new SlickAndSamComponent(m_pPyramid);
-	auto* pPosComponent = new EnemyPositionComponent(EnemyType::top);
+	auto* pPosComponent = new EnemyPositionComponent(EnemyType::top, m_pPyramid);
 	RenderComponent* pRenderComponent;
 	if (m_SpawnSlick)
 		pRenderComponent = new RenderComponent("Slick.png");

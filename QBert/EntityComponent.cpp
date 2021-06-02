@@ -32,11 +32,22 @@ void dae::EntityComponent::JumpRandomDownwards(bool isSlickOrSam)
 	if (pPosComp)
 	{
 		LevelCube* pCurrentCube = pPosComp->GetCurrentCube();
-
+		EnemyType enemyType = pPosComp->GetEnemyType();
+		
 		if (pCurrentCube)
-		{
-			LevelCube* pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, rand() % 2, isSlickOrSam);
-			pPosComp->ChangeCube(pNextCube);
+		{	
+			bool isOccupied = false;
+			int randomColChange = rand() % 2;
+			LevelCube* pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, randomColChange, isOccupied, enemyType, isSlickOrSam);
+			if (pNextCube)
+				pPosComp->ChangeCube(pNextCube);
+			else
+			{
+				randomColChange = static_cast<int>(!static_cast<bool>(randomColChange));
+				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 1, randomColChange, isOccupied, enemyType, isSlickOrSam);
+				if (!isOccupied)
+					pPosComp->ChangeCube(pNextCube);
+			}
 		}
 	}
 }

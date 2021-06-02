@@ -103,7 +103,7 @@ void LoadGame()
 	//Coily
 	auto coily = std::make_shared<dae::GameObject>();
 	auto* pCoilyRenderComp = new dae::RenderComponent("Coily_Egg.png");
-	auto* pCoilyPosComp = new dae::EnemyPositionComponent(dae::EnemyType::top);
+	auto* pCoilyPosComp = new dae::EnemyPositionComponent(dae::EnemyType::top, pLevelComponent);
 	auto* pCoilyComp = new dae::CoilyComponent(pLevelComponent);
 	coily->AddComponent(pCoilyRenderComp);
 	coily->AddComponent(pCoilyPosComp);
