@@ -39,7 +39,7 @@ void dae::CoilySpawnerComponent::SpawnEnemy()
 		coily->AddComponent(pCoilyRenderComp);
 		coily->AddComponent(pCoilyPosComp);
 		coily->AddComponent(pCoilyComp);
-		pCoilyPosComp->ChangeCube(m_pPyramid->GetCube(2, 1));
+		pCoilyPosComp->ChangeCube(m_pPyramid->GetCube(2, 1), false);
 		scene->Add(coily);
 	}
 }

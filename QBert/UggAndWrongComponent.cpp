@@ -29,6 +29,7 @@ void dae::UggAndWrongComponent::Jump()
 		if (pCurrentCube)
 		{
 			bool isOccupied = false;
+			bool QBertOnCube = false;
 			EnemyType enemyType = pPosComp->GetEnemyType();
 
 			LevelCube* pNextCube = nullptr;
@@ -41,14 +42,14 @@ void dae::UggAndWrongComponent::Jump()
 				switch (rowChange)
 				{
 				case 0:
-					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, rowChange, 1, isOccupied, enemyType);
+					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, rowChange, 1, isOccupied, enemyType, QBertOnCube);
 					if (isOccupied)
-						pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -1, 0, isOccupied, enemyType);
+						pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -1, 0, isOccupied, enemyType, QBertOnCube);
 					break;
 				case 1:
-					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -rowChange, 0, isOccupied, enemyType);
+					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -rowChange, 0, isOccupied, enemyType, QBertOnCube);
 					if (isOccupied)
-						pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 0, 1, isOccupied, enemyType);
+						pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, 0, 1, isOccupied, enemyType, QBertOnCube);
 					break;
 				default:
 					break;
@@ -58,9 +59,9 @@ void dae::UggAndWrongComponent::Jump()
 			case EnemyType::right:
 			{
 				int randRowChange = rand() % 2;
-				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -randRowChange, -1, isOccupied, enemyType);
+				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -randRowChange, -1, isOccupied, enemyType, QBertOnCube);
 				if (isOccupied)
-					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -static_cast<int>(!static_cast<bool>(randRowChange)), -1, isOccupied, enemyType);
+					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -static_cast<int>(!static_cast<bool>(randRowChange)), -1, isOccupied, enemyType, QBertOnCube);
 			}
 				break;
 			default:
@@ -68,7 +69,7 @@ void dae::UggAndWrongComponent::Jump()
 			}
 			
 			if (!isOccupied)
-				pPosComp->ChangeCube(pNextCube);
+				pPosComp->ChangeCube(pNextCube, QBertOnCube);
 		}
 	}
 }

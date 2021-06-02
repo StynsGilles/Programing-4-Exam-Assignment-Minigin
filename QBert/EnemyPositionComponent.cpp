@@ -2,7 +2,13 @@
 #include "EnemyPositionComponent.h"
 #include <SDL_render.h>
 #include <GameObject.h>
+#include "EntityComponent.h"
 #include "LevelComponent.h"
+#include "LivesComponent.h"
+#include "QBertComponent.h"
+#include "SlickAndSamComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 
 dae::EnemyPositionComponent::EnemyPositionComponent(EnemyType enemyType, LevelComponent* pPyramid)
 	: m_EnemyType(enemyType)
@@ -22,38 +28,31 @@ void dae::EnemyPositionComponent::Render() const
 {
 }
 
-void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube)
+void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCube)
 {
-	if (m_pCurrentCube)
-	{
-		switch (m_EnemyType)
-		{
-		case EnemyType::top:
-			m_pCurrentCube->entity = nullptr;
-			break;
-		case EnemyType::left:
-		{
-			auto* pLeftCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, 0);
-			if (pLeftCube)
-				pLeftCube->entity = nullptr;
-			break;
-		}
-		case EnemyType::right:
-		{
-			auto* pRightCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, +1);
-			if (pRightCube)
-				pRightCube->entity = nullptr;
-			break;
-		}
-		default:
-			m_pCurrentCube->entity = nullptr;
-			break;
-		}
-	}
+	RemoveFromCurrentCube();
 	
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
+		if (QBertOnCube)
+		{
+			auto* pEntityComp = m_pObject->GetComponent<EntityComponent>();
+			auto scene = SceneManager::GetInstance().GetCurrentScene();
+			auto qbert = scene->GetComponentOfType<QBertComponent>();
+			
+			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp))
+			{
+				if (qbert)
+					qbert->KillGreen();
+				
+				m_pObject->Delete();
+				return;
+			}
+			if (qbert)
+				qbert->GetGameObject()->GetComponent<LivesComponent>()->LoseLives(1);
+		}
+		
 		SDL_Rect dst;
 		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
 
@@ -94,6 +93,36 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube)
 	}
 	else
 		m_pObject->Delete();
+}
+
+void dae::EnemyPositionComponent::RemoveFromCurrentCube()
+{
+	if (m_pCurrentCube)
+	{
+		switch (m_EnemyType)
+		{
+		case EnemyType::top:
+			m_pCurrentCube->entity = nullptr;
+			break;
+		case EnemyType::left:
+		{
+			auto* pLeftCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, 0);
+			if (pLeftCube)
+				pLeftCube->entity = nullptr;
+			break;
+		}
+		case EnemyType::right:
+		{
+			auto* pRightCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, +1);
+			if (pRightCube)
+				pRightCube->entity = nullptr;
+			break;
+		}
+		default:
+			m_pCurrentCube->entity = nullptr;
+			break;
+		}
+	}
 }
 
 dae::LevelCube* dae::EnemyPositionComponent::GetCurrentCube() const

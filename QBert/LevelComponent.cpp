@@ -6,6 +6,7 @@
 #include "EnemyPositionComponent.h"
 #include "EntityComponent.h"
 #include "GameObject.h"
+#include "QBertComponent.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
@@ -66,23 +67,8 @@ void dae::LevelComponent::Render() const
 	{
 		for (int col = 0; col <= row; ++col)
 		{
-			switch (m_Pyramid[row][col]->stage)
-			{
-			case 0:
-				if (m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage])
-					Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y);
-				break;
-			case 1:
-				if (m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage])
-					Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y);
-				break;
-			case 2:
-				if (m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage])
-					Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y);
-				break;
-			default:
-				break;
-			}
+			if (m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage])
+				Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y);
 		}
 	}
 }
@@ -140,15 +126,10 @@ int dae::LevelComponent::GetPyramidSize() const
 }
 
 dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool& isOccupied,
-	const EnemyType& enemyType, bool isSlickOrSam)
+	const EnemyType& enemyType, bool& QBertOnCube, bool isSlickOrSam) const
 {
-	int newRow = -1;
-	int newCol = -1;
+	auto* pCube = GetNextCubeNeutral(pCurrentCube, rowChange, colChange);
 
-	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
-
-	auto* pCube = GetCube(newRow, newCol);
-	
 	if (pCube)
 	{
 		switch (enemyType)
@@ -156,70 +137,81 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 		case EnemyType::top:
 			if (pCube->entity)
 			{
-				isOccupied = true;
-				//if (!pCube->entity->GetComponent<QBertComponent>())
-				return nullptr;
+				if (pCube->entity->GetComponent<QBertComponent>())
+					QBertOnCube = true;
+				else
+				{
+					QBertOnCube = false;
+					isOccupied = true;
+					return nullptr;
+				}
 			}
-			else
-				isOccupied = false;
+			isOccupied = false;
 
 			if (isSlickOrSam)
 				pCube->stage = 0;
 			break;
 		case EnemyType::left:
 		{
-			auto* pLeftCube = GetCube(newRow + 1, newCol);
+			auto* pLeftCube = GetNextCubeNeutral(pCube, 1, 0);
 			if (pLeftCube && pLeftCube->entity)
 			{
-				isOccupied = true;
-				//if (!pLeftCube->entity->GetComponent<QBertComponent>())
-				return nullptr;
+				if (pCube->entity->GetComponent<QBertComponent>())
+					QBertOnCube = true;
+				else
+				{
+					QBertOnCube = false;
+					isOccupied = true;
+					return nullptr;
+				}
 			}
-			else
-				isOccupied = false;
+			isOccupied = false;
 		}
 		break;
 		case EnemyType::right:
 		{
-			auto* pRightCube = GetCube(newRow + 1, newCol + 1);
+			auto* pRightCube = GetNextCubeNeutral(pCube, 1, 1);
 			if (pRightCube && pRightCube->entity)
 			{
-				isOccupied = true;
-				//if (!pLeftCube->entity->GetComponent<QBertComponent>())
-				return nullptr;
+				if (pCube->entity->GetComponent<QBertComponent>())
+					QBertOnCube = true;
+				else
+				{
+					QBertOnCube = false;
+					isOccupied = true;
+					return nullptr;
+				}
 			}
-			else
-				isOccupied = false;
+			isOccupied = false;
 		}
 		break;
 		default:
 			if (pCube->entity)
 			{
-				isOccupied = true;
-				//if (!pCube->entity->GetComponent<QBertComponent>())
-				return nullptr;
+				if (pCube->entity->GetComponent<QBertComponent>())
+					QBertOnCube = true;
+				else
+				{
+					QBertOnCube = false;
+					isOccupied = true;
+					return nullptr;
+				}
 			}
-			else
-				isOccupied = false;
+			isOccupied = false;
 
 			if (isSlickOrSam)
 				pCube->stage = 0;
 			break;
 		}
 	}
-	
+
 	return pCube;
 }
 
 dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange, 
 	bool& fellOfPyramid, bool& positiveChange)
 {	
-	int newRow = -1;
-	int	newCol = -1;
-
-	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
-
-	auto* pCube = GetCube(newRow, newCol);
+	auto* pCube = GetNextCubeNeutral(pCurrentCube, rowChange, colChange);
 	
 	if (pCube == nullptr)
 	{
@@ -227,10 +219,10 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 		return GetTopCube();
 	}
 
-	if (m_Pyramid[newRow][newCol])
+	if (pCube)
 	{
-		positiveChange = UpdateCubeColor(m_Pyramid[newRow][newCol]);
-		return m_Pyramid[newRow][newCol];
+		positiveChange = UpdateCubeColor(pCube);
+		return pCube;
 	}
 	
 	fellOfPyramid = true;
@@ -243,7 +235,6 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeNeutral(LevelCube* pCurrentCube,
 	int	newCol = -1;
 
 	GetNextRowAndCol(pCurrentCube, newRow, newCol, rowChange, colChange);
-
 	auto* pCube = GetCube(newRow, newCol);
 
 	return pCube;

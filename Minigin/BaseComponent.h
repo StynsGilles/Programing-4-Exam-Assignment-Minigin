@@ -12,6 +12,7 @@ namespace dae
 		virtual void Update() = 0;
 		virtual void Render() const = 0;
 		void SetGameObject(GameObject* pObject);
+		GameObject* GetGameObject() const;
 		
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;

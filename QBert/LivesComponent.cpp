@@ -22,7 +22,7 @@ void dae::LivesComponent::Render() const
 {
 }
 
-void dae::LivesComponent::LoseLives(int amount)
+void dae::LivesComponent:: LoseLives(int amount)
 {
 	m_LivesRemaining -= amount;
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerDied);

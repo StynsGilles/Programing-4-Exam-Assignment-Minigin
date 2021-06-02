@@ -14,6 +14,7 @@ namespace dae
 		void Render() const override;
 		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange);
 		LevelCube* GetCurrentCube() const;
+		void KillGreen() const;
     	
 		QBertComponent(const QBertComponent& other) = delete;
 		QBertComponent(QBertComponent&& other) = delete;

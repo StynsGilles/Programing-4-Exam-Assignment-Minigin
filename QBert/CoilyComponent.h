@@ -32,6 +32,6 @@ namespace dae
 		void Jump() override;
 		void CheckIfBottom();
 		void ChasePlayer();
-		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied);
+		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube);
 	};
 }
