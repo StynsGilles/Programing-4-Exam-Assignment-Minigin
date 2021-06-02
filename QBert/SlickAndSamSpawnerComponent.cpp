@@ -37,7 +37,7 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy()
 	newEnemy->AddComponent(pSandSComponent);
 	newEnemy->AddComponent(pRenderComponent);
 	newEnemy->AddComponent(pPosComponent);
-	pPosComponent->ChangeCube(m_pPyramid->GetCube(1, rand() % 2), false);
+	pPosComponent->SpawnOnCube(m_pPyramid->GetCube(1, rand() % 2));
 	scene->Add(newEnemy);
 	m_SpawnSlick = !m_SpawnSlick;
 }

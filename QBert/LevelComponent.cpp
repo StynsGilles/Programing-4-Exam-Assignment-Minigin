@@ -156,7 +156,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 			auto* pLeftCube = GetNextCubeNeutral(pCube, 1, 0);
 			if (pLeftCube && pLeftCube->entity)
 			{
-				if (pCube->entity->GetComponent<QBertComponent>())
+				if (pLeftCube->entity->GetComponent<QBertComponent>())
 					QBertOnCube = true;
 				else
 				{
@@ -173,7 +173,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 			auto* pRightCube = GetNextCubeNeutral(pCube, 1, 1);
 			if (pRightCube && pRightCube->entity)
 			{
-				if (pCube->entity->GetComponent<QBertComponent>())
+				if (pRightCube->entity->GetComponent<QBertComponent>())
 					QBertOnCube = true;
 				else
 				{
@@ -209,7 +209,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 }
 
 dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange, 
-	bool& fellOfPyramid, bool& positiveChange)
+	bool& fellOfPyramid, bool& positiveChange, bool& isOccupied)
 {	
 	auto* pCube = GetNextCubeNeutral(pCurrentCube, rowChange, colChange);
 	
@@ -221,6 +221,9 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 
 	if (pCube)
 	{
+		if (pCube->entity)
+			isOccupied = true;
+		
 		positiveChange = UpdateCubeColor(pCube);
 		return pCube;
 	}

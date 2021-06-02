@@ -22,6 +22,7 @@ namespace dae
 
 		void Update() override;
 		void Render() const override;
+		void SpawnOnCube(LevelCube* pNewCube);
 		void ChangeCube(LevelCube* pNewCube, bool QBertOnCube);
 		LevelCube* GetCurrentCube() const;
 		EnemyType GetEnemyType() const;

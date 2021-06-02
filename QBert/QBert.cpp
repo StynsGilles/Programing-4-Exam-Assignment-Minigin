@@ -121,7 +121,7 @@ void LoadGame()
 	QBert->AddComponent(pQBertLivesComponent);
 	QBert->AddComponent(pQBertScoreComponent);
 	QBert->AddComponent(pQBertSubjectComponent);
-	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false);
+	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false, false);
 	pQBertSubjectComponent->AddObserver(pPlayerObserver);
 	scene.Add(QBert);
 

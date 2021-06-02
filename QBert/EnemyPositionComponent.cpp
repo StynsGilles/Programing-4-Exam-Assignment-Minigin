@@ -28,6 +28,25 @@ void dae::EnemyPositionComponent::Render() const
 {
 }
 
+void dae::EnemyPositionComponent::SpawnOnCube(LevelCube* pNewCube)
+{
+	bool QBertOnCube{};
+
+	switch (m_EnemyType)
+	{
+	case EnemyType::top:
+		if (pNewCube && pNewCube->entity && pNewCube->entity->GetComponent<QBertComponent>())
+			QBertOnCube = true;
+		break;
+	case EnemyType::left:
+	case EnemyType::right:
+	default:
+		QBertOnCube = false;
+		break;
+	}
+	ChangeCube(pNewCube, QBertOnCube);
+}
+
 void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCube)
 {
 	RemoveFromCurrentCube();
@@ -41,16 +60,13 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 			auto scene = SceneManager::GetInstance().GetCurrentScene();
 			auto qbert = scene->GetComponentOfType<QBertComponent>();
 			
-			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp))
-			{
-				if (qbert)
-					qbert->KillGreen();
-				
-				m_pObject->Delete();
-				return;
-			}
-			if (qbert)
+			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp) && qbert)
+				qbert->KillGreen();
+			else if (qbert)
 				qbert->GetGameObject()->GetComponent<LivesComponent>()->LoseLives(1);
+			
+			m_pObject->Delete();
+			return;
 		}
 		
 		SDL_Rect dst;

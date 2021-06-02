@@ -12,7 +12,7 @@ namespace dae
 
 		void Update() override;
 		void Render() const override;
-		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange);
+		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange, bool isOccupied);
 		LevelCube* GetCurrentCube() const;
 		void KillGreen() const;
     	

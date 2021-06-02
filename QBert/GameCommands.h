@@ -136,10 +136,11 @@ public:
 
                 bool fellOf = false;
                 bool positiveChange = false;
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, 0, fellOf, positiveChange);
+                bool isOccupied = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, 0, fellOf, positiveChange, isOccupied);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
 	        }
         }
     };
@@ -176,10 +177,11 @@ public:
 
                 bool fellOf = false;
                 bool positiveChange = false;
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 1, fellOf, positiveChange);
+                bool isOccupied = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 1, fellOf, positiveChange, isOccupied);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
             }
         }
     };
@@ -216,10 +218,11 @@ public:
 
                 bool fellOf = false;
                 bool positiveChange = false;
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, -1, fellOf, positiveChange);
+                bool isOccupied = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, -1, -1, fellOf, positiveChange, isOccupied);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
             }
         }
     };
@@ -256,10 +259,11 @@ public:
 
                 bool fellOf = false;
                 bool positiveChange = false;
-                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 0,fellOf, positiveChange);
+                bool isOccupied = false;
+                auto* pNextCube = pLevelComp->GetNextCube(pCurrentCube, 1, 0,fellOf, positiveChange, isOccupied);
 
                 if (pNextCube)
-                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange);
+                    pQBertComp->ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
             }
         }
     };
