@@ -1,11 +1,11 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseSpawnerComponent.h"
 
 namespace dae
 {
 	class LevelComponent;
 	
-	class UggAndWrongSpawnerComponent final : public BaseComponent
+	class UggAndWrongSpawnerComponent final : public BaseSpawnerComponent
 	{
 	public:
 		UggAndWrongSpawnerComponent(LevelComponent* pPyramid);
@@ -20,12 +20,8 @@ namespace dae
 		UggAndWrongSpawnerComponent& operator=(UggAndWrongSpawnerComponent&& other) = delete;
 
 	private:
-		LevelComponent* m_pPyramid = nullptr;
-
-		const float m_SpawnInterval = 10.f;
-		float m_SpawnTimer = 0.f;
 		bool m_SpawnUgg = true;
 		
-		void SpawnEnemy();
+		void SpawnEnemy() override;
 	};
 }

@@ -68,6 +68,12 @@
     <ClCompile Include="EntityComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="BaseSpawnerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilySpawnerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -116,6 +122,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="EntityComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSpawnerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilySpawnerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

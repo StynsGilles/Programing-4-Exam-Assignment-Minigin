@@ -18,11 +18,32 @@ namespace dae
 		std::string	GetName() const;
 
 		template <typename T>
+		T* GetComponentOfType() const
+		{
+			for (auto object : m_Objects)
+			{
+				T* pComp = object->GetComponent<T>();
+				if (pComp) return pComp;
+			}
+			return nullptr;
+		}
+		
+		template <typename T>
 		std::shared_ptr<GameObject> GetObjectOfType() const
 		{
 			for (auto object : m_Objects)
 				if (object->GetComponent<T>()) return object;
 			return nullptr;
+		}
+
+		template <typename T>
+		std::vector<std::shared_ptr<GameObject>> GetAllObjectsOfType() const
+		{
+			std::vector<std::shared_ptr<GameObject>> objectsOfType;
+			for (auto object : m_Objects)
+				if (object->GetComponent<T>()) objectsOfType.push_back(object);
+
+			return objectsOfType;
 		}
 		
 		~Scene();

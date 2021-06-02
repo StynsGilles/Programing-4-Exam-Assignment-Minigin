@@ -6,6 +6,10 @@
 #include "ScoreComponent.h"
 #include <TextComponent.h>
 
+#include "LevelComponent.h"
+#include "Scene.h"
+#include "SceneManager.h"
+
 dae::PlayerObserver::PlayerObserver()
 	: Observer()
 {
@@ -20,7 +24,12 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 	switch (event)
 	{
 	case Event::PlayerDied:
+	{
+		auto scene = SceneManager::GetInstance().GetCurrentScene();
+		auto level = scene->GetComponentOfType<LevelComponent>();
+		level->ClearBoard();
 		UpdateLivesText(pEntity);
+	}
 		break;
 	case Event::PlayerLostHP:
 		UpdateHealthText(pEntity);

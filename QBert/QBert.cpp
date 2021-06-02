@@ -25,6 +25,7 @@
 #include "QBertComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
 #include "CoilyComponent.h"
+#include "CoilySpawnerComponent.h"
 #include "EnemyPositionComponent.h"
 
 void LoadGame();
@@ -89,27 +90,22 @@ void LoadGame()
 
 	//Enemies
 	//Slick and Sam spawner
-	auto SandSSpawner = std::make_shared<dae::GameObject>();
+	auto pSAndSSpawner = std::make_shared<dae::GameObject>();
 	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent);
-	SandSSpawner->AddComponent(pSandSSpawnComponent);
-	scene.Add(SandSSpawner);
+	pSAndSSpawner->AddComponent(pSandSSpawnComponent);
+	scene.Add(pSAndSSpawner);
 
 	//Ugg + Wrong way spawner
-	auto UandWSpawner = std::make_shared<dae::GameObject>();
+	auto pUAndWSpawner = std::make_shared<dae::GameObject>();
 	auto* pUandWSpawnComponent = new dae::UggAndWrongSpawnerComponent(pLevelComponent);
-	UandWSpawner->AddComponent(pUandWSpawnComponent);
-	scene.Add(UandWSpawner);
+	pUAndWSpawner->AddComponent(pUandWSpawnComponent);
+	scene.Add(pUAndWSpawner);
 
-	//Coily
-	auto coily = std::make_shared<dae::GameObject>();
-	auto* pCoilyRenderComp = new dae::RenderComponent("Coily_Egg.png");
-	auto* pCoilyPosComp = new dae::EnemyPositionComponent(dae::EnemyType::top, pLevelComponent);
-	auto* pCoilyComp = new dae::CoilyComponent(pLevelComponent);
-	coily->AddComponent(pCoilyRenderComp);
-	coily->AddComponent(pCoilyPosComp);
-	coily->AddComponent(pCoilyComp);
-	pCoilyPosComp->ChangeCube(pLevelComponent->GetCube(2, 1));
-	scene.Add(coily);
+	//Coily spawner
+	auto pCoilySpawner = std::make_shared<dae::GameObject>();
+	auto* pCoilyspawnComponent = new dae::CoilySpawnerComponent(pLevelComponent);
+	pCoilySpawner->AddComponent(pCoilyspawnComponent);
+	scene.Add(pCoilySpawner);
 	
 	//Player
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();

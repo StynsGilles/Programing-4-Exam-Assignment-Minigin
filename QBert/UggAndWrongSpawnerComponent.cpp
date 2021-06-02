@@ -10,7 +10,7 @@
 #include <Scene.h>
 
 dae::UggAndWrongSpawnerComponent::UggAndWrongSpawnerComponent(LevelComponent* pPyramid)
-	: m_pPyramid(pPyramid)
+	: BaseSpawnerComponent(pPyramid)
 {
 }
 
@@ -20,13 +20,7 @@ dae::UggAndWrongSpawnerComponent::~UggAndWrongSpawnerComponent()
 
 void dae::UggAndWrongSpawnerComponent::Update()
 {
-	m_SpawnTimer += GameTime::GetInstance().GetDeltaTime();
-
-	if (m_SpawnTimer >= m_SpawnInterval)
-	{
-		SpawnEnemy();
-		m_SpawnTimer = 0.f;
-	}
+	BaseSpawnerComponent::Update();
 }
 
 void dae::UggAndWrongSpawnerComponent::SpawnEnemy()

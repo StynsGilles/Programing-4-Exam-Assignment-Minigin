@@ -191,7 +191,9 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseSpawnerComponent.cpp" />
     <ClCompile Include="CoilyComponent.cpp" />
+    <ClCompile Include="CoilySpawnerComponent.cpp" />
     <ClCompile Include="EnemyPositionComponent.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
     <ClCompile Include="SlickAndSamSpawnerComponent.cpp" />
@@ -214,7 +216,9 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="UggAndWrongSpawnerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseSpawnerComponent.h" />
     <ClInclude Include="CoilyComponent.h" />
+    <ClInclude Include="CoilySpawnerComponent.h" />
     <ClInclude Include="EnemyPositionComponent.h" />
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="SlickAndSamSpawnerComponent.h" />

@@ -1,11 +1,11 @@
 #pragma once
-#include <BaseComponent.h>
+#include "BaseSpawnerComponent.h"
 
 namespace dae
 {
 	class LevelComponent;
 
-	class SlickAndSamSpawnerComponent final : public BaseComponent
+	class SlickAndSamSpawnerComponent final : public BaseSpawnerComponent
 	{
 	public:
 		SlickAndSamSpawnerComponent(LevelComponent* pPyramid);
@@ -20,13 +20,8 @@ namespace dae
 		SlickAndSamSpawnerComponent& operator=(SlickAndSamSpawnerComponent&& other) = delete;
 
 	private:
-		LevelComponent* m_pPyramid = nullptr;
-
-		const float m_SpawnInterval = 10.f;
-		float m_SpawnTimer = 0.f;
-
 		bool m_SpawnSlick = true;
 
-		void SpawnEnemy();
+		void SpawnEnemy() override;
 	};
 }
