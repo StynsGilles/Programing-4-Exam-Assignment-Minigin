@@ -74,6 +74,9 @@
     <ClCompile Include="CoilySpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="PlateComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -128,6 +131,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="CoilySpawnerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlateComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

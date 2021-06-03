@@ -11,6 +11,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "ScoreComponent.h"
 
 dae::LevelComponent::LevelComponent(const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
 {
@@ -313,6 +314,8 @@ void dae::LevelComponent::CheckLevelFinished()
 	m_LevelFinished = levelFinished;
 	if (m_LevelFinished)
 	{
-		std::cout << "Congratulations!" << std::endl;
+		auto qbert = SceneManager::GetInstance().GetCurrentScene()->GetComponentOfType<QBertComponent>();
+		if (qbert)
+			qbert->FinishLevel();
 	}
 }

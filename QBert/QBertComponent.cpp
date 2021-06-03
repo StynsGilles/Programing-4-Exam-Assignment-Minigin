@@ -75,6 +75,11 @@ void dae::QBertComponent::KillGreen() const
 	m_pObject->GetComponent<ScoreComponent>()->AddToScore(m_ScoreSlAndSaDefeat);
 }
 
+void dae::QBertComponent::FinishLevel() const
+{
+	std::cout << "Congratulations!" << std::endl;
+}
+
 void dae::QBertComponent::UpdatePosition(const glm::vec3& nextPosition)
 {
 	m_pObject->SetPosition(nextPosition.x, nextPosition.y);

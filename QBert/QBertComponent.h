@@ -15,6 +15,7 @@ namespace dae
 		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange, bool isOccupied);
 		LevelCube* GetCurrentCube() const;
 		void KillGreen() const;
+		void FinishLevel() const;
     	
 		QBertComponent(const QBertComponent& other) = delete;
 		QBertComponent(QBertComponent&& other) = delete;
