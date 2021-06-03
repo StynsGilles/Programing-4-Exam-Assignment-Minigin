@@ -101,6 +101,9 @@ void dae::QBertComponent::AwardScore(int amount) const
 void dae::QBertComponent::FinishLevel() const
 {
 	std::cout << "Congratulations!" << std::endl;
+	auto scene = SceneManager::GetInstance().GetCurrentScene();
+	auto plates = scene->GetAllObjectsOfType<PlateComponent>();
+	AwardScore(plates.size() * m_ScoreRemainingDisc);
 }
 
 void dae::QBertComponent::Move(int rowChange, int colChange)
@@ -115,7 +118,6 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 
 		if (pPlate)
 		{
-			std::cout << "plate found" << std::endl;
 			ModifyCoilyBehavior(pPlate);
 			pPlate->GetGameObject()->Delete();
 		}
@@ -126,7 +128,6 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 
 void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate)
 {
-	std::cout << "modifying coily behavior" << std::endl;
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 
 	auto pCoily = scene->GetComponentOfType<CoilyComponent>();

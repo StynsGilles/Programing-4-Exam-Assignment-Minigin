@@ -326,8 +326,8 @@ bool dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
 	}
 	else if ((size_t)m_pCube->stage + 1 < m_pCube->pCubeTextures.size())
 	{
-		CheckLevelFinished();
 		m_pCube->stage++;
+		CheckLevelFinished();
 		return true;
 	}
 	return false;
@@ -347,8 +347,9 @@ void dae::LevelComponent::CheckLevelFinished()
 	m_LevelFinished = levelFinished;
 	if (m_LevelFinished)
 	{
-		auto qbert = SceneManager::GetInstance().GetCurrentScene()->GetComponentOfType<QBertComponent>();
-		if (qbert)
-			qbert->FinishLevel();
+		std::cout << "finished level" << std::endl;
+		auto* pQbert = SceneManager::GetInstance().GetCurrentScene()->GetComponentOfType<QBertComponent>();
+		if (pQbert)
+			pQbert->FinishLevel();
 	}
 }
