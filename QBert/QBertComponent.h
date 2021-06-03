@@ -7,7 +7,7 @@ namespace dae
     class QBertComponent final : public BaseComponent
     {
 	public:
-		QBertComponent();
+		QBertComponent(LevelComponent* pPyramid);
 		virtual ~QBertComponent();
 
 		void Update() override;
@@ -15,7 +15,10 @@ namespace dae
 		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange, bool isOccupied);
 		LevelCube* GetCurrentCube() const;
 		void KillGreen() const;
+		void KilledCoily() const;
+		void FlippedTile() const;
 		void FinishLevel() const;
+		void Move(int rowChange, int colChange);
     	
 		QBertComponent(const QBertComponent& other) = delete;
 		QBertComponent(QBertComponent&& other) = delete;
@@ -24,13 +27,16 @@ namespace dae
 
 	private:
 		LevelCube* m_pCurrentCube = nullptr;
-
+		LevelComponent* m_pPyramid = nullptr;
+    	
 		const int m_ScorePerCubeChange = 25;
 		const int m_ScoreCoilyDefeat = 500;
 		const int m_ScoreRemainingDisc = 50;
 		const int m_ScoreSlAndSaDefeat = 300;
-    	
+
+		void ModifyCoilyBehavior(PlateComponent* pPlate);
 		void UpdatePosition(const glm::vec3& nextPosition);
+		void AwardScore(int amount) const;
     };
 }
 

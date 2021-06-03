@@ -58,13 +58,13 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 		{
 			auto* pEntityComp = m_pObject->GetComponent<EntityComponent>();
 			auto scene = SceneManager::GetInstance().GetCurrentScene();
-			auto qbert = scene->GetComponentOfType<QBertComponent>();
+			auto* qbert = pNewCube->entity->GetComponent<QBertComponent>();
 			
 			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp) && qbert)
 				qbert->KillGreen();
 			else if (qbert)
 				qbert->GetGameObject()->GetComponent<LivesComponent>()->LoseLives(1);
-			
+
 			m_pObject->Delete();
 			return;
 		}

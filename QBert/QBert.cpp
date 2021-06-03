@@ -27,6 +27,7 @@
 #include "CoilyComponent.h"
 #include "CoilySpawnerComponent.h"
 #include "EnemyPositionComponent.h"
+#include "PlateComponent.h"
 
 void LoadGame();
 
@@ -88,6 +89,28 @@ void LoadGame()
 	pyramid->AddComponent(pLevelComponent);
 	scene.Add(pyramid);
 
+	const float plateWidth = 20.f;
+	
+	//Test Plate Left
+	auto leftPlate = std::make_shared<dae::GameObject>();
+	auto* pPlateLeftComp = new dae::PlateComponent(pLevelComponent, 3, dae::Side::left);
+	auto* pPlateLeftRenderComp = new dae::RenderComponent("Plate.png");
+	leftPlate->AddComponent(pPlateLeftComp);
+	leftPlate->AddComponent(pPlateLeftRenderComp);
+	pPlateLeftRenderComp->SetDimensions(plateWidth, plateWidth);
+	pPlateLeftComp->Initialize();
+	scene.Add(leftPlate);
+
+	//Test Plate Right
+	auto rightPlate = std::make_shared<dae::GameObject>();
+	auto* pPlateRightComp = new dae::PlateComponent(pLevelComponent, 3, dae::Side::right);
+	auto* pPlateRightRenderComp = new dae::RenderComponent("Plate.png");
+	rightPlate->AddComponent(pPlateRightComp);
+	rightPlate->AddComponent(pPlateRightRenderComp);
+	pPlateRightRenderComp->SetDimensions(plateWidth, plateWidth);
+	pPlateRightComp->Initialize();
+	scene.Add(rightPlate);
+	
 	//Enemies
 	//Slick and Sam spawner
 	auto pSAndSSpawner = std::make_shared<dae::GameObject>();
@@ -111,7 +134,7 @@ void LoadGame()
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
 	
 	auto QBert = std::make_shared<dae::GameObject>();
-	auto* pQBertComponent = new dae::QBertComponent();
+	auto* pQBertComponent = new dae::QBertComponent(pLevelComponent);
 	auto* pQBertRenderComponent = new dae::RenderComponent("Qbert.png");
 	auto* pQBertLivesComponent = new dae::LivesComponent(3);
 	auto* pQBertScoreComponent = new dae::ScoreComponent();
@@ -169,8 +192,8 @@ void LoadGame()
 	const dae::ActionInfo GoSouthWest{ dae::ControllerButton::Down, SDL_SCANCODE_S, dae::InputState::Up };
 
 	//Player 1
-	input.AddInput(0, GoNorthEast, new NorthEast(QBert, pyramid));
-	input.AddInput(0, GoNorthWest, new NorthWest(QBert, pyramid));
-	input.AddInput(0, GoSouthEast, new SouthEast(QBert, pyramid));
-	input.AddInput(0, GoSouthWest, new SouthWest(QBert, pyramid));
+	input.AddInput(0, GoNorthEast, new NorthEast(QBert));
+	input.AddInput(0, GoNorthWest, new NorthWest(QBert));
+	input.AddInput(0, GoSouthEast, new SouthEast(QBert));
+	input.AddInput(0, GoSouthWest, new SouthWest(QBert));
 }

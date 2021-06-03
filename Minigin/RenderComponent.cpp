@@ -49,3 +49,13 @@ void dae::RenderComponent::SetDimensions(float width, float height)
 	m_Height = height;
 	m_DimensionsSet = true;
 }
+
+float dae::RenderComponent::GetWidth() const
+{
+	return m_Width;
+}
+
+float dae::RenderComponent::GetHeight() const
+{
+	return m_Height;
+}

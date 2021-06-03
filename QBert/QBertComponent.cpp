@@ -2,13 +2,17 @@
 #include "QBertComponent.h"
 #include <SDL_render.h>
 
+#include "CoilyComponent.h"
 #include "EntityComponent.h"
 #include "GameObject.h"
 #include "LivesComponent.h"
+#include "SceneManager.h"
+#include "Scene.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
 
-dae::QBertComponent::QBertComponent()
+dae::QBertComponent::QBertComponent(LevelComponent* pPyramid)
+	: m_pPyramid(pPyramid)
 {
 }
 
@@ -32,25 +36,27 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
-		if (isOccupied)
+		if (isOccupied && m_pCurrentCube->entity)
 		{
 			auto* pEntityComp = m_pCurrentCube->entity->GetComponent<EntityComponent>();
 
 			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp))
 			{
 				KillGreen();
-
 				m_pCurrentCube->entity->Delete();
 			}
 			else
-				m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+			{
+				if (!m_pCurrentCube->entity->GetMarkedForDeletion())
+					m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+			}
 		}
 
 		if (fellOf)
 			m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
 
 		if (positiveChange)
-			m_pObject->GetComponent<ScoreComponent>()->AddToScore(m_ScorePerCubeChange);
+			FlippedTile();
 
 		m_pCurrentCube->entity = m_pObject;
 
@@ -72,12 +78,59 @@ dae::LevelCube* dae::QBertComponent::GetCurrentCube() const
 
 void dae::QBertComponent::KillGreen() const
 {
-	m_pObject->GetComponent<ScoreComponent>()->AddToScore(m_ScoreSlAndSaDefeat);
+	AwardScore(m_ScoreSlAndSaDefeat);
+}
+
+void dae::QBertComponent::KilledCoily() const
+{
+	AwardScore(m_ScoreCoilyDefeat);
+}
+
+void dae::QBertComponent::FlippedTile() const
+{
+	AwardScore(m_ScorePerCubeChange);
+}
+
+void dae::QBertComponent::AwardScore(int amount) const
+{
+	auto* score = m_pObject->GetComponent<ScoreComponent>();
+	if (score)
+		score->AddToScore(amount);
 }
 
 void dae::QBertComponent::FinishLevel() const
 {
 	std::cout << "Congratulations!" << std::endl;
+}
+
+void dae::QBertComponent::Move(int rowChange, int colChange)
+{
+	if (m_pPyramid)
+	{
+		bool fellOf = false;
+		bool positiveChange = false;
+		bool isOccupied = false;
+		PlateComponent* pPlate = nullptr;
+		auto* pNextCube = m_pPyramid->GetNextCube(m_pCurrentCube, rowChange, colChange, fellOf, positiveChange, isOccupied, pPlate);
+
+		if (pPlate)
+		{
+			std::cout << "plate found" << std::endl;
+			ModifyCoilyBehavior(pPlate);
+			pPlate->GetGameObject()->Delete();
+		}
+		
+		if (pNextCube) ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
+	}
+}
+
+void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate)
+{
+	std::cout << "modifying coily behavior" << std::endl;
+	auto scene = SceneManager::GetInstance().GetCurrentScene();
+
+	auto pCoily = scene->GetComponentOfType<CoilyComponent>();
+	if (pCoily) pCoily->SetTarget(pPlate, m_pCurrentCube);
 }
 
 void dae::QBertComponent::UpdatePosition(const glm::vec3& nextPosition)

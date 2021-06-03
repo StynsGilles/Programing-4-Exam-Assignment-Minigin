@@ -16,6 +16,8 @@ namespace dae
         void SetTexture(const std::string& filename);
         void SetTexture(std::shared_ptr<Texture2D> texture);
         void SetDimensions(float width, float height);
+        float GetWidth() const;
+        float GetHeight() const;
     	
         RenderComponent(const RenderComponent& other) = delete;
         RenderComponent(RenderComponent&& other) = delete;

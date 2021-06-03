@@ -27,6 +27,19 @@ namespace dae
 			}
 			return nullptr;
 		}
+
+		template<typename T>
+		std::vector<T*> GetAllComponentsOfType() const
+		{
+			std::vector<T*> pComponentsOfType;
+			for (auto object : m_Objects)
+			{
+				T* pComp = object->GetComponent<T>();
+				if (pComp) pComponentsOfType.push_back(pComp);
+			}
+
+			return pComponentsOfType;
+		}
 		
 		template <typename T>
 		std::shared_ptr<GameObject> GetObjectOfType() const

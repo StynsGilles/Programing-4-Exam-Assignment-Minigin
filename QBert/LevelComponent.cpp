@@ -11,7 +11,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
-#include "ScoreComponent.h"
+#include "PlateComponent.h"
 
 dae::LevelComponent::LevelComponent(const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
 {
@@ -43,8 +43,7 @@ dae::LevelComponent::LevelComponent(const std::string& initialColor, const std::
 
 dae::LevelComponent::LevelComponent(const std::string& initialColor, const std::string& finalColor, bool reversible)
 	:LevelComponent(initialColor, finalColor, "", reversible)
-{
-}
+{}
 
 dae::LevelComponent::~LevelComponent()
 {
@@ -210,13 +209,13 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 }
 
 dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange, 
-	bool& fellOfPyramid, bool& positiveChange, bool& isOccupied)
+	bool& fellOfPyramid, bool& positiveChange, bool& isOccupied, PlateComponent*& pJumpedOnPlate)
 {	
 	auto* pCube = GetNextCubeNeutral(pCurrentCube, rowChange, colChange);
 	
 	if (pCube == nullptr)
 	{
-		fellOfPyramid = true;
+		fellOfPyramid = CheckIfJumpedOnPlate(pCurrentCube, rowChange, colChange, pJumpedOnPlate);
 		return GetTopCube();
 	}
 
@@ -229,8 +228,42 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 		return pCube;
 	}
 	
-	fellOfPyramid = true;
+	fellOfPyramid = CheckIfJumpedOnPlate(pCurrentCube, rowChange, colChange, pJumpedOnPlate);
+	if (pJumpedOnPlate) std::cout << " found the plate!" << std::endl;
 	return GetTopCube();
+}
+
+bool dae::LevelComponent::CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate)
+{
+	if (rowChange == -1)
+	{
+		auto pAllPlates = SceneManager::GetInstance().GetCurrentScene()->GetAllComponentsOfType<PlateComponent>();
+		int newRow = GetRowOfCube(pCurrentCube) + rowChange;
+		Side sideNeeded{};
+
+		switch (colChange)
+		{
+		case -1:
+			sideNeeded = Side::left;
+			break;
+		case 0:
+			sideNeeded = Side::right;
+			break;
+		default:
+			break;
+		}
+
+		for (auto* plate : pAllPlates)
+		{
+			if (newRow == plate->GetRow() && sideNeeded == plate->GetSide())
+			{
+				std::cout << "jumped on plate" << std::endl;
+				pJumpedOnPlate = plate;
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 dae::LevelCube* dae::LevelComponent::GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const

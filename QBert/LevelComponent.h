@@ -4,6 +4,7 @@
 
 namespace dae
 {
+	class PlateComponent;
 	enum class EnemyType;
 
 	struct LevelCube
@@ -12,7 +13,6 @@ namespace dae
 		glm::vec3 position;
 		int stage = 0;
 		bool reversible = false;
-		//std::weak_ptr<GameObject> entity;
 		GameObject* entity = nullptr;
 	};
 	
@@ -34,7 +34,8 @@ namespace dae
 		LevelCube* GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool& isOccupied, const EnemyType& enemyType,
 			bool& QBertOnCube, bool isSlickOrSam = false) const;
 		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange,
-			bool& fellOfPyramid, bool& positiveChange, bool& isOccupied);
+			bool& fellOfPyramid, bool& positiveChange, bool& isOccupied, PlateComponent*& pJumpedOnPlate);
+		bool CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate);
 		LevelCube* GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const;
 		void ClearBoard();
 		
