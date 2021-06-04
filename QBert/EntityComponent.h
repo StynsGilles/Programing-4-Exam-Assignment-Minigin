@@ -23,11 +23,12 @@ namespace dae
 	protected:
 		LevelComponent* m_pPyramid = nullptr;
 
-		const float m_JumpInterval = 2.f;
+		float m_JumpInterval = 2.f;
 		float m_JumpTimer = 0.f;
 
 		void JumpUpdate();
 		virtual void Jump() = 0;
 		void JumpRandomDownwards(bool isSlickOrSam = false);
+		void SetJumpRate(float jumpInterval);
     };
 }

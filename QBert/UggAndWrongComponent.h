@@ -8,7 +8,7 @@ namespace dae
 	class UggAndWrongComponent final : public EntityComponent
 	{
 	public:
-		UggAndWrongComponent(LevelComponent* pPyramid);
+		UggAndWrongComponent(LevelComponent* pPyramid, float jumpInterval);
 		virtual ~UggAndWrongComponent();
 
 		void Update() override;

@@ -9,9 +9,11 @@
 #include "GameTime.h"
 #include "Scene.h"
 
-dae::SlickAndSamSpawnerComponent::SlickAndSamSpawnerComponent(LevelComponent* pPyramid)
+dae::SlickAndSamSpawnerComponent::SlickAndSamSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown)
 	: BaseSpawnerComponent(pPyramid)
 {
+	SetSpawnRate(spawnInterval);
+	SetJumpRateEntity(jumpCooldown);
 }
 
 dae::SlickAndSamSpawnerComponent::~SlickAndSamSpawnerComponent()
@@ -27,7 +29,7 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy()
 {
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 	auto newEnemy = std::make_shared<GameObject>();
-	auto* pSandSComponent = new SlickAndSamComponent(m_pPyramid);
+	auto* pSandSComponent = new SlickAndSamComponent(m_pPyramid, m_JumpCooldownEntity);
 	auto* pPosComponent = new EnemyPositionComponent(EnemyType::top, m_pPyramid);
 	RenderComponent* pRenderComponent;
 	if (m_SpawnSlick)

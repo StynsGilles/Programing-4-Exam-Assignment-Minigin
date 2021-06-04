@@ -24,10 +24,9 @@
 #include "PlayerObserver.h"
 #include "QBertComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
-#include "CoilyComponent.h"
 #include "CoilySpawnerComponent.h"
-#include "EnemyPositionComponent.h"
 #include "PlateComponent.h"
+#include "LevelParser.h"
 
 void LoadGame();
 
@@ -45,6 +44,36 @@ int main(int, char* [])
  */
 void LoadGame()
 {
+	//load level from file
+	
+	//gamerules
+	bool revertible;
+	std::vector<std::string> colors{ "Pink", "Yellow"};
+	//levelData
+	int pyramidSize = 7;
+	std::vector<int> plateRows{ 3 };
+	//QBertData
+	int qbertLives = 3;
+	float jumpCooldownQBert = 0.5f;
+	//SlickAndSamData
+	float spawnIntervalSlick = 10.f;
+	float jumpCooldownSlick = 1.f;
+	//UggAndWrongwayData
+	float spawnIntervalUgg = 10.f;
+	float jumpCooldownUgg = 1.f;
+	//CoilyData
+	float spawnIntervalCoily = 10.f;
+	float jumpCooldownCoily = 1.f;
+	
+	dae::LevelParser::LoadLevel(L"../Data/LevelData/Level1.json",
+		revertible, colors,
+		pyramidSize, plateRows,
+		qbertLives, jumpCooldownQBert,
+		spawnIntervalSlick, jumpCooldownSlick,
+		spawnIntervalUgg, jumpCooldownUgg,
+		spawnIntervalCoily, jumpCooldownCoily
+	);
+	
 	// tell the resource manager where he can find the game data
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SoundSystem>());
 	auto& scene = dae::SceneManager::GetInstance().CreateScene("Demo");
@@ -85,48 +114,56 @@ void LoadGame()
 
 	//Level
 	auto pyramid = std::make_shared<dae::GameObject>();
-	auto* pLevelComponent = new dae::LevelComponent("Pink", "Yellow");
+	dae::LevelComponent* pLevelComponent = nullptr;
+	if (colors.size() == 2)
+		pLevelComponent = new dae::LevelComponent(pyramidSize, colors[0], colors[1], revertible);
+	else if(colors.size() == 3)
+		pLevelComponent = new dae::LevelComponent(pyramidSize, colors[0], colors[2], colors[1], revertible);
+
 	pyramid->AddComponent(pLevelComponent);
 	scene.Add(pyramid);
 
 	const float plateWidth = 20.f;
-	
-	//Test Plate Left
-	auto leftPlate = std::make_shared<dae::GameObject>();
-	auto* pPlateLeftComp = new dae::PlateComponent(pLevelComponent, 3, dae::Side::left);
-	auto* pPlateLeftRenderComp = new dae::RenderComponent("Plate.png");
-	leftPlate->AddComponent(pPlateLeftComp);
-	leftPlate->AddComponent(pPlateLeftRenderComp);
-	pPlateLeftRenderComp->SetDimensions(plateWidth, plateWidth);
-	pPlateLeftComp->Initialize();
-	scene.Add(leftPlate);
 
-	//Test Plate Right
-	auto rightPlate = std::make_shared<dae::GameObject>();
-	auto* pPlateRightComp = new dae::PlateComponent(pLevelComponent, 3, dae::Side::right);
-	auto* pPlateRightRenderComp = new dae::RenderComponent("Plate.png");
-	rightPlate->AddComponent(pPlateRightComp);
-	rightPlate->AddComponent(pPlateRightRenderComp);
-	pPlateRightRenderComp->SetDimensions(plateWidth, plateWidth);
-	pPlateRightComp->Initialize();
-	scene.Add(rightPlate);
+	for (size_t idx=0; idx< plateRows.size(); ++idx)
+	{
+		//Test Plate Left
+		auto leftPlate = std::make_shared<dae::GameObject>();
+		auto* pPlateLeftComp = new dae::PlateComponent(pLevelComponent, plateRows[idx], dae::Side::left);
+		auto* pPlateLeftRenderComp = new dae::RenderComponent("Plate.png");
+		leftPlate->AddComponent(pPlateLeftComp);
+		leftPlate->AddComponent(pPlateLeftRenderComp);
+		pPlateLeftRenderComp->SetDimensions(plateWidth, plateWidth);
+		pPlateLeftComp->Initialize();
+		scene.Add(leftPlate);
+
+		//Test Plate Right
+		auto rightPlate = std::make_shared<dae::GameObject>();
+		auto* pPlateRightComp = new dae::PlateComponent(pLevelComponent, plateRows[idx], dae::Side::right);
+		auto* pPlateRightRenderComp = new dae::RenderComponent("Plate.png");
+		rightPlate->AddComponent(pPlateRightComp);
+		rightPlate->AddComponent(pPlateRightRenderComp);
+		pPlateRightRenderComp->SetDimensions(plateWidth, plateWidth);
+		pPlateRightComp->Initialize();
+		scene.Add(rightPlate);
+	}
 	
 	//Enemies
 	//Slick and Sam spawner
 	auto pSAndSSpawner = std::make_shared<dae::GameObject>();
-	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent);
+	auto* pSandSSpawnComponent = new dae::SlickAndSamSpawnerComponent(pLevelComponent, spawnIntervalSlick, jumpCooldownSlick);
 	pSAndSSpawner->AddComponent(pSandSSpawnComponent);
 	scene.Add(pSAndSSpawner);
 
 	//Ugg + Wrong way spawner
 	auto pUAndWSpawner = std::make_shared<dae::GameObject>();
-	auto* pUandWSpawnComponent = new dae::UggAndWrongSpawnerComponent(pLevelComponent);
+	auto* pUandWSpawnComponent = new dae::UggAndWrongSpawnerComponent(pLevelComponent, spawnIntervalUgg, jumpCooldownUgg);
 	pUAndWSpawner->AddComponent(pUandWSpawnComponent);
 	scene.Add(pUAndWSpawner);
 
 	//Coily spawner
 	auto pCoilySpawner = std::make_shared<dae::GameObject>();
-	auto* pCoilyspawnComponent = new dae::CoilySpawnerComponent(pLevelComponent);
+	auto* pCoilyspawnComponent = new dae::CoilySpawnerComponent(pLevelComponent, spawnIntervalCoily, jumpCooldownCoily);
 	pCoilySpawner->AddComponent(pCoilyspawnComponent);
 	scene.Add(pCoilySpawner);
 	
@@ -134,9 +171,9 @@ void LoadGame()
 	auto pPlayerObserver = std::make_shared<dae::PlayerObserver>();
 	
 	auto QBert = std::make_shared<dae::GameObject>();
-	auto* pQBertComponent = new dae::QBertComponent(pLevelComponent);
+	auto* pQBertComponent = new dae::QBertComponent(pLevelComponent, jumpCooldownQBert);
 	auto* pQBertRenderComponent = new dae::RenderComponent("Qbert.png");
-	auto* pQBertLivesComponent = new dae::LivesComponent(3);
+	auto* pQBertLivesComponent = new dae::LivesComponent(qbertLives);
 	auto* pQBertScoreComponent = new dae::ScoreComponent();
 	auto* pQBertSubjectComponent = new dae::SubjectComponent();
 	QBert->AddComponent(pQBertComponent);

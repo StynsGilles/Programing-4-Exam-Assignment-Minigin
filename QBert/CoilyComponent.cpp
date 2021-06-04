@@ -8,10 +8,11 @@
 #include "Scene.h"
 #include "SceneManager.h"
 
-dae::CoilyComponent::CoilyComponent(LevelComponent* pPyramid)
+dae::CoilyComponent::CoilyComponent(LevelComponent* pPyramid, float jumpInterval)
 	: m_State(CoilyState::egg)
 	, EntityComponent(pPyramid)
 {
+	SetJumpRate(jumpInterval);
 }
 
 dae::CoilyComponent::~CoilyComponent()
@@ -29,6 +30,9 @@ void dae::CoilyComponent::Render() const
 
 void dae::CoilyComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert)
 {
+	if (m_State == CoilyState::egg)
+		return;
+	
 	m_PlateRow = pPlate->GetRow();
 	m_PlateSide = pPlate->GetSide();
 	const auto rowColQbert = m_pPyramid->GetRowColOfCube(pCurrentCubeQbert);
@@ -46,6 +50,7 @@ void dae::CoilyComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurrentC
 			
 			while (!distanceCalced)
 			{
+				std::cout << "calcing path to qbert" << std::endl;
 				if (rowColQbert.first < rowColCoily.first &&
 					rowColQbert.second < rowColCoily.second)
 				{

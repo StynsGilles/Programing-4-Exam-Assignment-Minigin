@@ -4,9 +4,10 @@
 #include "GameObject.h"
 #include "LevelComponent.h"
 
-dae::SlickAndSamComponent::SlickAndSamComponent(LevelComponent* pPyramid)
+dae::SlickAndSamComponent::SlickAndSamComponent(LevelComponent* pPyramid, float jumpInterval)
 	: EntityComponent(pPyramid)
 {
+	SetJumpRate(jumpInterval);
 }
 
 dae::SlickAndSamComponent::~SlickAndSamComponent()

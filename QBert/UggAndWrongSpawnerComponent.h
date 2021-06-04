@@ -8,7 +8,7 @@ namespace dae
 	class UggAndWrongSpawnerComponent final : public BaseSpawnerComponent
 	{
 	public:
-		UggAndWrongSpawnerComponent(LevelComponent* pPyramid);
+		UggAndWrongSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown);
 		virtual ~UggAndWrongSpawnerComponent();
 
 		void Update() override;

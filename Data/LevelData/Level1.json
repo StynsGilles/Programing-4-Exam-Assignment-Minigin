@@ -1,0 +1,38 @@
+{
+	"gamerules": {
+		"textures": [{
+				"color": "Pink"
+			},
+			{
+				"color": "Yellow"
+			}
+		],
+		"revertible": false
+	},
+	"levelData": {
+		"pyramidSize": 10,
+		"plateRows": [{
+				"row": 1
+			},
+			{
+				"row": 4
+			}
+		]
+	},
+	"QBertData": {
+		"lives": 3,
+		"jumpCooldown": 0.5
+	},
+	"SlickAndSamData": {
+		"spawnInterval": 10.0,
+		"jumpCooldown": 1.0
+	},
+	"UggAndWrongwayData": {
+		"spawnInterval": 10.0,
+		"jumpCooldown": 1.0
+	},
+	"CoilyData": {
+		"spawnInterval": 10.0,
+		"jumpCooldown": 1.0
+	}
+}

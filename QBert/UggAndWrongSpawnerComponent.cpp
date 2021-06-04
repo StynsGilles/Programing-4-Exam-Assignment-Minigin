@@ -9,9 +9,11 @@
 #include "LevelComponent.h"
 #include <Scene.h>
 
-dae::UggAndWrongSpawnerComponent::UggAndWrongSpawnerComponent(LevelComponent* pPyramid)
+dae::UggAndWrongSpawnerComponent::UggAndWrongSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown)
 	: BaseSpawnerComponent(pPyramid)
 {
+	SetSpawnRate(spawnInterval);
+	SetJumpRateEntity(jumpCooldown);
 }
 
 dae::UggAndWrongSpawnerComponent::~UggAndWrongSpawnerComponent()
@@ -30,7 +32,7 @@ void dae::UggAndWrongSpawnerComponent::SpawnEnemy()
 	auto maxIndex = m_pPyramid->GetPyramidSize() - 1;
 
 	auto newEnemy = std::make_shared<GameObject>();
-	auto* pEnemyComp = new UggAndWrongComponent(m_pPyramid);
+	auto* pEnemyComp = new UggAndWrongComponent(m_pPyramid, m_JumpCooldownEntity);
 	newEnemy->AddComponent(pEnemyComp);
 	if (m_SpawnUgg)
 	{

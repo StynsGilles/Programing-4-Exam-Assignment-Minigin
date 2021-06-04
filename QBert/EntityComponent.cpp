@@ -52,3 +52,8 @@ void dae::EntityComponent::JumpRandomDownwards(bool isSlickOrSam)
 		}
 	}
 }
+
+void dae::EntityComponent::SetJumpRate(float jumpInterval)
+{
+	m_JumpInterval = jumpInterval;
+}

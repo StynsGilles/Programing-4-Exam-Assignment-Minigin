@@ -5,14 +5,16 @@
 #include "CoilyComponent.h"
 #include "EntityComponent.h"
 #include "GameObject.h"
+#include "GameTime.h"
 #include "LivesComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
 
-dae::QBertComponent::QBertComponent(LevelComponent* pPyramid)
+dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval)
 	: m_pPyramid(pPyramid)
+	, m_JumpInterval(jumpInterval)
 {
 }
 
@@ -22,6 +24,15 @@ dae::QBertComponent::~QBertComponent()
 
 void dae::QBertComponent::Update()
 {
+	if (!m_CanJump)
+	{
+		m_JumpCoolDown -= GameTime::GetInstance().GetDeltaTime();
+		if (m_JumpCoolDown <= 0.f)
+		{
+			m_CanJump = true;
+			m_JumpCoolDown = m_JumpInterval;
+		}
+	}
 }
 
 void dae::QBertComponent::Render() const
@@ -108,6 +119,9 @@ void dae::QBertComponent::FinishLevel() const
 
 void dae::QBertComponent::Move(int rowChange, int colChange)
 {
+	if (!m_CanJump)
+		return;
+	
 	if (m_pPyramid)
 	{
 		bool fellOf = false;
@@ -123,6 +137,8 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 		}
 		
 		if (pNextCube) ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
+		
+		m_CanJump = false;
 	}
 }
 

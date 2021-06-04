@@ -7,7 +7,7 @@ namespace dae
     class QBertComponent final : public BaseComponent
     {
 	public:
-		QBertComponent(LevelComponent* pPyramid);
+		QBertComponent(LevelComponent* pPyramid, float jumpInterval);
 		virtual ~QBertComponent();
 
 		void Update() override;
@@ -28,6 +28,10 @@ namespace dae
 	private:
 		LevelCube* m_pCurrentCube = nullptr;
 		LevelComponent* m_pPyramid = nullptr;
+
+		bool m_CanJump = true;
+		const float m_JumpInterval;
+		float m_JumpCoolDown;
     	
 		const int m_ScorePerCubeChange = 25;
 		const int m_ScoreCoilyDefeat = 500;

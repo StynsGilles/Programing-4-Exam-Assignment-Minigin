@@ -222,6 +222,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="CoilySpawnerComponent.h" />
     <ClInclude Include="EnemyPositionComponent.h" />
     <ClInclude Include="EntityComponent.h" />
+    <ClInclude Include="LevelParser.h" />
     <ClInclude Include="PlateComponent.h" />
     <ClInclude Include="SlickAndSamSpawnerComponent.h" />
     <ClInclude Include="GameCommands.h" />

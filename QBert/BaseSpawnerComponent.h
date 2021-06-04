@@ -23,10 +23,14 @@ namespace dae
 	protected:
 		LevelComponent* m_pPyramid = nullptr;
 
-		const float m_SpawnInterval = 10.f;
+		float m_SpawnInterval = 10.f;
 		float m_SpawnTimer = 0.f;
+		float m_JumpCooldownEntity;
 
 		virtual void SpawnEnemy() = 0;
+
+		void SetSpawnRate(float spawnInterval);
+		void SetJumpRateEntity(float jumpCooldown);
 	};
 }
 

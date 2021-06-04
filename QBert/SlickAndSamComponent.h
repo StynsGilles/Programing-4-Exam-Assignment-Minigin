@@ -9,7 +9,7 @@ namespace dae
 	class SlickAndSamComponent  final : public EntityComponent
 	{
 	public:
-		SlickAndSamComponent(LevelComponent* pPyramid);
+		SlickAndSamComponent(LevelComponent* pPyramid, float jumpInterval);
 		virtual ~SlickAndSamComponent();
 
 		void Update() override;

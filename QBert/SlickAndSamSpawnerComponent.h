@@ -8,7 +8,7 @@ namespace dae
 	class SlickAndSamSpawnerComponent final : public BaseSpawnerComponent
 	{
 	public:
-		SlickAndSamSpawnerComponent(LevelComponent* pPyramid);
+		SlickAndSamSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown);
 		virtual ~SlickAndSamSpawnerComponent();
 
 		void Update() override;

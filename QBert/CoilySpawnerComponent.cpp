@@ -8,9 +8,11 @@
 #include "Scene.h"
 #include "LevelComponent.h"
 
-dae::CoilySpawnerComponent::CoilySpawnerComponent(LevelComponent* pPyramid)
+dae::CoilySpawnerComponent::CoilySpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown)
 	: BaseSpawnerComponent(pPyramid)
 {
+	SetSpawnRate(spawnInterval);
+	SetJumpRateEntity(jumpCooldown);
 }
 
 dae::CoilySpawnerComponent::~CoilySpawnerComponent()
@@ -35,7 +37,7 @@ void dae::CoilySpawnerComponent::SpawnEnemy()
 		auto coily = std::make_shared<GameObject>();
 		auto* pCoilyRenderComp = new RenderComponent("Coily_Egg.png");
 		auto* pCoilyPosComp = new EnemyPositionComponent(dae::EnemyType::top, m_pPyramid);
-		auto* pCoilyComp = new CoilyComponent(m_pPyramid);
+		auto* pCoilyComp = new CoilyComponent(m_pPyramid, m_JumpCooldownEntity);
 		coily->AddComponent(pCoilyRenderComp);
 		coily->AddComponent(pCoilyPosComp);
 		coily->AddComponent(pCoilyComp);

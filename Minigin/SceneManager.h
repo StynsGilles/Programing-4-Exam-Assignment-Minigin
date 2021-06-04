@@ -8,6 +8,7 @@ namespace dae
 	{
 	public:
 		Scene& CreateScene(const std::string& name);
+		void AddScene(std::shared_ptr<Scene> scene);
 		std::shared_ptr<dae::Scene> GetCurrentScene() const;
 		void SetActiveScene(const std::string& name);
 		void PreviousScene();

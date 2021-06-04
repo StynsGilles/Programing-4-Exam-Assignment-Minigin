@@ -18,6 +18,12 @@
     <Filter Include="Observers">
       <UniqueIdentifier>{f27e6f3b-3429-4df5-acca-7bc1646e25e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{c08119ba-ac2d-475a-a53d-4cf771b9c5e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileParser">
+      <UniqueIdentifier>{43a7c06a-18b4-4212-b54c-d3429a81f3c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LevelComponent.cpp">
@@ -135,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="PlateComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelParser.h">
+      <Filter>FileParser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

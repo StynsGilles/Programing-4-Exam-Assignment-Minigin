@@ -19,8 +19,8 @@ namespace dae
 	class LevelComponent final : public BaseComponent
 	{
 	public:
-		LevelComponent(const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
-		LevelComponent(const std::string& initialColor, const std::string& finalColor, bool reversible);
+		LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
+		LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, bool reversible);
 		virtual ~LevelComponent();
 
 		void Update() override;
@@ -45,8 +45,8 @@ namespace dae
 		LevelComponent& operator=(LevelComponent&& other) = delete;
 
 	private:
-		static const int m_PyramidSize = 7;
-		LevelCube* m_Pyramid[m_PyramidSize][m_PyramidSize];
+		int m_PyramidSize = 7;
+		std::vector<std::vector<LevelCube*>> m_Pyramid;
 		bool m_LevelFinished = false;
 
 		void GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange) const;

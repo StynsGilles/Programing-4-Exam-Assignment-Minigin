@@ -4,9 +4,10 @@
 #include "LevelComponent.h"
 #include <GameObject.h>
 
-dae::UggAndWrongComponent::UggAndWrongComponent(LevelComponent* pPyramid)
+dae::UggAndWrongComponent::UggAndWrongComponent(LevelComponent* pPyramid, float jumpInterval)
 	: EntityComponent(pPyramid)
 {
+	SetJumpRate(jumpInterval);
 }
 
 dae::UggAndWrongComponent::~UggAndWrongComponent()

@@ -21,8 +21,16 @@ dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
 {
 	const auto scene = std::shared_ptr<Scene>(new Scene(name));
 	m_Scenes.push_back(scene);
-	m_ActiveScene = scene;
+	if (!m_ActiveScene)
+		m_ActiveScene = scene;
 	return *scene;
+}
+
+void dae::SceneManager::AddScene(std::shared_ptr<Scene> scene)
+{
+	m_Scenes.push_back(scene);
+	if (!m_ActiveScene)
+		m_ActiveScene = scene;
 }
 
 std::shared_ptr<dae::Scene> dae::SceneManager::GetCurrentScene() const

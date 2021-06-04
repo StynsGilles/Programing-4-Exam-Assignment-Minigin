@@ -16,7 +16,7 @@ namespace dae
 	class CoilyComponent  final : public EntityComponent
 	{
 	public:
-		CoilyComponent(LevelComponent* pPyramid);
+		CoilyComponent(LevelComponent* pPyramid, float jumpInterval);
 		virtual ~CoilyComponent();
 
 		void Update() override;

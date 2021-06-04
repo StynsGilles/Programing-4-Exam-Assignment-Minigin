@@ -6,7 +6,7 @@ namespace dae
 	class CoilySpawnerComponent : public BaseSpawnerComponent
 	{
 	public:
-		CoilySpawnerComponent(LevelComponent* pPyramid);
+		CoilySpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown);
 		virtual ~CoilySpawnerComponent();
 
 		void Update() override;
