@@ -8,7 +8,8 @@ namespace dae
     {
         PlayerDied,
         PlayerLostHP,
-    	IncreaseScore
+    	IncreaseScore,
+    	LevelFinished
     };
 
     class Observer

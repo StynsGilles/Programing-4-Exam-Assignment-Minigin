@@ -17,7 +17,7 @@ namespace dae
 		void KillGreen() const;
 		void KilledCoily() const;
 		void FlippedTile() const;
-		void FinishLevel() const;
+		void FinishLevel();
 		void Move(int rowChange, int colChange);
     	
 		QBertComponent(const QBertComponent& other) = delete;

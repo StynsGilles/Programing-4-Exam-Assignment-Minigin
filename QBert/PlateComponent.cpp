@@ -24,21 +24,29 @@ void dae::PlateComponent::Initialize()
 	case Side::left:
 	{
 		auto* pCube = m_pPyramid->GetCube(m_Row, 0);
-		auto pPlatePos = pCube->position;
-		pPlatePos.x -= (m_pObject->GetComponent<RenderComponent>()->GetWidth() + 1);
-		pPlatePos.y += 10.f;
-		m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
+		if (pCube)
+		{
+			auto pPlatePos = pCube->position;
+			pPlatePos.x -= (m_pObject->GetComponent<RenderComponent>()->GetWidth() + 1);
+			pPlatePos.y += 10.f;
+			m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
+		}
+
 	}
 	break;
 	case Side::right:
 	{
 		auto* pCube = m_pPyramid->GetCube(m_Row, m_Row);
-		auto pPlatePos = pCube->position;
-		SDL_Rect dst;
-		SDL_QueryTexture(pCube->pCubeTextures[pCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-		pPlatePos.x += dst.w + 1;
-		pPlatePos.y += 10.f;
-		m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
+		if (pCube)
+		{
+
+			auto pPlatePos = pCube->position;
+			SDL_Rect dst;
+			SDL_QueryTexture(pCube->pCubeTextures[pCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+			pPlatePos.x += dst.w + 1;
+			pPlatePos.y += 10.f;
+			m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
+		}
 	}
 		break;
 	default:

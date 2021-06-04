@@ -7,10 +7,12 @@
 #include "GameObject.h"
 #include "GameTime.h"
 #include "LivesComponent.h"
+#include "Observer.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
+#include "SubjectComponent.h"
 
 dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval)
 	: m_pPyramid(pPyramid)
@@ -109,12 +111,13 @@ void dae::QBertComponent::AwardScore(int amount) const
 		score->AddToScore(amount);
 }
 
-void dae::QBertComponent::FinishLevel() const
-{
+void dae::QBertComponent::FinishLevel()
+{	
 	std::cout << "Congratulations!" << std::endl;
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 	auto plates = scene->GetAllObjectsOfType<PlateComponent>();
 	AwardScore(plates.size() * m_ScoreRemainingDisc);
+	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::LevelFinished);
 }
 
 void dae::QBertComponent::Move(int rowChange, int colChange)

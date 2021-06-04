@@ -2,6 +2,8 @@
 #include "InputManager.h"
 #include "GameTime.h"
 
+using CommandMap = std::map<dae::ActionInfo, std::unique_ptr<Command>>;
+
 bool dae::InputManager::ProcessInput()
 {
 	ProcessControllers();
@@ -127,4 +129,12 @@ void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& b
 	default:
 		break;
 	}
+}
+
+void dae::InputManager::ClearInputs()
+{
+	m_CommandsPlayer1.clear();
+	m_CommandsPlayer1 = std::map<ActionInfo, std::unique_ptr<Command>>();
+	m_CommandsPlayer2.clear();
+	m_CommandsPlayer2 = std::map<ActionInfo, std::unique_ptr<Command>>();
 }

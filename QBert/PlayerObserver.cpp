@@ -5,7 +5,6 @@
 #include "LivesComponent.h"
 #include "ScoreComponent.h"
 #include <TextComponent.h>
-
 #include "LevelComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
@@ -36,6 +35,9 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 		break;
 	case Event::IncreaseScore:
 		UpdateScoreText(pEntity);
+		break;
+	case Event::LevelFinished:
+		HandleFinishedLevel();
 		break;
 	default:
 		break;
@@ -76,6 +78,12 @@ void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 		const std::string scoreString = "Score: " + std::to_string(scoreComp->GetScore());
 		scoreText->SetText(scoreString);
 	}
+}
+
+void dae::PlayerObserver::HandleFinishedLevel()
+{
+	auto scene = SceneManager::GetInstance().GetCurrentScene();
+	scene->ResetScene();
 }
 
 void dae::PlayerObserver::SetHealthObject(std::shared_ptr<GameObject> pHealth)

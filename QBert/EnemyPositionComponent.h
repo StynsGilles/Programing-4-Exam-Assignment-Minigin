@@ -24,6 +24,7 @@ namespace dae
 		void Render() const override;
 		void SpawnOnCube(LevelCube* pNewCube);
 		void ChangeCube(LevelCube* pNewCube, bool QBertOnCube);
+		void RemoveFromCurrentCube();
 		LevelCube* GetCurrentCube() const;
 		EnemyType GetEnemyType() const;
 
@@ -38,7 +39,6 @@ namespace dae
 		LevelCube* m_pCurrentCube = nullptr;
 		EnemyType m_EnemyType;
 
-		void RemoveFromCurrentCube();
 		void UpdatePosition(const glm::vec3& nextPosition);
 	};
 }

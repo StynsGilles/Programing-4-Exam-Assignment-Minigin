@@ -51,7 +51,7 @@ namespace dae
 		return lhs.ControllerButton < rhs.ControllerButton;
 	};
 
-	class InputManager final : public Singleton<InputManager>
+	class InputManager final
 	{
 	public:
 		bool ProcessInput();
@@ -60,7 +60,8 @@ namespace dae
 		bool IsReleased(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
 		bool IsKeyDown(const SDL_Scancode& key) const;
 		void AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand);
-
+		void ClearInputs();
+	
 	private:
 		void ProcessControllers();
 		bool HandleKeyBoard();

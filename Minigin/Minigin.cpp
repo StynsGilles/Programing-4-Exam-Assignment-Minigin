@@ -10,7 +10,7 @@
 #include <SDL.h>
 #include "GameTime.h"
 #include "SoundSystem.h"
-#include "ServiceLocator.h"
+#include "Scene.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -61,16 +61,15 @@ void dae::Minigin::Run()
 
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	auto input = sceneManager.GetCurrentScene()->GetInputManager();
 	auto& time = GameTime::GetInstance();
-	//ServiceLocator::GetSoundSystem()->PlayMusic("../Data/Sounds/Menu.wav");
 
 	bool doContinue = true;
 	while (doContinue)
 	{
 		time.Update();
 
-		doContinue = input.ProcessInput();
+		doContinue = input->ProcessInput();
 		sceneManager.Update();
 		sceneManager.RemoveDeadObjects();
 

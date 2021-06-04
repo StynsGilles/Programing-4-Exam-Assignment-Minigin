@@ -289,10 +289,13 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeNeutral(LevelCube* pCurrentCube,
 void dae::LevelComponent::ClearBoard()
 {
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	auto enemies = scene->GetAllObjectsOfType<EntityComponent>();
+	auto enemies = scene->GetAllComponentsOfType<EnemyPositionComponent>();
 
 	for (auto enemy : enemies)
-		enemy->Delete();
+	{
+		enemy->RemoveFromCurrentCube();
+		enemy->GetGameObject()->Delete();
+	}
 }
 
 void dae::LevelComponent::GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange) const

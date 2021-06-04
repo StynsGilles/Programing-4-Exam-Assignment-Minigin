@@ -54,7 +54,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
-		if (QBertOnCube)
+		if (QBertOnCube && pNewCube->entity)
 		{
 			auto* pEntityComp = m_pObject->GetComponent<EntityComponent>();
 			auto scene = SceneManager::GetInstance().GetCurrentScene();
@@ -108,7 +108,10 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 		UpdatePosition(pos);
 	}
 	else
+	{
+		RemoveFromCurrentCube();
 		m_pObject->Delete();
+	}
 }
 
 void dae::EnemyPositionComponent::RemoveFromCurrentCube()

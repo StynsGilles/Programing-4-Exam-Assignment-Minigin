@@ -31,5 +31,6 @@ namespace dae
         void UpdateHealthText(GameObject* pEntity);
         void UpdateLivesText(GameObject* pEntity);
         void UpdateScoreText(GameObject* pEntity);
+        void HandleFinishedLevel();
     };
 }
