@@ -2,7 +2,7 @@
 #include "QBertComponent.h"
 #include <SDL_render.h>
 
-#include "CoilyComponent.h"
+#include "CoilyNPCComponent.h"
 #include "EntityComponent.h"
 #include "GameObject.h"
 #include "GameTime.h"
@@ -154,7 +154,7 @@ void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate)
 {
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 
-	auto pCoily = scene->GetComponentOfType<CoilyComponent>();
+	auto pCoily = scene->GetComponentOfType<CoilyNPCComponent>();
 	if (pCoily) pCoily->SetTarget(pPlate, m_pCurrentCube);
 }
 

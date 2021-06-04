@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CoilySpawnerComponent.h"
-#include "CoilyComponent.h"
+#include "CoilyNPCComponent.h"
 #include "EnemyPositionComponent.h"
 #include "RenderComponent.h"
 #include "GameObject.h"
@@ -31,13 +31,13 @@ void dae::CoilySpawnerComponent::Render() const
 void dae::CoilySpawnerComponent::SpawnEnemy()
 {
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	auto activeCoily = scene->GetObjectOfType <CoilyComponent>();
+	auto activeCoily = scene->GetObjectOfType <CoilyNPCComponent>();
 	if (!activeCoily)
 	{
 		auto coily = std::make_shared<GameObject>();
 		auto* pCoilyRenderComp = new RenderComponent("Coily_Egg.png");
 		auto* pCoilyPosComp = new EnemyPositionComponent(dae::EnemyType::top, m_pPyramid);
-		auto* pCoilyComp = new CoilyComponent(m_pPyramid, m_JumpCooldownEntity);
+		auto* pCoilyComp = new CoilyNPCComponent(m_pPyramid, m_JumpCooldownEntity);
 		coily->AddComponent(pCoilyRenderComp);
 		coily->AddComponent(pCoilyPosComp);
 		coily->AddComponent(pCoilyComp);

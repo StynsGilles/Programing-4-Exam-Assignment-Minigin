@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CoilyComponent.h"
+#include "CoilyNPCComponent.h"
 #include "EnemyPositionComponent.h"
 #include <GameObject.h>
 #include "LevelComponent.h"
@@ -8,27 +8,27 @@
 #include "Scene.h"
 #include "SceneManager.h"
 
-dae::CoilyComponent::CoilyComponent(LevelComponent* pPyramid, float jumpInterval)
+dae::CoilyNPCComponent::CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval)
 	: m_State(CoilyState::egg)
 	, EntityComponent(pPyramid)
 {
 	SetJumpRate(jumpInterval);
 }
 
-dae::CoilyComponent::~CoilyComponent()
+dae::CoilyNPCComponent::~CoilyNPCComponent()
 {
 }
 
-void dae::CoilyComponent::Update()
+void dae::CoilyNPCComponent::Update()
 {
 	JumpUpdate();
 }
 
-void dae::CoilyComponent::Render() const
+void dae::CoilyNPCComponent::Render() const
 {
 }
 
-void dae::CoilyComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert)
+void dae::CoilyNPCComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert)
 {
 	if (m_State == CoilyState::egg)
 		return;
@@ -98,7 +98,7 @@ void dae::CoilyComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurrentC
 	}
 }
 
-void dae::CoilyComponent::Jump()
+void dae::CoilyNPCComponent::Jump()
 {
 	switch (m_State)
 	{
@@ -115,7 +115,7 @@ void dae::CoilyComponent::Jump()
 	}
 }
 
-void dae::CoilyComponent::CheckIfBottom()
+void dae::CoilyNPCComponent::CheckIfBottom()
 {
 	const int pyramidSize = m_pPyramid->GetPyramidSize();
 	const int currentRow = m_pPyramid->GetRowOfCube(m_pObject->GetComponent<EnemyPositionComponent>()->GetCurrentCube());
@@ -127,7 +127,7 @@ void dae::CoilyComponent::CheckIfBottom()
 	}
 }
 
-void dae::CoilyComponent::ChasePlayer()
+void dae::CoilyNPCComponent::ChasePlayer()
 {
 	const auto scene = SceneManager::GetInstance().GetCurrentScene();
 	const auto QBert = scene->GetObjectOfType<QBertComponent>();
@@ -147,7 +147,7 @@ void dae::CoilyComponent::ChasePlayer()
 	}
 }
 
-void dae::CoilyComponent::GoToPlate()
+void dae::CoilyNPCComponent::GoToPlate()
 {
 	auto* pPosComp = m_pObject->GetComponent<EnemyPositionComponent>();
 
@@ -178,7 +178,7 @@ void dae::CoilyComponent::GoToPlate()
 }
 
 
-dae::LevelCube* dae::CoilyComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube)
+dae::LevelCube* dae::CoilyNPCComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube)
 {
 	const auto rowColQbert = m_pPyramid->GetRowColOfCube(pQBertCube);
 	const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);

@@ -13,22 +13,22 @@ namespace dae
 		normal
 	};
 	
-	class CoilyComponent  final : public EntityComponent
+	class CoilyNPCComponent : public EntityComponent
 	{
 	public:
-		CoilyComponent(LevelComponent* pPyramid, float jumpInterval);
-		virtual ~CoilyComponent();
+		CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval);
+		virtual ~CoilyNPCComponent();
 
 		void Update() override;
 		void Render() const override;
 		void SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert);
 
-		CoilyComponent(const CoilyComponent& other) = delete;
-		CoilyComponent(CoilyComponent&& other) = delete;
-		CoilyComponent& operator=(const CoilyComponent& other) = delete;
-		CoilyComponent& operator=(CoilyComponent&& other) = delete;
+		CoilyNPCComponent(const CoilyNPCComponent& other) = delete;
+		CoilyNPCComponent(CoilyNPCComponent&& other) = delete;
+		CoilyNPCComponent& operator=(const CoilyNPCComponent& other) = delete;
+		CoilyNPCComponent& operator=(CoilyNPCComponent&& other) = delete;
 
-	private:
+	protected:
 		CoilyState m_State;
 
 		bool m_GoToPlate = false;
@@ -39,7 +39,7 @@ namespace dae
 
 		void Jump() override;
 		void CheckIfBottom();
-		void ChasePlayer();
+		virtual void ChasePlayer();
 		void GoToPlate();
 		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube);
 	};

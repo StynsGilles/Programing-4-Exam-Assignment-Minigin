@@ -68,7 +68,7 @@
     <ClCompile Include="UggAndWrongSpawnerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="CoilyComponent.cpp">
+    <ClCompile Include="CoilyNPCComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="EntityComponent.cpp">
@@ -85,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="SinglePlayerScene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyPlayerComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +133,7 @@
     <ClInclude Include="UggAndWrongSpawnerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="CoilyComponent.h">
+    <ClInclude Include="CoilyNPCComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="EntityComponent.h">
@@ -151,5 +154,6 @@
     <ClInclude Include="SinglePlayerScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CoilyPlayerComponent.h" />
   </ItemGroup>
 </Project>
