@@ -61,7 +61,6 @@ void dae::Minigin::Run()
 
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
-	auto input = sceneManager.GetCurrentScene()->GetInputManager();
 	auto& time = GameTime::GetInstance();
 
 	bool doContinue = true;
@@ -69,7 +68,7 @@ void dae::Minigin::Run()
 	{
 		time.Update();
 
-		doContinue = input->ProcessInput();
+		doContinue = sceneManager.GetCurrentScene()->GetInputManager()->ProcessInput();
 		sceneManager.Update();
 		sceneManager.RemoveDeadObjects();
 

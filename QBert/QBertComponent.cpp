@@ -89,6 +89,11 @@ dae::LevelCube* dae::QBertComponent::GetCurrentCube() const
 	return m_pCurrentCube;
 }
 
+void dae::QBertComponent::GotHit() const
+{
+	m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+}
+
 void dae::QBertComponent::KillGreen() const
 {
 	AwardScore(m_ScoreSlAndSaDefeat);

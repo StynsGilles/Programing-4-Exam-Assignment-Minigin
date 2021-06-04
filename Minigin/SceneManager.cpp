@@ -45,6 +45,7 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 		if (scene->GetName() == name)
 		{
 			m_ActiveScene = scene;
+			m_ActiveScene->ResetScene();
 			return;
 		}
 	}

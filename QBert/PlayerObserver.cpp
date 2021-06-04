@@ -82,8 +82,7 @@ void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 
 void dae::PlayerObserver::HandleFinishedLevel()
 {
-	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	scene->ResetScene();
+	SceneManager::GetInstance().NextScene();
 }
 
 void dae::PlayerObserver::SetHealthObject(std::shared_ptr<GameObject> pHealth)

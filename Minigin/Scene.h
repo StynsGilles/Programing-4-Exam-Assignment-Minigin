@@ -16,7 +16,6 @@ namespace dae
 		void Update();
 		void Render() const;
 		virtual void Initialize();
-		virtual void InitializeInputs();
 		void ResetScene();
 		void RemoveDeadObjects();
 		std::string	GetName() const;

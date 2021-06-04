@@ -54,19 +54,41 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
-		if (QBertOnCube && pNewCube->entity)
+		if (QBertOnCube)
 		{
 			auto* pEntityComp = m_pObject->GetComponent<EntityComponent>();
 			auto scene = SceneManager::GetInstance().GetCurrentScene();
-			auto* qbert = pNewCube->entity->GetComponent<QBertComponent>();
-			
-			if (dynamic_cast<SlickAndSamComponent*>(pEntityComp) && qbert)
-				qbert->KillGreen();
-			else if (qbert)
-				qbert->GetGameObject()->GetComponent<LivesComponent>()->LoseLives(1);
 
-			m_pObject->Delete();
-			return;
+			QBertComponent* pQBert = nullptr;
+			LevelCube* pQBertCube;
+			
+			switch (m_EnemyType)
+			{
+			case EnemyType::left:
+				pQBertCube = m_pPyramid->GetNextCubeNeutral(pNewCube, 1, 0);
+				break;
+			case EnemyType::right:
+				pQBertCube = m_pPyramid->GetNextCubeNeutral(pNewCube, 1, 1);
+				break;
+			case EnemyType::top:
+			default:
+				pQBertCube = pNewCube;
+				break;
+			}
+			
+			if (pQBertCube)
+				pQBert = pQBertCube->entity->GetComponent<QBertComponent>();
+			
+			if (pQBert)
+			{
+				if (dynamic_cast<SlickAndSamComponent*>(pEntityComp) && pQBert)
+					pQBert->KillGreen();
+				else if (pQBert)
+					pQBert->GotHit();
+
+				m_pObject->Delete();
+				return;
+			}
 		}
 		
 		SDL_Rect dst;

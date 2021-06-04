@@ -83,7 +83,7 @@
     <ClCompile Include="PlateComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LevelScene.cpp">
+    <ClCompile Include="SinglePlayerScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -148,7 +148,7 @@
     <ClInclude Include="LevelParser.h">
       <Filter>FileParser</Filter>
     </ClInclude>
-    <ClInclude Include="LevelScene.h">
+    <ClInclude Include="SinglePlayerScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

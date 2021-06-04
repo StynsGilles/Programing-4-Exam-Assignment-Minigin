@@ -8,14 +8,14 @@ unsigned int Scene::m_IdCounter = 0;
 
 Scene::Scene(const std::string& name)
 	: m_Name(name)
-	, m_InputManager(new InputManager())
 {
 	
 }
 
 Scene::~Scene()
 {
-	delete m_InputManager;
+	if (m_InputManager)
+		delete m_InputManager;
 }
 
 void Scene::Add(const std::shared_ptr<GameObject>& object)
@@ -37,16 +37,13 @@ void Scene::Render() const
 
 void Scene::Initialize()
 {
-}
-
-void Scene::InitializeInputs()
-{
+	m_InputManager = new InputManager();
 }
 
 void Scene::ResetScene()
 {
 	m_Objects.clear();
-	m_InputManager->ClearInputs();
+	delete m_InputManager;
 	Initialize();
 }
 

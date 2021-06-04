@@ -14,6 +14,7 @@ namespace dae
 		void Render() const override;
 		void ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange, bool isOccupied);
 		LevelCube* GetCurrentCube() const;
+		void GotHit() const;
 		void KillGreen() const;
 		void KilledCoily() const;
 		void FlippedTile() const;

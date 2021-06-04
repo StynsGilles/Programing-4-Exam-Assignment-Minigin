@@ -27,7 +27,7 @@
 #include "CoilySpawnerComponent.h"
 #include "PlateComponent.h"
 #include "LevelParser.h"
-#include "LevelScene.h"
+#include "SinglePlayerScene.h"
 
 void LoadGame();
 
@@ -45,11 +45,20 @@ int main(int, char* [])
  */
 void LoadGame()
 {
+	auto& sceneManager = dae::SceneManager::GetInstance();
 	
-	// tell the resource manager where he can find the game data
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SoundSystem>());
-	const auto levelScene = std::shared_ptr<dae::LevelScene>(new dae::LevelScene("Level1"));
-	dae::SceneManager::GetInstance().AddScene(levelScene);
+	const auto level1Scene = std::make_shared<dae::SinglePlayerScene>("Level1", L"Level1.json");
+	sceneManager.AddScene(level1Scene);
+	level1Scene->Initialize();
 
-	levelScene->Initialize();
+	const auto level2Scene = std::make_shared<dae::SinglePlayerScene>("Level2", L"Level2.json");
+	sceneManager.AddScene(level2Scene);
+	level2Scene->Initialize();
+
+	const auto level3Scene = std::make_shared<dae::SinglePlayerScene>("Level2", L"Level2.json");
+	sceneManager.AddScene(level3Scene);
+	level3Scene->Initialize();
+
+	sceneManager.SetActiveScene("Level1");
 }

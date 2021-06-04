@@ -130,11 +130,3 @@ void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& b
 		break;
 	}
 }
-
-void dae::InputManager::ClearInputs()
-{
-	m_CommandsPlayer1.clear();
-	m_CommandsPlayer1 = std::map<ActionInfo, std::unique_ptr<Command>>();
-	m_CommandsPlayer2.clear();
-	m_CommandsPlayer2 = std::map<ActionInfo, std::unique_ptr<Command>>();
-}

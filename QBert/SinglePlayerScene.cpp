@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "LevelScene.h"
+#include "SinglePlayerScene.h"
 #include "CoilySpawnerComponent.h"
 #include "FPSComponent.h"
 #include "GameCommands.h"
@@ -14,10 +14,17 @@
 #include "TextComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
 
-dae::LevelScene::LevelScene(const std::string& name) : Scene(name) {}
-
-void dae::LevelScene::Initialize()
+dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::wstring& fileName)
+	: Scene(name)
+	, m_FileName(fileName)
 {
+	
+}
+
+void dae::SinglePlayerScene::Initialize()
+{
+	Scene::Initialize();
+	
 	//load level from file
 
 	//gamerules
@@ -39,7 +46,7 @@ void dae::LevelScene::Initialize()
 	float spawnIntervalCoily = 10.f;
 	float jumpCooldownCoily = 1.f;
 
-	dae::LevelParser::LoadLevel(L"../Data/LevelData/Level1.json",
+	dae::LevelParser::LoadLevel(L"../Data/LevelData/" + m_FileName,
 		revertible, colors,
 		pyramidSize, plateRows,
 		qbertLives, jumpCooldownQBert,
@@ -47,8 +54,6 @@ void dae::LevelScene::Initialize()
 		spawnIntervalUgg, jumpCooldownUgg,
 		spawnIntervalCoily, jumpCooldownCoily
 	);
-
-	pyramidSize = 3;
 	
 	//Create objects
 	auto go = std::make_shared<dae::GameObject>();
@@ -198,10 +203,9 @@ void dae::LevelScene::Initialize()
 	const ActionInfo GoSouthEast{ ControllerButton::Right, SDL_SCANCODE_D, InputState::Up };
 	const ActionInfo GoSouthWest{ ControllerButton::Down, SDL_SCANCODE_S, InputState::Up };
 
-	////Player 1
+	//Player 1
 	m_InputManager->AddInput(0, GoNorthEast, new NorthEast(QBert));
 	m_InputManager->AddInput(0, GoNorthWest, new NorthWest(QBert));
 	m_InputManager->AddInput(0, GoSouthEast, new SouthEast(QBert));
 	m_InputManager->AddInput(0, GoSouthWest, new SouthWest(QBert));
 }
-
