@@ -33,7 +33,7 @@ void dae::MainMenuScene::Initialize()
 	auto buttonSinglePlayer = std::make_shared<GameObject>();
 	auto* pSingleTextureComponent = new RenderComponent();
 	auto* pSingleTextComponent = new TextComponent("SinglePlayer", font, textOffsetX, textOffsetY);
-	auto* pSingleClickComp = new MenuClickComponent(pSingleTextureComponent);
+	auto* pSingleClickComp = new MenuClickComponent(pSingleTextureComponent, "Level1");
 	pSingleTextureComponent->SetTexture("Button.png");
 	buttonSinglePlayer->AddComponent(pSingleTextureComponent);
 	buttonSinglePlayer->AddComponent(pSingleTextComponent);
@@ -46,7 +46,7 @@ void dae::MainMenuScene::Initialize()
 	auto buttonVersus = std::make_shared<GameObject>();
 	auto* pVersusTextureComponent = new RenderComponent();
 	auto* pVersusTextComponent = new TextComponent("Versus", font, textOffsetX, textOffsetY);
-	auto* pVersusClickComp = new MenuClickComponent(pVersusTextureComponent);
+	auto* pVersusClickComp = new MenuClickComponent(pVersusTextureComponent, "VersusLevel1");
 	pVersusTextureComponent->SetTexture("Button.png");
 	buttonVersus->AddComponent(pVersusTextureComponent);
 	buttonVersus->AddComponent(pVersusTextComponent);
@@ -59,7 +59,7 @@ void dae::MainMenuScene::Initialize()
 	auto buttonCoop = std::make_shared<GameObject>();
 	auto* pCoopTextureComponent = new RenderComponent();
 	auto* pCoopTextComponent = new TextComponent("Coop", font, textOffsetX, textOffsetY);
-	auto* pCoopClickComp = new MenuClickComponent(pCoopTextureComponent);
+	auto* pCoopClickComp = new MenuClickComponent(pCoopTextureComponent, "CoopLevel1");
 	pCoopTextureComponent->SetTexture("Button.png");
 	buttonCoop->AddComponent(pCoopTextureComponent);
 	buttonCoop->AddComponent(pCoopTextComponent);

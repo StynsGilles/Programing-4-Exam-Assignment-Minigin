@@ -102,7 +102,7 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="MenuClickComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +184,8 @@
     <ClInclude Include="MainMenuScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MenuClickComponent.h" />
+    <ClInclude Include="MenuClickComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

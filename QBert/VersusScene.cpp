@@ -25,7 +25,7 @@ dae::VersusScene::VersusScene(const std::string& name, const std::wstring& fileN
 
 void dae::VersusScene::Initialize()
 {
-	Scene::Initialize();
+	BaseLevelScene::Initialize();
 
 	//load level from file
 

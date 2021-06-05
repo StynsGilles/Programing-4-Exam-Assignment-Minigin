@@ -6,7 +6,7 @@ namespace dae
 	class MenuClickComponent final : public ClickComponent
 	{
 	public:
-		explicit MenuClickComponent(RenderComponent* pRenderComp);
+		explicit MenuClickComponent(RenderComponent* pRenderComp, const std::string& sceneName);
 		virtual ~MenuClickComponent();
 
 		MenuClickComponent(const MenuClickComponent& other) = delete;
@@ -15,6 +15,8 @@ namespace dae
 		MenuClickComponent& operator=(MenuClickComponent&& other) = delete;
 	
 	private:
+		std::string m_SceneName;
+		
 		void ProcessClicked() override;
 	};
 }
