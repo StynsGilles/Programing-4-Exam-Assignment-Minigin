@@ -216,12 +216,35 @@ private:
     std::weak_ptr<dae::GameObject> m_pQbert;
 };
 
-class NorthEastCoily final : public Command
+class CoilyCommand : public Command
+{
+public:
+    explicit CoilyCommand(std::weak_ptr<dae::GameObject> pCoily)
+	    : m_pCoily(pCoily)
+    {}
+
+    void Execute() override
+    {}
+
+    void ChangeCoily(std::weak_ptr<dae::GameObject> pCoily)
+    {
+        m_pCoily = pCoily;
+    }
+	
+    CoilyCommand(const CoilyCommand& other) = delete;
+    CoilyCommand(CoilyCommand&& other) = delete;
+    CoilyCommand& operator=(const CoilyCommand& other) = delete;
+    CoilyCommand& operator=(CoilyCommand&& other) = delete;
+	
+protected:
+    std::weak_ptr<dae::GameObject> m_pCoily;
+};
+
+class NorthEastCoily final : public CoilyCommand
 {
 public:
     NorthEastCoily(std::weak_ptr<dae::GameObject> pCoily)
-        : Command()
-        , m_pCoily(pCoily)
+        : CoilyCommand(pCoily)
     {}
 
     void Execute() override
@@ -239,16 +262,13 @@ public:
     NorthEastCoily(NorthEastCoily&& other) = delete;
     NorthEastCoily& operator=(const NorthEastCoily& other) = delete;
     NorthEastCoily& operator=(NorthEastCoily&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pCoily;
 };
 
-class SouthEastCoily final : public Command
+class SouthEastCoily final : public CoilyCommand
 {
 public:
     SouthEastCoily(std::weak_ptr<dae::GameObject> pCoily)
-        : Command()
-        , m_pCoily(pCoily)
+        : CoilyCommand(pCoily)
     {}
 
     void Execute() override
@@ -265,16 +285,13 @@ public:
     SouthEastCoily(SouthEastCoily&& other) = delete;
     SouthEastCoily& operator=(const SouthEastCoily& other) = delete;
     SouthEastCoily& operator=(SouthEastCoily&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pCoily;
 };
 
-class NorthWestCoily final : public Command
+class NorthWestCoily final : public CoilyCommand
 {
 public:
     NorthWestCoily(std::weak_ptr<dae::GameObject> pCoily)
-        : Command()
-        , m_pCoily(pCoily)
+        : CoilyCommand(pCoily)
     {}
 
     void Execute() override
@@ -291,16 +308,13 @@ public:
     NorthWestCoily(NorthWestCoily&& other) = delete;
     NorthWestCoily& operator=(const NorthWestCoily& other) = delete;
     NorthWestCoily& operator=(NorthWestCoily&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pCoily;
 };
 
-class SouthWestCoily final : public Command
+class SouthWestCoily final : public CoilyCommand
 {
 public:
     SouthWestCoily(std::weak_ptr<dae::GameObject> pCoily)
-        : Command()
-        , m_pCoily(pCoily)
+        : CoilyCommand(pCoily)
     {}
 
     void Execute() override
@@ -317,6 +331,4 @@ public:
     SouthWestCoily(SouthWestCoily&& other) = delete;
     SouthWestCoily& operator=(const SouthWestCoily& other) = delete;
     SouthWestCoily& operator=(SouthWestCoily&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pCoily;
 };

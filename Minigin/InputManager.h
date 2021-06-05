@@ -1,7 +1,6 @@
 #pragma once
 #include <XInput.h>
 #include "Commands.h"
-#include "Singleton.h"
 #include <map>
 #include <SDL.h>
 
@@ -60,11 +59,12 @@ namespace dae
 		bool IsReleased(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
 		bool IsKeyDown(const SDL_Scancode& key) const;
 		void AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand);
+		std::map<dae::ActionInfo, std::unique_ptr<Command>>& GetPlayer2Commands();
 	
 	private:
 		void ProcessControllers();
-		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
 		bool HandleKeyBoard();
+		using CommandMap = std::map<dae::ActionInfo, std::unique_ptr<Command>>;
 		bool HandleEvent(const SDL_Event& e, const CommandMap& commands);
 		void HandleKeyDown(const CommandMap& commands);
 		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);

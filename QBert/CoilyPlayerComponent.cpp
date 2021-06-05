@@ -35,6 +35,10 @@ void dae::CoilyPlayerComponent::Move(int rowChange, int colChange)
 	}
 }
 
+void dae::CoilyPlayerComponent::SetTarget(PlateComponent*, LevelCube*)
+{
+}
+
 void dae::CoilyPlayerComponent::ChasePlayer()
 {
 	m_CanJump = true;

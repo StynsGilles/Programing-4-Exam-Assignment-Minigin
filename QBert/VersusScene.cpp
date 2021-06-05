@@ -1,8 +1,5 @@
 #include "pch.h"
 #include "VersusScene.h"
-
-
-
 #include "CoilySpawnerComponent.h"
 #include "EnemyPositionComponent.h"
 #include "FPSComponent.h"
@@ -124,21 +121,10 @@ void dae::VersusScene::Initialize()
 	Add(pUAndWSpawner);
 
 	//Coily spawner
-	//auto pCoilySpawner = std::make_shared<GameObject>();
-	//auto* pCoilyspawnComponent = new CoilySpawnerComponent(pLevelComponent, spawnIntervalCoily, jumpCooldownCoily);
-	//pCoilySpawner->AddComponent(pCoilyspawnComponent);
-	//Add(pCoilySpawner);
-
-	//Test PlayerCoily
-	auto coily = std::make_shared<GameObject>();
-	auto* pCoilyRenderComp = new RenderComponent("Coily_Egg.png");
-	auto* pCoilyPosComp = new EnemyPositionComponent(EnemyType::top, pLevelComponent);
-	auto* pCoilyComp = new CoilyPlayerComponent(pLevelComponent, jumpCooldownCoily);
-	coily->AddComponent(pCoilyRenderComp);
-	coily->AddComponent(pCoilyPosComp);
-	coily->AddComponent(pCoilyComp);
-	pCoilyPosComp->SpawnOnCube(pLevelComponent->GetTopCube());
-	Add(coily);
+	auto pCoilySpawner = std::make_shared<GameObject>();
+	auto* pCoilyspawnComponent = new CoilySpawnerComponent(pLevelComponent, spawnIntervalCoily, jumpCooldownCoily, true);
+	pCoilySpawner->AddComponent(pCoilyspawnComponent);
+	Add(pCoilySpawner);
 	
 	//Player
 	auto pPlayerObserver = std::make_shared<PlayerObserver>();
@@ -211,8 +197,8 @@ void dae::VersusScene::Initialize()
 	m_InputManager->AddInput(0, GoSouthWest, new SouthWest(QBert));
 
 	//Coily
-	m_InputManager->AddInput(1, CoilyNorthEast, new NorthEastCoily(coily));
-	m_InputManager->AddInput(1, CoilyNorthWest, new NorthWestCoily(coily));
-	m_InputManager->AddInput(1, CoilySouthEast, new SouthEastCoily(coily));
-	m_InputManager->AddInput(1, CoilySouthWest, new SouthWestCoily(coily));
+	m_InputManager->AddInput(1, CoilyNorthEast, new NorthEastCoily(std::weak_ptr<GameObject>()));
+	m_InputManager->AddInput(1, CoilyNorthWest, new NorthWestCoily(std::weak_ptr<GameObject>()));
+	m_InputManager->AddInput(1, CoilySouthEast, new SouthEastCoily(std::weak_ptr<GameObject>()));
+	m_InputManager->AddInput(1, CoilySouthWest, new SouthWestCoily(std::weak_ptr<GameObject>()));
 }

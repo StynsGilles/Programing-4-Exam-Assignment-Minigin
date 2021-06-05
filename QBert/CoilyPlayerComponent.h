@@ -13,6 +13,7 @@ namespace dae
 		virtual ~CoilyPlayerComponent();
 
 		void Move(int rowChange, int colChange);
+		void SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert) override;
 		
 		CoilyPlayerComponent(const CoilyPlayerComponent& other) = delete;
 		CoilyPlayerComponent(CoilyPlayerComponent&& other) = delete;

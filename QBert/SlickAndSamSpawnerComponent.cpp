@@ -7,6 +7,7 @@
 #include <GameObject.h>
 #include "EnemyPositionComponent.h"
 #include "GameTime.h"
+#include "QBertComponent.h"
 #include "Scene.h"
 
 dae::SlickAndSamSpawnerComponent::SlickAndSamSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown)
@@ -39,7 +40,11 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy()
 	newEnemy->AddComponent(pSandSComponent);
 	newEnemy->AddComponent(pRenderComponent);
 	newEnemy->AddComponent(pPosComponent);
-	pPosComponent->SpawnOnCube(m_pPyramid->GetCube(1, rand() % 2));
+	int randomCol = rand() % 2;
+	auto cubeToSpawnOn = m_pPyramid->GetCube(1, randomCol);
+	if (cubeToSpawnOn->entity && !cubeToSpawnOn->entity->GetComponent<QBertComponent>())
+		cubeToSpawnOn = m_pPyramid->GetCube(1, static_cast<int>(!static_cast<bool>(randomCol)));
+	pPosComponent->SpawnOnCube(cubeToSpawnOn);
 	scene->Add(newEnemy);
 	m_SpawnSlick = !m_SpawnSlick;
 }

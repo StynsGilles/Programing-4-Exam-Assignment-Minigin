@@ -21,7 +21,7 @@ namespace dae
 
 		void Update() override;
 		void Render() const override;
-		void SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert);
+		virtual void SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert);
 
 		CoilyNPCComponent(const CoilyNPCComponent& other) = delete;
 		CoilyNPCComponent(CoilyNPCComponent&& other) = delete;

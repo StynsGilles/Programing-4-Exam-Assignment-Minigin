@@ -147,3 +147,8 @@ void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& b
 		break;
 	}
 }
+
+std::map<dae::ActionInfo, std::unique_ptr<Command>>& dae::InputManager::GetPlayer2Commands()
+{
+	return m_CommandsPlayer2;
+}
