@@ -63,8 +63,10 @@ namespace dae
 	
 	private:
 		void ProcessControllers();
-		bool HandleKeyBoard();
 		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
+		bool HandleKeyBoard();
+		bool HandleEvent(const SDL_Event& e, const CommandMap& commands);
+		void HandleKeyDown(const CommandMap& commands);
 		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
 
 		CommandMap m_CommandsPlayer1{};

@@ -95,6 +95,9 @@
     <ClCompile Include="CoopScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="BaseLevelScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -167,6 +170,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CoopScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseLevelScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

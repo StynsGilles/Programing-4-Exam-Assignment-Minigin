@@ -226,6 +226,7 @@ public:
 
     void Execute() override
     {
+        std::cout << "doing shit" << std::endl;
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
         if (std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
         {

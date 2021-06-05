@@ -9,14 +9,14 @@
 #include "PlayerObserver.h"
 #include "RenderComponent.h"
 #include "ResourceManager.h"
+#include "ScoreComponent.h"
 #include "SlickAndSamSpawnerComponent.h"
 #include "SubjectComponent.h"
 #include "TextComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
 
 dae::SinglePlayerScene::SinglePlayerScene(const std::string& name, const std::wstring& fileName)
-	: Scene(name)
-	, m_FileName(fileName)
+	: BaseLevelScene(name, fileName)
 {
 	
 }

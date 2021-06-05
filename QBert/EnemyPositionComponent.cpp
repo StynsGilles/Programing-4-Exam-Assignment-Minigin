@@ -143,19 +143,20 @@ void dae::EnemyPositionComponent::RemoveFromCurrentCube()
 		switch (m_EnemyType)
 		{
 		case EnemyType::top:
-			m_pCurrentCube->entity = nullptr;
+			if (m_pCurrentCube->entity == m_pObject)
+				m_pCurrentCube->entity = nullptr;
 			break;
 		case EnemyType::left:
 		{
 			auto* pLeftCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, 0);
-			if (pLeftCube)
+			if (pLeftCube && pLeftCube->entity == m_pObject)
 				pLeftCube->entity = nullptr;
 			break;
 		}
 		case EnemyType::right:
 		{
 			auto* pRightCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, +1);
-			if (pRightCube)
+			if (pRightCube && pRightCube->entity == m_pObject)
 				pRightCube->entity = nullptr;
 			break;
 		}

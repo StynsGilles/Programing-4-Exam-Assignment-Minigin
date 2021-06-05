@@ -1,9 +1,18 @@
 #pragma once
-#include <Scene.h>
+#include "BaseLevelScene.h"
 
 namespace dae
 {
-	class VersusScene final : public Scene
+	class VersusScene final : public BaseLevelScene
 	{
+	public:
+		explicit VersusScene(const std::string& name, const std::wstring& fileName);
+
+		void Initialize() override;
+
+		VersusScene(const VersusScene& other) = delete;
+		VersusScene(VersusScene&& other) = delete;
+		VersusScene& operator=(const VersusScene& other) = delete;
+		VersusScene& operator=(VersusScene&& other) = delete;
 	};
 }

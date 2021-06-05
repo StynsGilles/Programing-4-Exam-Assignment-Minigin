@@ -191,6 +191,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BaseLevelScene.cpp" />
     <ClCompile Include="BaseSpawnerComponent.cpp" />
     <ClCompile Include="CoilyNPCComponent.cpp" />
     <ClCompile Include="CoilyPlayerComponent.cpp" />
@@ -221,6 +222,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="VersusScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseLevelScene.h" />
     <ClInclude Include="BaseSpawnerComponent.h" />
     <ClInclude Include="CoilyNPCComponent.h" />
     <ClInclude Include="CoilyPlayerComponent.h" />
