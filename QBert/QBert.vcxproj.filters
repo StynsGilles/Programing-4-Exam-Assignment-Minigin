@@ -98,6 +98,9 @@
     <ClCompile Include="BaseLevelScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -173,6 +176,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="BaseLevelScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,11 @@
 #pragma once
+#include <iosfwd>
+#include <vector>
+
+
 #include "EntityComponent.h"
 #include "PlateComponent.h"
+#include "QBertComponent.h"
 
 namespace dae
 {
@@ -39,6 +44,8 @@ namespace dae
 
 		void Jump() override;
 		void CheckIfBottom();
+		LevelCube* GetNearestQBertCube(const std::vector<QBertComponent*>& pQBertVec, LevelCube* pCoilyCube) const;
+		int GetShortestPathToGoal(const std::pair<int, int>& rowColQBert, std::pair<int, int> rowColCoily) const;
 		virtual void ChasePlayer();
 		void GoToPlate();
 		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube);

@@ -71,6 +71,7 @@ void dae::SceneManager::PreviousScene()
 	if (0 <= indexPrevScene && indexPrevScene < (int)m_Scenes.size())
 	{
 		m_ActiveScene = m_Scenes[indexPrevScene];
+		m_ActiveScene->ResetScene();
 	}
 }
 
@@ -93,5 +94,6 @@ void dae::SceneManager::NextScene()
 	if (0 <= indexPrevScene && indexPrevScene < (int)m_Scenes.size())
 	{
 		m_ActiveScene = m_Scenes[indexPrevScene];
+		m_ActiveScene->ResetScene();
 	}
 }

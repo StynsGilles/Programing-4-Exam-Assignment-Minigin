@@ -16,6 +16,7 @@
 #include "SinglePlayerScene.h"
 #include "VersusScene.h"
 #include "CoopScene.h"
+#include "MainMenuScene.h"
 
 void LoadGame();
 
@@ -37,6 +38,10 @@ void LoadGame()
 	
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SoundSystem>());
 
+	const auto mainMenuScene = std::make_shared<dae::MainMenuScene>("MainMenu");
+	sceneManager.AddScene(mainMenuScene);
+	mainMenuScene->Initialize();
+	
 	//const auto versusScene = std::make_shared<dae::VersusScene>("VersusLevel", L"Level1.json");
 	//sceneManager.AddScene(versusScene);
 	//versusScene->Initialize();
@@ -53,9 +58,9 @@ void LoadGame()
 	//sceneManager.AddScene(level3Scene);
 	//level3Scene->Initialize();
 
-	const auto coopScene = std::make_shared<dae::CoopScene>("CoopLevel", L"Level1.json");
-	sceneManager.AddScene(coopScene);
-	coopScene->Initialize();
+	//const auto coopScene = std::make_shared<dae::CoopScene>("CoopLevel", L"Level1.json");
+	//sceneManager.AddScene(coopScene);
+	//coopScene->Initialize();
 	
-	sceneManager.SetActiveScene("CoopLevel");
+	sceneManager.SetActiveScene("MainMenu");
 }
