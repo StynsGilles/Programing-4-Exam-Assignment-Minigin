@@ -27,7 +27,7 @@ void dae::CoilyPlayerComponent::Move(int rowChange, int colChange)
 		
 		auto pNextCube = m_pPyramid->GetNextCubeEnemy(pPosComp->GetCurrentCube(), rowChange, colChange, isOccupied, pPosComp->GetEnemyType(), QBertOnCube);
 
-		if (pNextCube && !isOccupied)
+		if (!isOccupied)
 		{
 			pPosComp->ChangeCube(pNextCube, QBertOnCube);
 			m_CanJump = false;
