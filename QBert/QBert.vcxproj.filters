@@ -87,7 +87,13 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="CoilyPlayerComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CoopScene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,14 @@
     <ClInclude Include="SinglePlayerScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CoilyPlayerComponent.h" />
+    <ClInclude Include="CoilyPlayerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CoopScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
