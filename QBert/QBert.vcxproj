@@ -200,6 +200,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="EnemyPositionComponent.cpp" />
     <ClCompile Include="EntityComponent.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
+    <ClCompile Include="MenuClickComponent.cpp" />
     <ClCompile Include="SinglePlayerScene.cpp" />
     <ClCompile Include="PlateComponent.cpp" />
     <ClCompile Include="SlickAndSamSpawnerComponent.cpp" />
@@ -233,6 +234,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="EntityComponent.h" />
     <ClInclude Include="LevelParser.h" />
     <ClInclude Include="MainMenuScene.h" />
+    <ClInclude Include="MenuClickComponent.h" />
     <ClInclude Include="SinglePlayerScene.h" />
     <ClInclude Include="PlateComponent.h" />
     <ClInclude Include="SlickAndSamSpawnerComponent.h" />

@@ -15,6 +15,7 @@ namespace dae
         void Render() const override;
         void SetTexture(const std::string& filename);
         void SetTexture(std::shared_ptr<Texture2D> texture);
+        std::shared_ptr<Texture2D> GetTexture() const;
         void SetDimensions(float width, float height);
         float GetWidth() const;
         float GetHeight() const;

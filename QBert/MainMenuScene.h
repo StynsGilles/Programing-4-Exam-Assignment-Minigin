@@ -7,7 +7,7 @@ namespace dae
 	{
 	public:
 		explicit MainMenuScene(const std::string& name);
-
+		
 		void Initialize() override;
 
 		MainMenuScene(const MainMenuScene& other) = delete;

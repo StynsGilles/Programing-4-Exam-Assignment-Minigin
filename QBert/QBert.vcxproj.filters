@@ -101,6 +101,9 @@
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MenuClickComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
@@ -181,5 +184,6 @@
     <ClInclude Include="MainMenuScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="MenuClickComponent.h" />
   </ItemGroup>
 </Project>

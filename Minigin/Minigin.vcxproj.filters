@@ -138,6 +138,9 @@
     <ClInclude Include="JsonParser.h">
       <Filter>FileParser</Filter>
     </ClInclude>
+    <ClInclude Include="ClickComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,8 +11,8 @@ namespace dae
 		BaseSpawnerComponent(LevelComponent* pPyramid);
 		virtual ~BaseSpawnerComponent();
 
-		virtual void Update() override;
-		virtual void Render() const override = 0;
+		void Update() override;
+		void Render() const override = 0;
 
 		static void Spawn();
 

@@ -12,7 +12,7 @@ bool dae::InputManager::ProcessInput()
 	HandleCommands(m_CommandsPlayer1, m_CurrentState, m_PreviousState);
 	//Handle player 2 commands
 	HandleCommands(m_CommandsPlayer2, m_CurrentStatePlayer2, m_PreviousStatePlayer2);
-
+	
 	return keepPlaying;
 }
 
@@ -29,6 +29,7 @@ void dae::InputManager::ProcessControllers()
 
 bool dae::InputManager::HandleKeyBoard()
 {
+	bool mouseClicked = false;
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
@@ -37,8 +38,22 @@ bool dae::InputManager::HandleKeyBoard()
 		
 		if (!HandleEvent(e, m_CommandsPlayer2))
 			return false;
+
+		if (e.type == SDL_MOUSEBUTTONUP)
+		{
+			POINT mousePos{ static_cast<LONG>(e.button.x), static_cast<LONG>(e.button.y) };
+			switch (e.button.button)
+			{
+			case SDL_BUTTON_LEFT:
+				mouseClicked = true;
+				m_MousePosition = mousePos;
+				break;
+			}
+		}
 	}
 
+	m_MouseUp = mouseClicked;
+	
 	HandleKeyDown(m_CommandsPlayer1);
 	HandleKeyDown(m_CommandsPlayer2);
 	
@@ -70,6 +85,7 @@ bool dae::InputManager::HandleEvent(const SDL_Event& e, const CommandMap& comman
 				(*commandIt).second->Execute();
 		}
 	}
+	
 	return true;
 }
 
@@ -151,4 +167,14 @@ void dae::InputManager::AddInput(const int& controllerIndex, const ActionInfo& b
 std::map<dae::ActionInfo, std::unique_ptr<Command>>& dae::InputManager::GetPlayer2Commands()
 {
 	return m_CommandsPlayer2;
+}
+
+bool dae::InputManager::GetMouseUp() const
+{
+	return m_MouseUp;
+}
+
+POINT dae::InputManager::GetMousePosition() const
+{
+	return m_MousePosition;
 }

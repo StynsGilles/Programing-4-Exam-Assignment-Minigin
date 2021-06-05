@@ -1,5 +1,8 @@
 #include "MiniginPCH.h"
 #include "RenderComponent.h"
+
+#include <SDL_render.h>
+
 #include "GameObject.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
@@ -36,11 +39,23 @@ void dae::RenderComponent::Render() const
 void dae::RenderComponent::SetTexture(const std::string& filename)
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
+	if(!m_DimensionsSet)
+	{
+		SDL_Rect dst;
+		SDL_QueryTexture(m_pTexture->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+		m_Width = static_cast<float>(dst.w);
+		m_Height = static_cast<float>(dst.h);
+	}
 }
 
 void dae::RenderComponent::SetTexture(std::shared_ptr<Texture2D> texture)
 {
 	m_pTexture = texture;
+}
+
+std::shared_ptr<dae::Texture2D> dae::RenderComponent::GetTexture() const
+{
+	return m_pTexture;
 }
 
 void dae::RenderComponent::SetDimensions(float width, float height)

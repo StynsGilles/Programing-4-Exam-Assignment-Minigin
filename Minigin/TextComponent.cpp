@@ -6,12 +6,14 @@
 #include "GameObject.h"
 #include "RenderComponent.h"
 
-dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font)
+dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font, float x, float y)
 	: BaseComponent()
 	, m_NeedsUpdate(true)
 	, m_Text(text)
 	, m_Font(font)
 	, m_Color(SDL_Color{ 255, 255, 255 })
+	, m_OffsetX(x)
+	, m_OffsetY(y)
 {
 }
 
@@ -40,7 +42,7 @@ void dae::TextComponent::Render() const
 	if (m_pTexture!= nullptr)
 	{
 		const auto& pos = m_pObject->GetTransform().GetPosition();
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x + m_OffsetX, pos.y + m_OffsetY);
 	}
 }
 

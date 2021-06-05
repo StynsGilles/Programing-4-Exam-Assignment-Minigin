@@ -10,7 +10,7 @@ namespace dae
 	class TextComponent final : public BaseComponent
     {
     public:
-        explicit TextComponent(const std::string& text, const std::shared_ptr<Font>& font);
+        explicit TextComponent(const std::string& text, const std::shared_ptr<Font>& font, float x = 0, float y = 0);
         virtual ~TextComponent();
 
         void Update() override;
@@ -28,5 +28,6 @@ namespace dae
         std::shared_ptr<Font> m_Font;
         SDL_Color m_Color;
         std::shared_ptr<Texture2D> m_pTexture;
+        float m_OffsetX, m_OffsetY;
     };
 }

@@ -59,21 +59,25 @@ namespace dae
 		bool IsReleased(const ControllerButton& button, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
 		bool IsKeyDown(const SDL_Scancode& key) const;
 		void AddInput(const int& controllerIndex, const ActionInfo& button, Command* pCommand);
-		std::map<dae::ActionInfo, std::unique_ptr<Command>>& GetPlayer2Commands();
+		std::map<ActionInfo, std::unique_ptr<Command>>& GetPlayer2Commands();
+		bool GetMouseUp() const;
+		POINT GetMousePosition() const;
 	
 	private:
 		void ProcessControllers();
 		bool HandleKeyBoard();
-		using CommandMap = std::map<dae::ActionInfo, std::unique_ptr<Command>>;
+		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
 		bool HandleEvent(const SDL_Event& e, const CommandMap& commands);
 		void HandleKeyDown(const CommandMap& commands);
 		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
-
+		
 		CommandMap m_CommandsPlayer1{};
 		CommandMap m_CommandsPlayer2{};
 		XINPUT_STATE m_PreviousState{};
 		XINPUT_STATE m_CurrentState{};
 		XINPUT_STATE m_PreviousStatePlayer2{};
 		XINPUT_STATE m_CurrentStatePlayer2{};
+		POINT m_MousePosition = POINT();
+		bool m_MouseUp = false;
 	};
 }
