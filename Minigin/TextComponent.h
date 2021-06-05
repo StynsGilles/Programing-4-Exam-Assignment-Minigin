@@ -5,6 +5,8 @@
 
 namespace dae
 {
+    class Texture2D;
+	
 	class TextComponent final : public BaseComponent
     {
     public:
@@ -25,5 +27,6 @@ namespace dae
         std::string m_Text;
         std::shared_ptr<Font> m_Font;
         SDL_Color m_Color;
+        std::shared_ptr<Texture2D> m_pTexture;
     };
 }

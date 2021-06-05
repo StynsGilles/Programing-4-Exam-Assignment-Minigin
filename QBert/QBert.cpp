@@ -42,10 +42,6 @@ void LoadGame()
 	sceneManager.AddScene(mainMenuScene);
 	mainMenuScene->Initialize();
 	
-	//const auto versusScene = std::make_shared<dae::VersusScene>("VersusLevel", L"Level1.json");
-	//sceneManager.AddScene(versusScene);
-	//versusScene->Initialize();
-	
 	//const auto level1Scene = std::make_shared<dae::SinglePlayerScene>("Level1", L"Level1.json");
 	//sceneManager.AddScene(level1Scene);
 	//level1Scene->Initialize();
@@ -58,6 +54,10 @@ void LoadGame()
 	//sceneManager.AddScene(level3Scene);
 	//level3Scene->Initialize();
 
+	//const auto versusScene = std::make_shared<dae::VersusScene>("VersusLevel", L"Level1.json");
+	//sceneManager.AddScene(versusScene);
+	//versusScene->Initialize();
+	
 	//const auto coopScene = std::make_shared<dae::CoopScene>("CoopLevel", L"Level1.json");
 	//sceneManager.AddScene(coopScene);
 	//coopScene->Initialize();

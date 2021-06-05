@@ -57,20 +57,6 @@ void dae::VersusScene::Initialize()
 		spawnIntervalCoily, jumpCooldownCoily
 	);
 
-	//Create objects
-	
-
-	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
-	auto fps = std::make_shared<GameObject>();
-	auto* pFPSTextureComponent = new RenderComponent();
-	auto* pTextComponent = new TextComponent("00 fps", fpsFont);
-	auto* pFPSComponent = new FPSComponent(pTextComponent);
-	pTextComponent->SetColor(SDL_Color{ 255, 255, 0 });
-	fps->AddComponent(pFPSTextureComponent);
-	fps->AddComponent(pTextComponent);
-	fps->AddComponent(pFPSComponent);
-	Add(fps);
-
 	//Level
 	auto pyramid = std::make_shared<GameObject>();
 	LevelComponent* pLevelComponent = nullptr;
@@ -132,25 +118,13 @@ void dae::VersusScene::Initialize()
 	//Player HUD
 	const auto hudFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	//Title
-	auto pHUDTitle = std::make_shared<GameObject>();
-	std::string HUDTitleString = "Player 1";
-	auto* pHUDTitleText = new TextComponent(HUDTitleString, hudFont);
-	auto* pHUDTitleRender = new RenderComponent();
-	pHUDTitle->AddComponent(pHUDTitleText);
-	pHUDTitle->AddComponent(pHUDTitleRender);
-	pHUDTitle->SetPosition(10, 60);
-	Add(pHUDTitle);
-
 	//Lives remaining
 	auto pLives = std::make_shared<GameObject>();
 	auto* pLivesComponent = new LivesComponent(qbertLives);
 	const std::string livesString = "Remaining lives: " + std::to_string(pLivesComponent->GetLivesRemaining());
 	auto* pLivesText = new TextComponent(livesString, hudFont);
-	auto* pLivesRender = new RenderComponent();
 	auto* pLivesSubjectComponent = new SubjectComponent();
 	pLives->AddComponent(pLivesText);
-	pLives->AddComponent(pLivesRender);
 	pLives->AddComponent(pLivesComponent);
 	pLives->AddComponent(pLivesSubjectComponent);
 	pLives->SetPosition(10, 120);
@@ -162,10 +136,8 @@ void dae::VersusScene::Initialize()
 	auto* pScoreComponent = new ScoreComponent();
 	const std::string player1ScoreString = "Score: " + std::to_string(pScoreComponent->GetScore());
 	auto* pScoreText = new TextComponent(player1ScoreString, hudFont);
-	auto* pScoreRender = new RenderComponent();
 	auto* pScoreSubjectComponent = new SubjectComponent();
 	pScore->AddComponent(pScoreText);
-	pScore->AddComponent(pScoreRender);
 	pScore->AddComponent(pScoreComponent);
 	pScore->AddComponent(pScoreSubjectComponent);
 	pScore->SetPosition(10, 150);

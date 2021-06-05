@@ -24,7 +24,7 @@ dae::CoopScene::CoopScene(const std::string& name, const std::wstring& fileName)
 
 void dae::CoopScene::Initialize()
 {
-	Scene::Initialize();
+	BaseLevelScene::Initialize();
 
 	//load level from file
 
@@ -55,40 +55,6 @@ void dae::CoopScene::Initialize()
 		spawnIntervalUgg, jumpCooldownUgg,
 		spawnIntervalCoily, jumpCooldownCoily
 	);
-
-	//Create objects
-	auto go = std::make_shared<dae::GameObject>();
-	auto* pBackgroundTextureComponent = new RenderComponent();
-	pBackgroundTextureComponent->SetTexture("background.jpg");
-	go->AddComponent(pBackgroundTextureComponent);
-	Add(go);
-
-	go = std::make_shared<dae::GameObject>();
-	auto* pLogoTextureComponent = new RenderComponent();
-	pLogoTextureComponent->SetTexture("logo.png");
-	go->AddComponent(pLogoTextureComponent);
-	go->SetPosition(216, 180);
-	Add(go);
-
-	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<dae::GameObject>();
-	auto* pTextTextureComponent = new RenderComponent();
-	auto* pTextInfoComponent = new TextComponent("Programming 4 Assignment", font);
-	to->AddComponent(pTextTextureComponent);
-	to->AddComponent(pTextInfoComponent);
-	to->SetPosition(80, 20);
-	Add(to);
-
-	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
-	auto fps = std::make_shared<GameObject>();
-	auto* pFPSTextureComponent = new RenderComponent();
-	auto* pTextComponent = new TextComponent("00 fps", fpsFont);
-	auto* pFPSComponent = new FPSComponent(pTextComponent);
-	pTextComponent->SetColor(SDL_Color{ 255, 255, 0 });
-	fps->AddComponent(pFPSTextureComponent);
-	fps->AddComponent(pTextComponent);
-	fps->AddComponent(pFPSComponent);
-	Add(fps);
 
 	//Level
 	auto pyramid = std::make_shared<GameObject>();
@@ -153,25 +119,13 @@ void dae::CoopScene::Initialize()
 	//Player HUD
 	const auto hudFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	//Title
-	auto pHUDTitle = std::make_shared<GameObject>();
-	std::string HUDTitleString = "Player 1";
-	auto* pHUDTitleText = new TextComponent(HUDTitleString, hudFont);
-	auto* pHUDTitleRender = new RenderComponent();
-	pHUDTitle->AddComponent(pHUDTitleText);
-	pHUDTitle->AddComponent(pHUDTitleRender);
-	pHUDTitle->SetPosition(10, 60);
-	Add(pHUDTitle);
-
 	//Lives remaining
 	auto pLives = std::make_shared<GameObject>();
 	auto* pLivesComponent = new LivesComponent(qbertLives);
 	const std::string livesString = "Remaining lives: " + std::to_string(pLivesComponent->GetLivesRemaining());
 	auto* pLivesText = new TextComponent(livesString, hudFont);
-	auto* pLivesRender = new RenderComponent();
 	auto* pLivesSubjectComponent = new SubjectComponent();
 	pLives->AddComponent(pLivesText);
-	pLives->AddComponent(pLivesRender);
 	pLives->AddComponent(pLivesComponent);
 	pLives->AddComponent(pLivesSubjectComponent);
 	pLives->SetPosition(10, 120);
@@ -183,10 +137,8 @@ void dae::CoopScene::Initialize()
 	auto* pScoreComponent = new ScoreComponent();
 	const std::string player1ScoreString = "Score: " + std::to_string(pScoreComponent->GetScore());
 	auto* pScoreText = new TextComponent(player1ScoreString, hudFont);
-	auto* pScoreRender = new RenderComponent();
 	auto* pScoreSubjectComponent = new SubjectComponent();
 	pScore->AddComponent(pScoreText);
-	pScore->AddComponent(pScoreRender);
 	pScore->AddComponent(pScoreComponent);
 	pScore->AddComponent(pScoreSubjectComponent);
 	pScore->SetPosition(10, 150);
