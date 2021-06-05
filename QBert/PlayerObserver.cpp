@@ -47,7 +47,7 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 void dae::PlayerObserver::UpdateHealthText(GameObject* pEntity)
 {
 	std::cout << "Lost hp" << std::endl;
-	auto* healthText = m_HealthObject->GetComponent<TextComponent>();
+	auto* healthText = pEntity->GetComponent<TextComponent>();
 	auto* healthComp = pEntity->GetComponent<HealthComponent>();
 	if (healthText && healthComp)
 	{
@@ -59,7 +59,7 @@ void dae::PlayerObserver::UpdateHealthText(GameObject* pEntity)
 void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 {
 	std::cout << "PlayerDied" << std::endl;
-	auto* pLivesRemainingText = m_LivesObject->GetComponent<TextComponent>();
+	auto* pLivesRemainingText = pEntity->GetComponent<TextComponent>();
 	auto* pLivesComp = pEntity->GetComponent<LivesComponent>();
 	if (pLivesRemainingText && pLivesComp)
 	{
@@ -71,7 +71,7 @@ void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 {
 	std::cout << "Increasing score" << std::endl;
-	auto* scoreText = m_ScoreObject->GetComponent<TextComponent>();
+	auto* scoreText = pEntity->GetComponent<TextComponent>();
 	auto* scoreComp = pEntity->GetComponent<ScoreComponent>();
 	if (scoreText && scoreComp)
 	{
@@ -83,19 +83,4 @@ void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 void dae::PlayerObserver::HandleFinishedLevel()
 {
 	SceneManager::GetInstance().NextScene();
-}
-
-void dae::PlayerObserver::SetHealthObject(std::shared_ptr<GameObject> pHealth)
-{
-	m_HealthObject = pHealth;
-}
-
-void dae::PlayerObserver::SetLivesObject(std::shared_ptr<GameObject> pLives)
-{
-	m_LivesObject = pLives;
-}
-
-void dae::PlayerObserver::SetScorebject(std::shared_ptr<GameObject> pScore)
-{
-	m_ScoreObject = pScore;
 }

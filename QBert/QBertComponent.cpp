@@ -14,9 +14,11 @@
 #include "SlickAndSamComponent.h"
 #include "SubjectComponent.h"
 
-dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval)
+dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval, LivesComponent* pLivesComp, ScoreComponent* pScoreComp)
 	: m_pPyramid(pPyramid)
 	, m_JumpInterval(jumpInterval)
+	, m_pLivesComp(pLivesComp)
+	, m_pScoreComp(pScoreComp)
 {
 }
 
@@ -61,12 +63,12 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 			else
 			{
 				if (!m_pCurrentCube->entity->GetMarkedForDeletion())
-					m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+					m_pLivesComp->LoseLives(1);
 			}
 		}
 
 		if (fellOf)
-			m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+			m_pLivesComp->LoseLives(1);
 
 		if (positiveChange)
 			FlippedTile();
@@ -91,7 +93,7 @@ dae::LevelCube* dae::QBertComponent::GetCurrentCube() const
 
 void dae::QBertComponent::GotHit() const
 {
-	m_pObject->GetComponent<LivesComponent>()->LoseLives(1);
+	m_pLivesComp->LoseLives(1);
 }
 
 void dae::QBertComponent::KillGreen() const
@@ -111,9 +113,8 @@ void dae::QBertComponent::FlippedTile() const
 
 void dae::QBertComponent::AwardScore(int amount) const
 {
-	auto* score = m_pObject->GetComponent<ScoreComponent>();
-	if (score)
-		score->AddToScore(amount);
+	if (m_pScoreComp)
+		m_pScoreComp->AddToScore(amount);
 }
 
 void dae::QBertComponent::FinishLevel()
@@ -135,8 +136,9 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 		bool fellOf = false;
 		bool positiveChange = false;
 		bool isOccupied = false;
+		bool otherPlayerOnCube = false;
 		PlateComponent* pPlate = nullptr;
-		auto* pNextCube = m_pPyramid->GetNextCube(m_pCurrentCube, rowChange, colChange, fellOf, positiveChange, isOccupied, pPlate);
+		auto* pNextCube = m_pPyramid->GetNextCube(m_pCurrentCube, rowChange, colChange, fellOf, positiveChange, isOccupied, otherPlayerOnCube, pPlate);
 
 		if (pPlate)
 		{
@@ -144,7 +146,7 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 			pPlate->GetGameObject()->Delete();
 		}
 		
-		if (pNextCube) ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
+		if (pNextCube && !otherPlayerOnCube) ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
 		
 		m_CanJump = false;
 	}

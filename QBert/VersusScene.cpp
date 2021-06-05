@@ -48,7 +48,7 @@ void dae::VersusScene::Initialize()
 	float spawnIntervalCoily = 10.f;
 	float jumpCooldownCoily = 1.f;
 
-	dae::LevelParser::LoadLevel(L"../Data/LevelData/" + m_FileName,
+	LevelParser::LoadLevel(L"../Data/LevelData/" + m_FileName,
 		revertible, colors,
 		pyramidSize, plateRows,
 		qbertLives, jumpCooldownQBert,
@@ -126,59 +126,64 @@ void dae::VersusScene::Initialize()
 	pCoilySpawner->AddComponent(pCoilyspawnComponent);
 	Add(pCoilySpawner);
 	
-	//Player
+	//Players
 	auto pPlayerObserver = std::make_shared<PlayerObserver>();
-
-	auto QBert = std::make_shared<GameObject>();
-	auto* pQBertComponent = new QBertComponent(pLevelComponent, jumpCooldownQBert);
-	auto* pQBertRenderComponent = new RenderComponent("Qbert.png");
-	auto* pQBertLivesComponent = new LivesComponent(qbertLives);
-	auto* pQBertScoreComponent = new ScoreComponent();
-	auto* pQBertSubjectComponent = new SubjectComponent();
-	QBert->AddComponent(pQBertComponent);
-	QBert->AddComponent(pQBertRenderComponent);
-	QBert->AddComponent(pQBertLivesComponent);
-	QBert->AddComponent(pQBertScoreComponent);
-	QBert->AddComponent(pQBertSubjectComponent);
-	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false, false);
-	pQBertSubjectComponent->AddObserver(pPlayerObserver);
-	Add(QBert);
 
 	//Player HUD
 	const auto hudFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
 	//Title
-	auto player1HUDTitle = std::make_shared<GameObject>();
-	std::string player1HUDTitleString = "Player 1";
-	auto* pPlayer1HUDTitleText = new TextComponent(player1HUDTitleString, hudFont);
-	auto* pPlayer1HUDTitleRender = new RenderComponent();
-	player1HUDTitle->AddComponent(pPlayer1HUDTitleText);
-	player1HUDTitle->AddComponent(pPlayer1HUDTitleRender);
-	player1HUDTitle->SetPosition(10, 60);
-	Add(player1HUDTitle);
+	auto pHUDTitle = std::make_shared<GameObject>();
+	std::string HUDTitleString = "Player 1";
+	auto* pHUDTitleText = new TextComponent(HUDTitleString, hudFont);
+	auto* pHUDTitleRender = new RenderComponent();
+	pHUDTitle->AddComponent(pHUDTitleText);
+	pHUDTitle->AddComponent(pHUDTitleRender);
+	pHUDTitle->SetPosition(10, 60);
+	Add(pHUDTitle);
 
 	//Lives remaining
-	auto player1Lives = std::make_shared<GameObject>();
-	const std::string player1LivesString = "Remaining lives: " + std::to_string(pQBertLivesComponent->GetLivesRemaining());
-	auto* pPlayer1LivesText = new TextComponent(player1LivesString, hudFont);
-	auto* pPlayer1LivesRender = new RenderComponent();
-	player1Lives->AddComponent(pPlayer1LivesText);
-	player1Lives->AddComponent(pPlayer1LivesRender);
-	player1Lives->SetPosition(10, 120);
-	Add(player1Lives);
-	pPlayerObserver->SetLivesObject(player1Lives);
+	auto pLives = std::make_shared<GameObject>();
+	auto* pLivesComponent = new LivesComponent(qbertLives);
+	const std::string livesString = "Remaining lives: " + std::to_string(pLivesComponent->GetLivesRemaining());
+	auto* pLivesText = new TextComponent(livesString, hudFont);
+	auto* pLivesRender = new RenderComponent();
+	auto* pLivesSubjectComponent = new SubjectComponent();
+	pLives->AddComponent(pLivesText);
+	pLives->AddComponent(pLivesRender);
+	pLives->AddComponent(pLivesComponent);
+	pLives->AddComponent(pLivesSubjectComponent);
+	pLives->SetPosition(10, 120);
+	Add(pLives);
+	pLivesSubjectComponent->AddObserver(pPlayerObserver);
 
 	//Score
-	auto player1Score = std::make_shared<GameObject>();
-	const std::string player1ScoreString = "Score: " + std::to_string(pQBertScoreComponent->GetScore());
-	auto* pPlayer1ScoreText = new TextComponent(player1ScoreString, hudFont);
-	auto* pPlayer1ScoreRender = new RenderComponent();
-	player1Score->AddComponent(pPlayer1ScoreText);
-	player1Score->AddComponent(pPlayer1ScoreRender);
-	player1Score->SetPosition(10, 150);
-	Add(player1Score);
-	pPlayerObserver->SetScorebject(player1Score);
+	auto pScore = std::make_shared<GameObject>();
+	auto* pScoreComponent = new ScoreComponent();
+	const std::string player1ScoreString = "Score: " + std::to_string(pScoreComponent->GetScore());
+	auto* pScoreText = new TextComponent(player1ScoreString, hudFont);
+	auto* pScoreRender = new RenderComponent();
+	auto* pScoreSubjectComponent = new SubjectComponent();
+	pScore->AddComponent(pScoreText);
+	pScore->AddComponent(pScoreRender);
+	pScore->AddComponent(pScoreComponent);
+	pScore->AddComponent(pScoreSubjectComponent);
+	pScore->SetPosition(10, 150);
+	Add(pScore);
+	pScoreSubjectComponent->AddObserver(pPlayerObserver);
 
+	//Player
+	auto QBert = std::make_shared<GameObject>();
+	auto* pQBertComponent = new QBertComponent(pLevelComponent, jumpCooldownQBert, pLivesComponent, pScoreComponent);
+	auto* pQBertRenderComponent = new RenderComponent("Qbert.png");
+	auto* pQBertSubjectComponent = new SubjectComponent();
+	QBert->AddComponent(pQBertComponent);
+	QBert->AddComponent(pQBertRenderComponent);
+	QBert->AddComponent(pQBertSubjectComponent);
+	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false, false);
+	Add(QBert);
+	pQBertSubjectComponent->AddObserver(pPlayerObserver);
+	
 	//Adding input
 	const ActionInfo GoNorthEast{ ControllerButton::Up, SDL_SCANCODE_W, InputState::Up };
 	const ActionInfo GoNorthWest{ ControllerButton::Left, SDL_SCANCODE_A, InputState::Up };

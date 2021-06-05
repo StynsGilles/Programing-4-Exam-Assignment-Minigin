@@ -34,7 +34,7 @@ namespace dae
 		LevelCube* GetNextCubeEnemy(LevelCube* pCurrentCube, int rowChange, int colChange, bool& isOccupied, const EnemyType& enemyType,
 			bool& QBertOnCube, bool isSlickOrSam = false) const;
 		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange,
-			bool& fellOfPyramid, bool& positiveChange, bool& isOccupied, PlateComponent*& pJumpedOnPlate);
+			bool& fellOfPyramid, bool& positiveChange, bool& isOccupied, bool& otherPlayerOnCube, PlateComponent*& pJumpedOnPlate);
 		bool CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate);
 		LevelCube* GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const;
 		void ClearBoard();
