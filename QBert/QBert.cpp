@@ -40,44 +40,34 @@ void LoadGame()
 
 	const auto mainMenuScene = std::make_shared<dae::MainMenuScene>("MainMenu");
 	sceneManager.AddScene(mainMenuScene);
-	mainMenuScene->Initialize();
 	
 	const auto level1Scene = std::make_shared<dae::SinglePlayerScene>("Level1", L"Level1.json");
 	sceneManager.AddScene(level1Scene);
-	level1Scene->Initialize();
 
 	const auto level2Scene = std::make_shared<dae::SinglePlayerScene>("Level2", L"Level2.json");
 	sceneManager.AddScene(level2Scene);
-	level2Scene->Initialize();
 
 	const auto level3Scene = std::make_shared<dae::SinglePlayerScene>("Level3", L"Level3.json");
 	sceneManager.AddScene(level3Scene);
-	level3Scene->Initialize();
 
 	const auto versusLv1Scene = std::make_shared<dae::VersusScene>("VersusLevel1", L"Level1.json");
 	sceneManager.AddScene(versusLv1Scene);
-	versusLv1Scene->Initialize();
-
+	
 	const auto versusLv2Scene = std::make_shared<dae::VersusScene>("VersusLevel2", L"Level2.json");
 	sceneManager.AddScene(versusLv2Scene);
-	versusLv2Scene->Initialize();
 
 	const auto versusLv3Scene = std::make_shared<dae::VersusScene>("VersusLevel3", L"Level3.json");
 	sceneManager.AddScene(versusLv3Scene);
-	versusLv3Scene->Initialize();
 	
 	const auto coopLv1Scene = std::make_shared<dae::CoopScene>("CoopLevel1", L"Level1.json");
 	sceneManager.AddScene(coopLv1Scene);
-	coopLv1Scene->Initialize();
-
+	
 	const auto coopLv2Scene = std::make_shared<dae::CoopScene>("CoopLevel2", L"Level2.json");
 	sceneManager.AddScene(coopLv2Scene);
-	coopLv2Scene->Initialize();
 
 
 	const auto coopLv3Scene = std::make_shared<dae::CoopScene>("CoopLevel3", L"Level3.json");
 	sceneManager.AddScene(coopLv3Scene);
-	coopLv3Scene->Initialize();
 	
 	sceneManager.SetActiveScene("MainMenu");
 }

@@ -41,7 +41,8 @@ void Scene::Initialize()
 void Scene::ResetScene()
 {
 	m_Objects.clear();
-	delete m_InputManager;
+	if (m_InputManager)
+		delete m_InputManager;
 	Initialize();
 }
 
