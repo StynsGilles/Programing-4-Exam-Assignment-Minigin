@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "LivesComponent.h"
-#include "SubjectComponent.h"
-#include "GameObject.h"
+
+#include <GameObject.h>
 #include <Observer.h>
+#include <SubjectComponent.h>
+
+#include "SceneManager.h"
 
 dae::LivesComponent::LivesComponent(int maxLives)
 	: m_MaxLives(maxLives)
@@ -33,7 +36,7 @@ void dae::LivesComponent:: LoseLives(int amount)
 	m_LivesRemaining -= amount;
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::PlayerDied);
 	if (m_LivesRemaining <= 0)
-		m_pObject->Delete();
+		SceneManager::GetInstance().SetActiveScene("MainMenu");
 }
 
 int dae::LivesComponent::GetLivesRemaining() const

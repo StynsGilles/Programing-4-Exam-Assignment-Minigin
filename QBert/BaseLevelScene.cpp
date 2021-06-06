@@ -16,11 +16,11 @@ void dae::BaseLevelScene::Initialize()
 	Scene::Initialize();
 	
 	//Create objects
-	auto go = std::make_shared<dae::GameObject>();
+	auto pBackGround = std::make_shared<dae::GameObject>();
 	auto* pBackgroundTextureComponent = new RenderComponent();
 	pBackgroundTextureComponent->SetTexture("background.jpg");
-	go->AddComponent(pBackgroundTextureComponent);
-	Add(go);
+	pBackGround->AddComponent(pBackgroundTextureComponent);
+	Add(pBackGround);
 
 	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	auto fps = std::make_shared<GameObject>();
@@ -30,6 +30,14 @@ void dae::BaseLevelScene::Initialize()
 	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);
 	Add(fps);
+
+	auto pStageObj = std::make_shared<GameObject>();
+	auto* pStageTextComponent = new TextComponent("Level: " + std::to_string(m_Level) + "/" + std::to_string(m_MaxLevel), fpsFont);
+	pStageTextComponent->SetColor(SDL_Color{ 255, 255, 255 });
+	pStageObj->AddComponent(pStageTextComponent);
+	Add(pStageObj);
+
+	pStageObj->SetPosition(0, 30);
 }
 
 int dae::BaseLevelScene::GetLevel() const

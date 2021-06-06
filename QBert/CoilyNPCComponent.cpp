@@ -1,12 +1,15 @@
 #include "pch.h"
 #include "CoilyNPCComponent.h"
-#include "EnemyPositionComponent.h"
+
 #include <GameObject.h>
+
+#include "EnemyPositionComponent.h"
 #include "LevelComponent.h"
 #include "QBertComponent.h"
 #include "RenderComponent.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include "ServiceLocator.h"
 
 dae::CoilyNPCComponent::CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval)
 	: m_State(CoilyState::egg)
@@ -206,6 +209,7 @@ void dae::CoilyNPCComponent::GoToPlate()
 
 	if (pPosComp && m_PlateDestinationCube)
 	{
+		ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/SnakeFall.wav");
 		bool isOccupied = false;
 		bool QBertOnCube = false;
 		auto* pCoilyCube = pPosComp->GetCurrentCube();

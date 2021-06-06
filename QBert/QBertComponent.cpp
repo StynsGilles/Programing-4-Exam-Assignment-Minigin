@@ -1,18 +1,20 @@
 #include "pch.h"
 #include "QBertComponent.h"
+
+#include <GameObject.h>
+#include <GameTime.h>
+#include <Observer.h>
+#include <Scene.h>
+#include <SceneManager.h>
 #include <SDL_render.h>
+#include <ServiceLocator.h>
+#include <SubjectComponent.h>
 
 #include "CoilyNPCComponent.h"
 #include "EntityComponent.h"
-#include "GameObject.h"
-#include "GameTime.h"
 #include "LivesComponent.h"
-#include "Observer.h"
-#include "SceneManager.h"
-#include "Scene.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
-#include "SubjectComponent.h"
 
 dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval, LivesComponent* pLivesComp, ScoreComponent* pScoreComp)
 	: m_pPyramid(pPyramid)
@@ -68,7 +70,12 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 		}
 
 		if (fellOf)
+		{
 			m_pLivesComp->LoseLives(1);
+			ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Fall.wav");
+		}
+		else
+			ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Jump.wav");
 
 		if (positiveChange)
 			FlippedTile();
@@ -93,12 +100,14 @@ dae::LevelCube* dae::QBertComponent::GetCurrentCube() const
 
 void dae::QBertComponent::GotHit() const
 {
+	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Swear.wav");
 	m_pLivesComp->LoseLives(1);
 }
 
 void dae::QBertComponent::KillGreen() const
 {
 	AwardScore(m_ScoreSlAndSaDefeat);
+	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Prize.wav");
 }
 
 void dae::QBertComponent::KilledCoily() const
@@ -124,6 +133,7 @@ void dae::QBertComponent::FinishLevel()
 	auto plates = scene->GetAllObjectsOfType<PlateComponent>();
 	AwardScore(plates.size() * m_ScoreRemainingDisc);
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::LevelFinished);
+	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Victory.wav");
 }
 
 void dae::QBertComponent::Move(int rowChange, int colChange)
@@ -144,6 +154,7 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 		{
 			ModifyCoilyBehavior(pPlate);
 			pPlate->GetGameObject()->Delete();
+			ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Lift.wav");
 		}
 		
 		if (pNextCube && !otherPlayerOnCube) ChangeCube(pNextCube, fellOf, positiveChange, isOccupied);
