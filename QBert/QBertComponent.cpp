@@ -4,30 +4,30 @@
 #include <GameObject.h>
 #include <GameTime.h>
 #include <Observer.h>
+#include <RenderComponent.h>
 #include <Scene.h>
 #include <SceneManager.h>
-#include <SDL_render.h>
 #include <ServiceLocator.h>
 #include <SubjectComponent.h>
 
 #include "CoilyNPCComponent.h"
 #include "EntityComponent.h"
+#include "LevelComponent.h"
 #include "LivesComponent.h"
-#include "RenderComponent.h"
+#include "PlateComponent.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
 
 dae::QBertComponent::QBertComponent(LevelComponent* pPyramid, float jumpInterval, LivesComponent* pLivesComp, ScoreComponent* pScoreComp)
 	: m_pPyramid(pPyramid)
-	, m_JumpInterval(jumpInterval)
 	, m_pLivesComp(pLivesComp)
 	, m_pScoreComp(pScoreComp)
-{
-}
+	, m_JumpInterval(jumpInterval)
+	, m_JumpCoolDown(jumpInterval)
+{}
 
 dae::QBertComponent::~QBertComponent()
-{
-}
+{}
 
 void dae::QBertComponent::Update()
 {
@@ -43,8 +43,7 @@ void dae::QBertComponent::Update()
 }
 
 void dae::QBertComponent::Render() const
-{
-}
+{}
 
 void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool positiveChange, bool isOccupied)
 {
@@ -124,12 +123,11 @@ void dae::QBertComponent::AwardScore(int amount) const
 		m_pScoreComp->AddToScore(amount);
 }
 
-void dae::QBertComponent::FinishLevel()
+void dae::QBertComponent::FinishLevel() const
 {	
-	std::cout << "Congratulations!" << std::endl;
-	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	auto plates = scene->GetAllObjectsOfType<PlateComponent>();
-	AwardScore(plates.size() * m_ScoreRemainingDisc);
+	const auto pScene = SceneManager::GetInstance().GetCurrentScene();
+	const auto pPlates = pScene->GetAllObjectsOfType<PlateComponent>();
+	AwardScore(pPlates.size() * m_ScoreRemainingDisc);
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::LevelFinished);
 	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Victory.wav");
 }
@@ -161,7 +159,7 @@ void dae::QBertComponent::Move(int rowChange, int colChange)
 	}
 }
 
-void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate)
+void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate) const
 {
 	auto scene = SceneManager::GetInstance().GetCurrentScene();
 
@@ -169,7 +167,7 @@ void dae::QBertComponent::ModifyCoilyBehavior(PlateComponent* pPlate)
 	if (pCoily) pCoily->SetTarget(pPlate, m_pCurrentCube);
 }
 
-void dae::QBertComponent::UpdatePosition(const glm::vec3& nextPosition)
+void dae::QBertComponent::UpdatePosition(const glm::vec3& nextPosition) const
 {
 	m_pObject->SetPosition(nextPosition.x, nextPosition.y);
 }

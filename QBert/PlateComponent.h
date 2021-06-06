@@ -3,21 +3,16 @@
 
 namespace dae
 {
+	enum class Side;
 	class LevelComponent;
-
-	enum class Side
-	{
-		left,
-		right
-	};
 	
-	class PlateComponent : public BaseComponent
+	class PlateComponent final : public BaseComponent
 	{
 	public:
-		PlateComponent(LevelComponent* pPyramid, int row, Side side);
-		virtual ~PlateComponent();
+		explicit PlateComponent(LevelComponent* pPyramid, int row, Side side);
+		~PlateComponent();
 
-		void Initialize();
+		void Initialize() const;
 		void Update() override;
 		void Render() const override;
 		int GetRow() const;

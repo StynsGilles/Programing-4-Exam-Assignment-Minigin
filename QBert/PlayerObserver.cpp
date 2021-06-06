@@ -1,23 +1,22 @@
 #include "pch.h"
 #include "PlayerObserver.h"
+
 #include <GameObject.h>
-#include "HealthComponent.h"
-#include "LivesComponent.h"
-#include "ScoreComponent.h"
-#include <TextComponent.h>
-#include "LevelComponent.h"
 #include <Scene.h>
 #include <SceneManager.h>
+#include <TextComponent.h>
+
 #include "BaseLevelScene.h"
+#include "LevelComponent.h"
+#include "LivesComponent.h"
+#include "ScoreComponent.h"
 
 dae::PlayerObserver::PlayerObserver()
 	: Observer()
-{
-}
+{}
 
 dae::PlayerObserver::~PlayerObserver()
-{
-}
+{}
 
 void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 {
@@ -25,14 +24,13 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 	{
 	case Event::PlayerDied:
 	{
-		auto scene = SceneManager::GetInstance().GetCurrentScene();
-		auto level = scene->GetComponentOfType<LevelComponent>();
-		level->ClearBoard();
+		const auto pScene = SceneManager::GetInstance().GetCurrentScene();
+		auto* pLevel = pScene->GetComponentOfType<LevelComponent>();
+		pLevel->ClearBoard();
 		UpdateLivesText(pEntity);
 	}
 		break;
 	case Event::PlayerLostHP:
-		UpdateHealthText(pEntity);
 		break;
 	case Event::IncreaseScore:
 		UpdateScoreText(pEntity);
@@ -48,21 +46,8 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 	}
 }
 
-void dae::PlayerObserver::UpdateHealthText(GameObject* pEntity)
+void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity) const
 {
-	std::cout << "Lost hp" << std::endl;
-	auto* healthText = pEntity->GetComponent<TextComponent>();
-	auto* healthComp = pEntity->GetComponent<HealthComponent>();
-	if (healthText && healthComp)
-	{
-		const std::string healthString = "Health: " + std::to_string(healthComp->GetHealth()) + "/" + std::to_string(healthComp->GetMaxHealth());
-		healthText->SetText(healthString);
-	}
-}
-
-void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
-{
-	std::cout << "PlayerDied" << std::endl;
 	auto* pLivesRemainingText = pEntity->GetComponent<TextComponent>();
 	auto* pLivesComp = pEntity->GetComponent<LivesComponent>();
 	if (pLivesRemainingText && pLivesComp)
@@ -72,9 +57,8 @@ void dae::PlayerObserver::UpdateLivesText(GameObject* pEntity)
 	}
 }
 
-void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
+void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity) const
 {
-	std::cout << "Increasing score" << std::endl;
 	auto* scoreText = pEntity->GetComponent<TextComponent>();
 	auto* scoreComp = pEntity->GetComponent<ScoreComponent>();
 	if (scoreText && scoreComp)
@@ -84,11 +68,10 @@ void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 	}
 }
 
-void dae::PlayerObserver::HandleFinishedLevel()
+void dae::PlayerObserver::HandleFinishedLevel() const
 {
-	auto pScene = SceneManager::GetInstance().GetCurrentScene();
-	
-	auto pLevelScene = std::dynamic_pointer_cast<BaseLevelScene>(pScene);
+	const auto pScene = SceneManager::GetInstance().GetCurrentScene();
+	const auto pLevelScene = std::dynamic_pointer_cast<BaseLevelScene>(pScene);
 
 	if (pLevelScene)
 	{
@@ -97,10 +80,11 @@ void dae::PlayerObserver::HandleFinishedLevel()
 			auto* pCurrentLivesComp = pLevelScene->GetComponentOfType<LivesComponent>();
 			auto* pCurrentScoreComp = pLevelScene->GetComponentOfType<ScoreComponent>();
 			
-			auto pNextScene = SceneManager::GetInstance().NextScene();
+			const auto pNextScene = SceneManager::GetInstance().NextScene();
 
 			auto* pNextLivesComp = pNextScene->GetComponentOfType<LivesComponent>();
 			auto* pNextScoreComp = pNextScene->GetComponentOfType<ScoreComponent>();
+			
 			if (pCurrentLivesComp && pNextLivesComp)
 				pNextLivesComp->SetLives(pCurrentLivesComp->GetLivesRemaining());
 

@@ -1,26 +1,23 @@
 #include "pch.h"
 #include "ScoreComponent.h"
+
+#include <GameObject.h>
 #include <Observer.h>
 #include <SubjectComponent.h>
-#include <GameObject.h>
 
 dae::ScoreComponent::ScoreComponent()
 	: BaseComponent()
 	, m_Score(0)
-{
-}
+{}
 
 dae::ScoreComponent::~ScoreComponent()
-{
-}
+{}
 
 void dae::ScoreComponent::Update()
-{
-}
+{}
 
 void dae::ScoreComponent::Render() const
-{
-}
+{}
 
 void dae::ScoreComponent::SetScore(int score)
 {

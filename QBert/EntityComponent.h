@@ -8,11 +8,11 @@ namespace dae
 	class EntityComponent : public BaseComponent
     {
 	public:
-		EntityComponent(LevelComponent* pPyramid);
+		explicit EntityComponent(LevelComponent* pPyramid);
 		virtual ~EntityComponent();
 
-		virtual void Update() override = 0;
-		virtual void Render() const override = 0;
+		void Update() override = 0;
+		void Render() const override = 0;
 
 		static void Spawn();
 		
@@ -28,7 +28,7 @@ namespace dae
 
 		void JumpUpdate();
 		virtual void Jump() = 0;
-		void JumpRandomDownwards(bool isSlickOrSam = false);
+		void JumpRandomDownwards(bool isSlickOrSam = false) const;
 		void SetJumpRate(float jumpInterval);
     };
 }

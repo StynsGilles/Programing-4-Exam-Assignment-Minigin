@@ -6,8 +6,8 @@ namespace dae
     class ScoreComponent final : public BaseComponent
     {
     public:
-        ScoreComponent();
-        virtual ~ScoreComponent();
+        explicit ScoreComponent();
+        ~ScoreComponent();
 
         void Update() override;
     	void Render() const override;

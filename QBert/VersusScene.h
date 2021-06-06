@@ -7,7 +7,8 @@ namespace dae
 	{
 	public:
 		explicit VersusScene(const std::string& name, int level);
-
+		~VersusScene();
+		
 		void Initialize() override;
 
 		VersusScene(const VersusScene& other) = delete;

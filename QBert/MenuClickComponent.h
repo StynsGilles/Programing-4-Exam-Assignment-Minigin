@@ -7,7 +7,7 @@ namespace dae
 	{
 	public:
 		explicit MenuClickComponent(RenderComponent* pRenderComp, const std::string& sceneName);
-		virtual ~MenuClickComponent();
+		~MenuClickComponent();
 
 		MenuClickComponent(const MenuClickComponent& other) = delete;
 		MenuClickComponent(MenuClickComponent&& other) = delete;

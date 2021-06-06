@@ -1,22 +1,47 @@
 #pragma once
 #include <Commands.h>
-#include <iostream>
 #include <GameObject.h>
+#include <utility>
+
 #include "CoilyPlayerComponent.h"
 #include "QBertComponent.h"
 
-class NorthEast final : public Command
+class QBertCommand : public Command
 {
 public:
-    NorthEast(std::weak_ptr<dae::GameObject> pQbert)
-		: Command()
-		, m_pQbert(pQbert)
+    explicit QBertCommand(std::weak_ptr<dae::GameObject> pQbert)
+        : Command()
+        , m_pQbert(std::move(pQbert))
+    {}
+
+    ~QBertCommand() override
+    {}
+
+    void Execute() override
+    {}
+
+    QBertCommand(const QBertCommand& other) = delete;
+    QBertCommand(QBertCommand&& other) = delete;
+    QBertCommand& operator=(const QBertCommand& other) = delete;
+    QBertCommand& operator=(QBertCommand&& other) = delete;
+protected:
+    std::weak_ptr<dae::GameObject> m_pQbert;
+};
+
+class NorthEast final : public QBertCommand
+{
+public:
+    explicit NorthEast(const std::weak_ptr<dae::GameObject>& pQbert)
+        : QBertCommand(pQbert)
+    {}
+	
+    ~NorthEast() override
     {}
 	
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
         {
             auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
             if (pQBertComp) pQBertComp->Move(-1, 0);
@@ -27,22 +52,22 @@ public:
     NorthEast(NorthEast&& other) = delete;
     NorthEast& operator=(const NorthEast& other) = delete;
     NorthEast& operator=(NorthEast&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pQbert;
 };
 
-class SouthEast final : public Command
+class SouthEast final : public QBertCommand
 {
 public:
-    SouthEast(std::weak_ptr<dae::GameObject> pQbert)
-        : Command()
-        , m_pQbert(pQbert)
+    explicit SouthEast(const std::weak_ptr<dae::GameObject>& pQbert)
+        : QBertCommand(pQbert)
     {}
 
+    ~SouthEast() override
+	{}
+	
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
         {
             auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
             if (pQBertComp) pQBertComp->Move(1, 1);
@@ -53,22 +78,22 @@ public:
     SouthEast(SouthEast&& other) = delete;
     SouthEast& operator=(const SouthEast& other) = delete;
     SouthEast& operator=(SouthEast&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pQbert;
 };
 
-class NorthWest final : public Command
+class NorthWest final : public QBertCommand
 {
 public:
-    NorthWest(std::weak_ptr<dae::GameObject> pQbert)
-        : Command()
-        , m_pQbert(pQbert)
+    explicit NorthWest(const std::weak_ptr<dae::GameObject>& pQbert)
+        : QBertCommand(pQbert)
     {}
+
+    ~NorthWest() override
+	{}
 
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
         {
             auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
             if (pQBertComp) pQBertComp->Move(-1, -1);
@@ -79,22 +104,22 @@ public:
     NorthWest(NorthWest&& other) = delete;
     NorthWest& operator=(const NorthWest& other) = delete;
     NorthWest& operator=(NorthWest&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pQbert;
 };
 
-class SouthWest final : public Command
+class SouthWest final : public QBertCommand
 {
 public:
-    SouthWest(std::weak_ptr<dae::GameObject> pQbert)
-        : Command()
-        , m_pQbert(pQbert)
+    explicit SouthWest(const std::weak_ptr<dae::GameObject>& pQbert)
+        : QBertCommand(pQbert)
     {}
 
+    ~SouthWest() override
+    {}
+	
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedQbert = m_pQbert.lock())
         {
             auto* pQBertComp = pSharedQbert->GetComponent<dae::QBertComponent>();
             if (pQBertComp) pQBertComp->Move(1, 0);
@@ -105,23 +130,25 @@ public:
     SouthWest(SouthWest&& other) = delete;
     SouthWest& operator=(const SouthWest& other) = delete;
     SouthWest& operator=(SouthWest&& other) = delete;
-private:
-    std::weak_ptr<dae::GameObject> m_pQbert;
 };
 
 class CoilyCommand : public Command
 {
 public:
     explicit CoilyCommand(std::weak_ptr<dae::GameObject> pCoily)
-	    : m_pCoily(pCoily)
+	    :Command()
+		, m_pCoily(std::move(pCoily))
     {}
 
+    ~CoilyCommand() override
+	{}
+	
     void Execute() override
     {}
 
     void ChangeCoily(std::weak_ptr<dae::GameObject> pCoily)
     {
-        m_pCoily = pCoily;
+        m_pCoily = std::move(pCoily);
     }
 	
     CoilyCommand(const CoilyCommand& other) = delete;
@@ -136,15 +163,17 @@ protected:
 class NorthEastCoily final : public CoilyCommand
 {
 public:
-    NorthEastCoily(std::weak_ptr<dae::GameObject> pCoily)
+	explicit NorthEastCoily(const std::weak_ptr<dae::GameObject>& pCoily)
         : CoilyCommand(pCoily)
     {}
 
+    ~NorthEastCoily() override
+	{}
+	
     void Execute() override
     {
-        std::cout << "doing shit" << std::endl;
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
         {
             auto* pCoilyComp = pSharedCoily->GetComponent<dae::CoilyPlayerComponent>();
             if (pCoilyComp) pCoilyComp->Move(-1, 0);
@@ -160,14 +189,17 @@ public:
 class SouthEastCoily final : public CoilyCommand
 {
 public:
-    SouthEastCoily(std::weak_ptr<dae::GameObject> pCoily)
+    explicit SouthEastCoily(const std::weak_ptr<dae::GameObject>& pCoily)
         : CoilyCommand(pCoily)
     {}
 
+    ~SouthEastCoily() override
+	{}
+	
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
         {
             auto* pCoilyComp = pSharedCoily->GetComponent<dae::CoilyPlayerComponent>();
             if (pCoilyComp) pCoilyComp->Move(1, 1);
@@ -183,14 +215,17 @@ public:
 class NorthWestCoily final : public CoilyCommand
 {
 public:
-    NorthWestCoily(std::weak_ptr<dae::GameObject> pCoily)
+    explicit NorthWestCoily(const std::weak_ptr<dae::GameObject>& pCoily)
         : CoilyCommand(pCoily)
     {}
 
+    ~NorthWestCoily() override
+	{}
+	
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
         {
             auto* pCoilyComp = pSharedCoily->GetComponent<dae::CoilyPlayerComponent>();
             if (pCoilyComp) pCoilyComp->Move(-1, -1);
@@ -206,14 +241,17 @@ public:
 class SouthWestCoily final : public CoilyCommand
 {
 public:
-    SouthWestCoily(std::weak_ptr<dae::GameObject> pCoily)
+    explicit SouthWestCoily(const std::weak_ptr<dae::GameObject>& pCoily)
         : CoilyCommand(pCoily)
     {}
+
+	~SouthWestCoily() override
+	{}
 
     void Execute() override
     {
         //Try to see if the objects still exist by acquiring shared_ptr from the weak_ptr
-        if (std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
+        if (const std::shared_ptr<dae::GameObject> pSharedCoily = m_pCoily.lock())
         {
             auto* pCoilyComp = pSharedCoily->GetComponent<dae::CoilyPlayerComponent>();
             if (pCoilyComp) pCoilyComp->Move(1, 0);

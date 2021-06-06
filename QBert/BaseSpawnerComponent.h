@@ -8,13 +8,11 @@ namespace dae
 	class BaseSpawnerComponent : public BaseComponent
 	{
 	public:
-		BaseSpawnerComponent(LevelComponent* pPyramid);
+		explicit BaseSpawnerComponent(LevelComponent* pPyramid);
 		virtual ~BaseSpawnerComponent();
 
 		void Update() override;
 		void Render() const override = 0;
-
-		static void Spawn();
 
 		BaseSpawnerComponent(const BaseSpawnerComponent& other) = delete;
 		BaseSpawnerComponent(BaseSpawnerComponent&& other) = delete;
@@ -25,7 +23,7 @@ namespace dae
 
 		float m_SpawnInterval = 10.f;
 		float m_SpawnTimer = 0.f;
-		float m_JumpCooldownEntity;
+		float m_JumpCooldownEntity{};
 
 		virtual void SpawnEnemy() = 0;
 

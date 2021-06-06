@@ -1,16 +1,14 @@
 #include "pch.h"
 #include "BaseSpawnerComponent.h"
 
-#include "GameTime.h"
+#include <GameTime.h>
 
 dae::BaseSpawnerComponent::BaseSpawnerComponent(LevelComponent* pPyramid)
 	:m_pPyramid(pPyramid)
-{
-}
+{}
 
 dae::BaseSpawnerComponent::~BaseSpawnerComponent()
-{
-}
+{}
 
 void dae::BaseSpawnerComponent::Update()
 {

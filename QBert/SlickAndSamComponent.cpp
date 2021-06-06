@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "SlickAndSamComponent.h"
-#include "EnemyPositionComponent.h"
-#include "GameObject.h"
+
 #include "LevelComponent.h"
 
 dae::SlickAndSamComponent::SlickAndSamComponent(LevelComponent* pPyramid, float jumpInterval)
@@ -11,8 +10,7 @@ dae::SlickAndSamComponent::SlickAndSamComponent(LevelComponent* pPyramid, float 
 }
 
 dae::SlickAndSamComponent::~SlickAndSamComponent()
-{
-}
+{}
 
 void dae::SlickAndSamComponent::Update()
 {
@@ -25,5 +23,4 @@ void dae::SlickAndSamComponent::Jump()
 }
 
 void dae::SlickAndSamComponent::Render() const
-{
-}
+{}

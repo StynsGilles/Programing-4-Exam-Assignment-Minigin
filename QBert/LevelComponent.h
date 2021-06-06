@@ -1,27 +1,18 @@
 #pragma once
 #include <BaseComponent.h>
-#include "Texture2D.h"
 
 namespace dae
 {
+	struct LevelCube;
 	class PlateComponent;
 	enum class EnemyType;
-
-	struct LevelCube
-	{
-		std::vector<std::shared_ptr<Texture2D>> pCubeTextures;
-		glm::vec3 position;
-		int stage = 0;
-		bool reversible = false;
-		GameObject* entity = nullptr;
-	};
 	
 	class LevelComponent final : public BaseComponent
 	{
 	public:
-		LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
-		LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, bool reversible);
-		virtual ~LevelComponent();
+		explicit LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
+		explicit LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, bool reversible);
+		~LevelComponent() override;
 
 		void Update() override;
 		void Render() const override;
@@ -35,7 +26,6 @@ namespace dae
 			bool& QBertOnCube, bool isSlickOrSam = false) const;
 		LevelCube* GetNextCube(LevelCube* pCurrentCube, int rowChange, int colChange,
 			bool& fellOfPyramid, bool& positiveChange, bool& isOccupied, bool& otherPlayerOnCube, PlateComponent*& pJumpedOnPlate);
-		bool CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate);
 		LevelCube* GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const;
 		void ClearBoard();
 		float GetCubeWidth() const;
@@ -53,6 +43,7 @@ namespace dae
 		std::vector<std::vector<LevelCube*>> m_Pyramid;
 		bool m_LevelFinished = false;
 
+		bool CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate) const;
 		void GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange) const;
 		bool UpdateCubeColor(LevelCube* m_pCube);
 		void CheckLevelFinished();

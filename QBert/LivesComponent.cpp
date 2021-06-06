@@ -3,9 +3,8 @@
 
 #include <GameObject.h>
 #include <Observer.h>
+#include <SceneManager.h>
 #include <SubjectComponent.h>
-
-#include "SceneManager.h"
 
 dae::LivesComponent::LivesComponent(int maxLives)
 	: m_MaxLives(maxLives)
@@ -14,16 +13,13 @@ dae::LivesComponent::LivesComponent(int maxLives)
 }
 
 dae::LivesComponent::~LivesComponent()
-{
-}
+{}
 
 void dae::LivesComponent::Update()
-{
-}
+{}
 
 void dae::LivesComponent::Render() const
-{
-}
+{}
 
 void dae::LivesComponent::SetLives(int lives)
 {

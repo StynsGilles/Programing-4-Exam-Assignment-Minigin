@@ -1,22 +1,17 @@
 #pragma once
+#include "GameStructs.h"
 #include "JsonParser.h"
 
 namespace dae
 {
-	class LevelParser final : dae::JsonParser
+	class LevelParser final : public JsonParser
 	{
 	public:
-		static void LoadLevel(std::wstring filePath, 
-			bool& revertible, std::vector<std::string>& colors, 
-			int& pyramidSize, float& cubeWidth,
-			float& cubeHeight, std::vector<int>& plateRowsVector,
-			int& qbertLives, float& qbertJumpCD,
-			float& spawnIntervalSlick, float& jumpCdSlick, 
-			float& spawnIntervalUgg, float& jumpCdUgg,
-			float& spawnIntervalCoily, float& jumpCdCoily)
+		static dae::GameRules LoadLevel(const std::wstring& filePath)
 		{
 			auto levelFile = ReadJsonFile(filePath);
-
+			GameRules gameRules;
+			
 			if (levelFile.IsObject())
 			{
 				using rapidjson::Value;
@@ -24,71 +19,70 @@ namespace dae
 				if (levelFile.HasMember("gamerules") && levelFile["gamerules"].IsObject())
 				{
 					if (levelFile["gamerules"].HasMember("revertible"))
-						revertible = levelFile["gamerules"]["revertible"].GetBool();
+						gameRules.Revertible = levelFile["gamerules"]["revertible"].GetBool();
 					if (levelFile["gamerules"].HasMember("textures"))
 					{
-						colors.clear();
+						gameRules.Colors.clear();
 						auto textures = levelFile["gamerules"]["textures"].GetArray();
 						for (rapidjson::SizeType idx = 0; idx < textures.Size(); idx++)
 						{
 							auto textureObj = textures[idx].GetObjectW();
-							std::cout << textureObj["color"].GetString() << std::endl;
-							colors.push_back(textureObj["color"].GetString());
+							gameRules.Colors.push_back(textureObj["color"].GetString());
 						}
 					}
 				}
 				if (levelFile.HasMember("levelData") && levelFile["levelData"].IsObject())
 				{
 					if (levelFile["levelData"].HasMember("pyramidSize"))
-						pyramidSize = levelFile["levelData"]["pyramidSize"].GetInt();
-					
+						gameRules.PyramidSize = levelFile["levelData"]["pyramidSize"].GetInt();
+
 					if (levelFile["levelData"].HasMember("cubeWidth"))
-						cubeWidth = levelFile["levelData"]["cubeWidth"].GetFloat();
-					
+						gameRules.CubeWidth = levelFile["levelData"]["cubeWidth"].GetFloat();
+
 					if (levelFile["levelData"].HasMember("cubeHeight"))
-						cubeHeight = levelFile["levelData"]["cubeHeight"].GetFloat();
-					
+						gameRules.CubeHeight = levelFile["levelData"]["cubeHeight"].GetFloat();
+
 					if (levelFile["levelData"].HasMember("plateRows"))
 					{
-						plateRowsVector.clear();
-						auto plateRows = levelFile["levelData"]["plateRows"].GetArray();
+						gameRules.PlateRows.clear();
+						const auto plateRows = levelFile["levelData"]["plateRows"].GetArray();
 						for (rapidjson::SizeType idx = 0; idx < plateRows.Size(); idx++)
 						{
 							auto textureObj = plateRows[idx].GetObjectW();
-							std::cout << textureObj["row"].GetInt() << std::endl;
-							plateRowsVector.push_back(textureObj["row"].GetInt());
+							gameRules.PlateRows.push_back(textureObj["row"].GetInt());
 						}
 					}
 				}
 				if (levelFile.HasMember("QBertData"))
 				{
 					if (levelFile["QBertData"].HasMember("lives"))
-						qbertLives = levelFile["QBertData"]["lives"].GetInt();
+						gameRules.QBertLives = levelFile["QBertData"]["lives"].GetInt();
 					if (levelFile["QBertData"].HasMember("jumpCooldown"))
-						qbertJumpCD = levelFile["QBertData"]["jumpCooldown"].GetFloat();
+						gameRules.JumpCooldownQBert = levelFile["QBertData"]["jumpCooldown"].GetFloat();
 				}
 				if (levelFile.HasMember("SlickAndSamData"))
 				{
 					if (levelFile["SlickAndSamData"].HasMember("spawnInterval"))
-						spawnIntervalSlick = levelFile["SlickAndSamData"]["spawnInterval"].GetFloat();
+						gameRules.SpawnIntervalSlick = levelFile["SlickAndSamData"]["spawnInterval"].GetFloat();
 					if (levelFile["SlickAndSamData"].HasMember("jumpCooldown"))
-						jumpCdSlick = levelFile["SlickAndSamData"]["jumpCooldown"].GetFloat();
+						gameRules.JumpCooldownSlick = levelFile["SlickAndSamData"]["jumpCooldown"].GetFloat();
 				}
 				if (levelFile.HasMember("UggAndWrongwayData"))
 				{
 					if (levelFile["UggAndWrongwayData"].HasMember("spawnInterval"))
-						spawnIntervalUgg = levelFile["UggAndWrongwayData"]["spawnInterval"].GetFloat();
+						gameRules.SpawnIntervalUgg = levelFile["UggAndWrongwayData"]["spawnInterval"].GetFloat();
 					if (levelFile["UggAndWrongwayData"].HasMember("jumpCooldown"))
-						jumpCdUgg = levelFile["UggAndWrongwayData"]["jumpCooldown"].GetFloat();
+						gameRules.JumpCooldownUgg = levelFile["UggAndWrongwayData"]["jumpCooldown"].GetFloat();
 				}
 				if (levelFile.HasMember("CoilyData"))
 				{
 					if (levelFile["CoilyData"].HasMember("spawnInterval"))
-						spawnIntervalCoily = levelFile["CoilyData"]["spawnInterval"].GetFloat();
+						gameRules.SpawnIntervalCoily = levelFile["CoilyData"]["spawnInterval"].GetFloat();
 					if (levelFile["CoilyData"].HasMember("jumpCooldown"))
-						jumpCdCoily = levelFile["CoilyData"]["jumpCooldown"].GetFloat();
+						gameRules.JumpCooldownCoily = levelFile["CoilyData"]["jumpCooldown"].GetFloat();
 				}
 			}
+			return gameRules;
 		}
 	};
 }

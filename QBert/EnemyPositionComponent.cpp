@@ -1,32 +1,30 @@
 #include "pch.h"
 #include "EnemyPositionComponent.h"
-#include <SDL_render.h>
+
 #include <GameObject.h>
+#include <RenderComponent.h>
+#include <SceneManager.h>
+
 #include "EntityComponent.h"
+#include "GameStructs.h"
 #include "LevelComponent.h"
 #include "QBertComponent.h"
-#include "RenderComponent.h"
 #include "SlickAndSamComponent.h"
-#include "SceneManager.h"
-#include "Scene.h"
 
 dae::EnemyPositionComponent::EnemyPositionComponent(EnemyType enemyType, LevelComponent* pPyramid)
-	: m_EnemyType(enemyType)
-	, m_pPyramid(pPyramid)
+	: m_pPyramid(pPyramid)
+	, m_EnemyType(enemyType)
 {
 }
 
 dae::EnemyPositionComponent::~EnemyPositionComponent()
-{
-}
+{}
 
 void dae::EnemyPositionComponent::Update()
-{
-}
+{}
 
 void dae::EnemyPositionComponent::Render() const
-{
-}
+{}
 
 void dae::EnemyPositionComponent::SpawnOnCube(LevelCube* pNewCube)
 {
@@ -136,7 +134,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 	}
 }
 
-void dae::EnemyPositionComponent::RemoveFromCurrentCube()
+void dae::EnemyPositionComponent::RemoveFromCurrentCube() const
 {
 	if (m_pCurrentCube)
 	{
@@ -177,7 +175,7 @@ dae::EnemyType dae::EnemyPositionComponent::GetEnemyType() const
 	return m_EnemyType;
 }
 
-void dae::EnemyPositionComponent::UpdatePosition(const glm::vec3& nextPosition)
+void dae::EnemyPositionComponent::UpdatePosition(const glm::vec3& nextPosition) const
 {
 	m_pObject->SetPosition(nextPosition.x, nextPosition.y);
 }

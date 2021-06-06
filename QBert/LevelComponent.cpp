@@ -1,17 +1,16 @@
 #include "pch.h"
 #include "LevelComponent.h"
-#include <iostream>
-#include <SDL_rect.h>
-#include <SDL_render.h>
+
+#include <GameObject.h>
+#include <Renderer.h>
+#include <ResourceManager.h>
+#include <Scene.h>
+#include <SceneManager.h>
+
 #include "EnemyPositionComponent.h"
-#include "EntityComponent.h"
-#include "GameObject.h"
-#include "QBertComponent.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
-#include "SceneManager.h"
-#include "Scene.h"
+#include "GameStructs.h"
 #include "PlateComponent.h"
+#include "QBertComponent.h"
 
 dae::LevelComponent::LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
 	: m_PyramidSize{pyramidSize}
@@ -20,25 +19,26 @@ dae::LevelComponent::LevelComponent(int pyramidSize, float cubeWidth, float cube
 {
 	glm::vec3 initialCubePos = glm::vec3(320, 50, 0);
 
-	auto initialTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + initialColor + ".png");
-	std::shared_ptr<Texture2D> interTexture = nullptr;
+	const auto pInitialTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + initialColor + ".png");
+	std::shared_ptr<Texture2D> pInterTexture = nullptr;
 	if (!interColor.empty())
-		interTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + interColor + ".png");
-	auto finaltexture = ResourceManager::GetInstance().LoadTexture("Cube_" + finalColor + ".png");
+		pInterTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + interColor + ".png");
+	const auto pFinalTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + finalColor + ".png");
+	
 	for (int row = 0; row < m_PyramidSize; ++row)
 	{
 		std::vector<LevelCube*> newRow;
 		for (int col = 0; col <= row; ++col)
 		{
-			LevelCube* newCube = new LevelCube();
-			newCube->pCubeTextures.push_back(initialTexture);
+			auto* pNewCube = new LevelCube();
+			pNewCube->pCubeTextures.push_back(pInitialTexture);
 			if (!interColor.empty())
-				newCube->pCubeTextures.push_back(interTexture);
-			newCube->pCubeTextures.push_back(finaltexture);
+				pNewCube->pCubeTextures.push_back(pInterTexture);
+			pNewCube->pCubeTextures.push_back(pFinalTexture);
 			
-			newCube->position = initialCubePos;
-			newCube->reversible = reversible;
-			newRow.push_back(newCube);
+			pNewCube->position = initialCubePos;
+			pNewCube->reversible = reversible;
+			newRow.push_back(pNewCube);
 			if (col == row)
 			{
 				initialCubePos.x -= m_CubeWidth / 2.f + m_CubeWidth * col;
@@ -93,7 +93,7 @@ dae::LevelCube* dae::LevelComponent::GetCube(int row, int col) const
 	if (row >= m_PyramidSize || row < 0)
 		return nullptr;
 
-	if (col >= (int)m_Pyramid[row].size() || col < 0)
+	if (col >= static_cast<int>(m_Pyramid[row].size()) || col < 0)
 		return nullptr;
 	
 	return m_Pyramid[row][col];
@@ -144,23 +144,6 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 	{
 		switch (enemyType)
 		{
-		case EnemyType::top:
-			if (pCube->entity)
-			{
-				if (pCube->entity->GetComponent<QBertComponent>())
-					QBertOnCube = true;
-				else
-				{
-					QBertOnCube = false;
-					isOccupied = true;
-					return nullptr;
-				}
-			}
-			isOccupied = false;
-
-			if (isSlickOrSam)
-				pCube->stage = 0;
-			break;
 		case EnemyType::left:
 		{
 			auto* pLeftCube = GetNextCubeNeutral(pCube, 1, 0);
@@ -195,6 +178,7 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeEnemy(LevelCube* pCurrentCube, i
 			isOccupied = false;
 		}
 		break;
+		case EnemyType::top:
 		default:
 			if (pCube->entity)
 			{
@@ -243,16 +227,15 @@ dae::LevelCube* dae::LevelComponent::GetNextCube(LevelCube* pCurrentCube, int ro
 	}
 	
 	fellOfPyramid = CheckIfJumpedOnPlate(pCurrentCube, rowChange, colChange, pJumpedOnPlate);
-	if (pJumpedOnPlate) std::cout << " found the plate!" << std::endl;
 	return GetTopCube();
 }
 
-bool dae::LevelComponent::CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate)
+bool dae::LevelComponent::CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate) const
 {
 	if (rowChange == -1)
 	{
 		auto pAllPlates = SceneManager::GetInstance().GetCurrentScene()->GetAllComponentsOfType<PlateComponent>();
-		int newRow = GetRowOfCube(pCurrentCube) + rowChange;
+		const int newRow = GetRowOfCube(pCurrentCube) + rowChange;
 		Side sideNeeded{};
 
 		switch (colChange)
@@ -271,7 +254,6 @@ bool dae::LevelComponent::CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowC
 		{
 			if (newRow == plate->GetRow() && sideNeeded == plate->GetSide())
 			{
-				std::cout << "jumped on plate" << std::endl;
 				pJumpedOnPlate = plate;
 				return false;
 			}
@@ -293,13 +275,13 @@ dae::LevelCube* dae::LevelComponent::GetNextCubeNeutral(LevelCube* pCurrentCube,
 
 void dae::LevelComponent::ClearBoard()
 {
-	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	auto enemies = scene->GetAllComponentsOfType<EnemyPositionComponent>();
+	const auto pScene = SceneManager::GetInstance().GetCurrentScene();
+	auto enemies = pScene->GetAllComponentsOfType<EnemyPositionComponent>();
 
-	for (auto enemy : enemies)
+	for (auto* pEnemy : enemies)
 	{
-		enemy->RemoveFromCurrentCube();
-		enemy->GetGameObject()->Delete();
+		pEnemy->RemoveFromCurrentCube();
+		pEnemy->GetGameObject()->Delete();
 	}
 }
 
@@ -351,7 +333,7 @@ bool dae::LevelComponent::UpdateCubeColor(LevelCube* m_pCube)
 			return false;
 		}
 	}
-	else if ((size_t)m_pCube->stage + 1 < m_pCube->pCubeTextures.size())
+	else if (static_cast<size_t>(m_pCube->stage) + 1 < m_pCube->pCubeTextures.size())
 	{
 		m_pCube->stage++;
 		CheckLevelFinished();
@@ -367,14 +349,13 @@ void dae::LevelComponent::CheckLevelFinished()
 	{
 		for (int col = 0; col <= row; ++col)
 		{
-			if ((size_t)m_Pyramid[row][col]->stage + 1 != m_Pyramid[row][col]->pCubeTextures.size())
+			if (static_cast<size_t>(m_Pyramid[row][col]->stage) + 1 != m_Pyramid[row][col]->pCubeTextures.size())
 				levelFinished = false;
 		}
 	}
 	m_LevelFinished = levelFinished;
 	if (m_LevelFinished)
 	{
-		std::cout << "finished level" << std::endl;
 		auto* pQbert = SceneManager::GetInstance().GetCurrentScene()->GetComponentOfType<QBertComponent>();
 		if (pQbert)
 			pQbert->FinishLevel();

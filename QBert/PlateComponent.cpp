@@ -1,12 +1,11 @@
 #include "pch.h"
 #include "PlateComponent.h"
 
-#include <SDL_render.h>
+#include <GameObject.h>
+#include <RenderComponent.h>
 
-
-#include "GameObject.h"
+#include "GameStructs.h"
 #include "LevelComponent.h"
-#include "RenderComponent.h"
 
 dae::PlateComponent::PlateComponent(LevelComponent* pPyramid, int row, Side side)
 	: m_pPyramid(pPyramid)
@@ -17,7 +16,7 @@ dae::PlateComponent::PlateComponent(LevelComponent* pPyramid, int row, Side side
 dae::PlateComponent::~PlateComponent()
 {}
 
-void dae::PlateComponent::Initialize()
+void dae::PlateComponent::Initialize() const
 {
 	const float yOffset = 22.f;
 	const float xOffset = 3.f;
@@ -34,7 +33,6 @@ void dae::PlateComponent::Initialize()
 			pPlatePos.y += yOffset;
 			m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
 		}
-
 	}
 	break;
 	case Side::right:
@@ -55,12 +53,10 @@ void dae::PlateComponent::Initialize()
 }
 
 void dae::PlateComponent::Update()
-{
-}
+{}
 
 void dae::PlateComponent::Render() const
-{
-}
+{}
 
 int dae::PlateComponent::GetRow() const
 {

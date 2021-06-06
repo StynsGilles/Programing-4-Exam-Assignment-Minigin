@@ -7,6 +7,7 @@ namespace dae
 	{
 	public:
 		explicit SinglePlayerScene(const std::string& name, int level);
+		~SinglePlayerScene();
 		
 		void Initialize() override;
 		

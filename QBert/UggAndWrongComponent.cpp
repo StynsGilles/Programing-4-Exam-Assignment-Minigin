@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "UggAndWrongComponent.h"
+
+#include <GameObject.h>
+
 #include "EnemyPositionComponent.h"
 #include "LevelComponent.h"
-#include <GameObject.h>
+#include "GameStructs.h"
 
 dae::UggAndWrongComponent::UggAndWrongComponent(LevelComponent* pPyramid, float jumpInterval)
 	: EntityComponent(pPyramid)
@@ -11,8 +14,7 @@ dae::UggAndWrongComponent::UggAndWrongComponent(LevelComponent* pPyramid, float 
 }
 
 dae::UggAndWrongComponent::~UggAndWrongComponent()
-{
-}
+{}
 
 void dae::UggAndWrongComponent::Update()
 {
@@ -31,7 +33,7 @@ void dae::UggAndWrongComponent::Jump()
 		{
 			bool isOccupied = false;
 			bool QBertOnCube = false;
-			EnemyType enemyType = pPosComp->GetEnemyType();
+			const EnemyType enemyType = pPosComp->GetEnemyType();
 
 			LevelCube* pNextCube = nullptr;
 
@@ -59,12 +61,13 @@ void dae::UggAndWrongComponent::Jump()
 			}
 			case EnemyType::right:
 			{
-				int randRowChange = rand() % 2;
+				const int randRowChange = rand() % 2;
 				pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -randRowChange, -1, isOccupied, enemyType, QBertOnCube);
 				if (isOccupied)
 					pNextCube = m_pPyramid->GetNextCubeEnemy(pCurrentCube, -static_cast<int>(!static_cast<bool>(randRowChange)), -1, isOccupied, enemyType, QBertOnCube);
 			}
 				break;
+			case EnemyType::top:
 			default:
 				break;
 			}
@@ -76,5 +79,4 @@ void dae::UggAndWrongComponent::Jump()
 }
 
 void dae::UggAndWrongComponent::Render() const
-{
-}
+{}

@@ -2,18 +2,18 @@
 #include "CoilyNPCComponent.h"
 
 #include <GameObject.h>
+#include <RenderComponent.h>
+#include <Scene.h>
+#include <SceneManager.h>
+#include <ServiceLocator.h>
 
 #include "EnemyPositionComponent.h"
 #include "LevelComponent.h"
+#include "PlateComponent.h"
 #include "QBertComponent.h"
-#include "RenderComponent.h"
-#include "Scene.h"
-#include "SceneManager.h"
-#include "ServiceLocator.h"
 
 dae::CoilyNPCComponent::CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval)
-	: m_State(CoilyState::egg)
-	, EntityComponent(pPyramid)
+	: EntityComponent(pPyramid)
 {
 	SetJumpRate(jumpInterval);
 }
@@ -47,13 +47,13 @@ void dae::CoilyNPCComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurre
 
 		if (pCoilyCube)
 		{
-			auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
-			int numberOfJumps = GetShortestPathToGoal(rowColQbert, rowColCoily);
+			const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
+			const int numberOfJumps = GetShortestPathToGoal(rowColQbert, rowColCoily);
 
 			if (numberOfJumps <= 2)
 			{
 				m_State = CoilyState::targettedPlate;
-				m_PlateDestinationCube = pCurrentCubeQbert;
+				m_pPlateDestinationCube = pCurrentCubeQbert;
 			}
 		}
 	}
@@ -143,12 +143,8 @@ dae::LevelCube* dae::CoilyNPCComponent::GetNearestQBertCube(const std::vector<QB
 				shortestSteps = numberOfJumps;
 				pNearestQBertCube = pCurrentCubeQbert;
 			}
-			std::cout << "calced for 1 qbert moving to next one" << std::endl;
 		}
 	}
-
-	std::cout << "finished calcing" << std::endl;
-	
 	return pNearestQBertCube;
 }
 
@@ -157,46 +153,32 @@ int dae::CoilyNPCComponent::GetShortestPathToGoal(const std::pair<int, int>& row
 {
 	int numberOfJumps = 0;
 	bool distanceCalced = false;
-	
+
 	while (!distanceCalced)
 	{
-		if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
+		if ((rowColQbert.first < rowColCoily.first && rowColQbert.second < rowColCoily.second) ||
+			(rowColQbert.first == rowColCoily.first && rowColQbert.second < rowColCoily.second))
 		{
 			rowColCoily.first -= 1;
 			rowColCoily.second -= 1;
 		}
-		else if (rowColQbert.first == rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
-		{
-			rowColCoily.first -= 1;
-			rowColCoily.second -= 1;
-		}
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second < rowColCoily.second)
+		else if (rowColQbert.first > rowColCoily.first && rowColQbert.second < rowColCoily.second)
 			rowColCoily.first += 1;
-		else if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
+		else if ((rowColQbert.first < rowColCoily.first && rowColQbert.second > rowColCoily.second) ||
+				(rowColQbert.first == rowColCoily.first && rowColQbert.second > rowColCoily.second))
 			rowColCoily.first -= 1;
-		else if (rowColQbert.first == rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
-			rowColCoily.first -= 1;
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second > rowColCoily.second)
+		else if (rowColQbert.first > rowColCoily.first && rowColQbert.second > rowColCoily.second)
 		{
 			rowColCoily.first += 1;
 			rowColCoily.second += 1;
 		}
-		else if (rowColQbert.first < rowColCoily.first &&
-			rowColQbert.second == rowColCoily.second)
+		else if (rowColQbert.first < rowColCoily.first && rowColQbert.second == rowColCoily.second)
 			rowColCoily.first -= 1;
-		else if (rowColQbert.first > rowColCoily.first &&
-			rowColQbert.second == rowColCoily.second)
+		else if (rowColQbert.first > rowColCoily.first && rowColQbert.second == rowColCoily.second)
 			rowColCoily.first += 1;
 
 		numberOfJumps++;
-		if (rowColCoily.first == rowColQbert.first &&
-			rowColCoily.second == rowColQbert.second)
+		if (rowColCoily.first == rowColQbert.first && rowColCoily.second == rowColQbert.second)
 			distanceCalced = true;
 	}
 
@@ -207,7 +189,7 @@ void dae::CoilyNPCComponent::GoToPlate()
 {
 	auto* pPosComp = m_pObject->GetComponent<EnemyPositionComponent>();
 
-	if (pPosComp && m_PlateDestinationCube)
+	if (pPosComp && m_pPlateDestinationCube)
 	{
 		bool isOccupied = false;
 		bool QBertOnCube = false;
@@ -225,34 +207,32 @@ void dae::CoilyNPCComponent::GoToPlate()
 		}
 		else
 		{
-			LevelCube* pNextCube = GetNextCube(pCoilyCube, m_PlateDestinationCube, isOccupied, QBertOnCube);
+			LevelCube* pNextCube = GetNextCube(pCoilyCube, m_pPlateDestinationCube, isOccupied, QBertOnCube);
 
 			if (pNextCube)
 				pPosComp->ChangeCube(pNextCube, false);
 
-			if (pPosComp->GetCurrentCube() == m_PlateDestinationCube)
+			if (pPosComp->GetCurrentCube() == m_pPlateDestinationCube)
 				m_ReachedPlateCube = true;
 		}
 	}
 }
 
 
-dae::LevelCube* dae::CoilyNPCComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube)
+dae::LevelCube* dae::CoilyNPCComponent::GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube) const
 {
 	const auto rowColQbert = m_pPyramid->GetRowColOfCube(pQBertCube);
 	const auto rowColCoily = m_pPyramid->GetRowColOfCube(pCoilyCube);
 
-	auto enemyType = m_pObject->GetComponent<EnemyPositionComponent>()->GetEnemyType();
-	
+	const auto enemyType = m_pObject->GetComponent<EnemyPositionComponent>()->GetEnemyType();
+
 	//QBert in a lower column than coily
-	if (rowColQbert.first < rowColCoily.first &&
-		rowColQbert.second < rowColCoily.second)
+	if (rowColQbert.first < rowColCoily.first && rowColQbert.second < rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, -1, isOccupied, enemyType, QBertOnCube);
-	if (rowColQbert.first == rowColCoily.first &&
-		rowColQbert.second < rowColCoily.second)
+	if (rowColQbert.first == rowColCoily.first && rowColQbert.second < rowColCoily.second)
 	{
 		LevelCube* pNextCube = nullptr;
-		int rowChange = (rand() % 2) * 2 - 1;
+		const int rowChange = (rand() % 2) * 2 - 1;
 
 		switch (rowChange)
 		{
@@ -270,17 +250,14 @@ dae::LevelCube* dae::CoilyNPCComponent::GetNextCube(LevelCube* pCoilyCube, Level
 			return nullptr;
 		}
 	}
-	if (rowColQbert.first > rowColCoily.first &&
-		rowColQbert.second < rowColCoily.second)
+	if (rowColQbert.first > rowColCoily.first && rowColQbert.second < rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0, isOccupied, enemyType, QBertOnCube);
 	//QBert in a higher column than coily
-	if (rowColQbert.first < rowColCoily.first &&
-		rowColQbert.second > rowColCoily.second)
+	if (rowColQbert.first < rowColCoily.first && rowColQbert.second > rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0, isOccupied, enemyType, QBertOnCube);
-	if (rowColQbert.first == rowColCoily.first &&
-		rowColQbert.second > rowColCoily.second)
+	if (rowColQbert.first == rowColCoily.first && rowColQbert.second > rowColCoily.second)
 	{
-		int rowChange = (rand() % 2) * 2 - 1;
+		const int rowChange = (rand() % 2) * 2 - 1;
 		LevelCube* pNextCube;
 		switch (rowChange)
 		{
@@ -298,15 +275,12 @@ dae::LevelCube* dae::CoilyNPCComponent::GetNextCube(LevelCube* pCoilyCube, Level
 			return nullptr;
 		}
 	}
-	if (rowColQbert.first > rowColCoily.first &&
-		rowColQbert.second > rowColCoily.second)
+	if (rowColQbert.first > rowColCoily.first && rowColQbert.second > rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 1, isOccupied, enemyType, QBertOnCube);
 	//QBert in the same column as coily
-	if (rowColQbert.first < rowColCoily.first &&
-		rowColQbert.second == rowColCoily.second)
+	if (rowColQbert.first < rowColCoily.first && rowColQbert.second == rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, -1, 0, isOccupied, enemyType, QBertOnCube);
-	if (rowColQbert.first > rowColCoily.first &&
-		rowColQbert.second == rowColCoily.second)
+	if (rowColQbert.first > rowColCoily.first && rowColQbert.second == rowColCoily.second)
 		return m_pPyramid->GetNextCubeEnemy(pCoilyCube, 1, 0, isOccupied, enemyType, QBertOnCube);
 
 	return nullptr;

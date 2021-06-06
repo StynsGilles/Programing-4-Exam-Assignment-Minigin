@@ -3,14 +3,8 @@
 
 namespace dae
 {
+	enum class EnemyType;
 	class LevelComponent;
-
-	enum class EnemyType
-	{
-		top,
-		left,
-		right
-	};
 	
 	struct LevelCube;
 
@@ -18,13 +12,13 @@ namespace dae
 	{
 	public:
 		explicit EnemyPositionComponent(EnemyType enemyType, LevelComponent* pPyramid);
-		virtual ~EnemyPositionComponent();
+		~EnemyPositionComponent();
 
 		void Update() override;
 		void Render() const override;
 		void SpawnOnCube(LevelCube* pNewCube);
 		void ChangeCube(LevelCube* pNewCube, bool QBertOnCube);
-		void RemoveFromCurrentCube();
+		void RemoveFromCurrentCube() const;
 		LevelCube* GetCurrentCube() const;
 		EnemyType GetEnemyType() const;
 
@@ -39,6 +33,6 @@ namespace dae
 		LevelCube* m_pCurrentCube = nullptr;
 		EnemyType m_EnemyType;
 
-		void UpdatePosition(const glm::vec3& nextPosition);
+		void UpdatePosition(const glm::vec3& nextPosition) const;
 	};
 }

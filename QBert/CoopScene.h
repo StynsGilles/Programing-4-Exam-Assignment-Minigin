@@ -7,7 +7,8 @@ namespace dae
 	{
 	public:
 		explicit CoopScene(const std::string& name, int level);
-
+		~CoopScene();
+		
 		void Initialize() override;
 
 		CoopScene(const CoopScene& other) = delete;

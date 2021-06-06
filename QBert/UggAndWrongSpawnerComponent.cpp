@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "UggAndWrongSpawnerComponent.h"
-#include "EnemyPositionComponent.h"
-#include "GameTime.h"
-#include "RenderComponent.h"
-#include "SceneManager.h"
-#include "UggAndWrongComponent.h"
+
 #include <GameObject.h>
-#include "LevelComponent.h"
+#include <GameTime.h>
+#include <RenderComponent.h>
 #include <Scene.h>
+#include <SceneManager.h>
+
+#include "EnemyPositionComponent.h"
+#include "GameStructs.h"
+#include "LevelComponent.h"
+#include "UggAndWrongComponent.h"
 
 dae::UggAndWrongSpawnerComponent::UggAndWrongSpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown)
 	: BaseSpawnerComponent(pPyramid)
@@ -17,8 +20,7 @@ dae::UggAndWrongSpawnerComponent::UggAndWrongSpawnerComponent(LevelComponent* pP
 }
 
 dae::UggAndWrongSpawnerComponent::~UggAndWrongSpawnerComponent()
-{
-}
+{}
 
 void dae::UggAndWrongSpawnerComponent::Update()
 {
@@ -27,37 +29,42 @@ void dae::UggAndWrongSpawnerComponent::Update()
 
 void dae::UggAndWrongSpawnerComponent::SpawnEnemy()
 {
-	auto scene = SceneManager::GetInstance().GetCurrentScene();
+	auto pScene = SceneManager::GetInstance().GetCurrentScene();
 
-	auto maxIndex = m_pPyramid->GetPyramidSize() - 1;
+	const auto maxIndex = m_pPyramid->GetPyramidSize() - 1;
 
-	auto newEnemy = std::make_shared<GameObject>();
+	auto pNewEnemy = std::make_shared<GameObject>();
 	auto* pEnemyComp = new UggAndWrongComponent(m_pPyramid, m_JumpCooldownEntity);
-	newEnemy->AddComponent(pEnemyComp);
+	pNewEnemy->AddComponent(pEnemyComp);
+
+	std::string fileName{};
+	EnemyType spawnSide{};
+	int spawnColIdx{};
+	
 	if (m_SpawnUgg)
 	{
-		auto* pUggRenderComponent = new RenderComponent("Ugg.png");
-		auto* pUggPosComponent = new EnemyPositionComponent(dae::EnemyType::right, m_pPyramid);
-		newEnemy->AddComponent(pUggRenderComponent);
-		newEnemy->AddComponent(pUggPosComponent);
-		pUggRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
-		pUggPosComponent->SpawnOnCube(m_pPyramid->GetCube(maxIndex, maxIndex));
+		fileName = "Ugg.png";
+		spawnColIdx = maxIndex;
+		spawnSide = EnemyType::right;
 	}
 	else
 	{
-		auto* pWrongwayRenderComponent = new dae::RenderComponent("Wrongway.png");
-		auto* pWrongwayPosComponent = new dae::EnemyPositionComponent(dae::EnemyType::left, m_pPyramid);
-		newEnemy->AddComponent(pWrongwayRenderComponent);
-		newEnemy->AddComponent(pWrongwayPosComponent);
-		pWrongwayRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
-		pWrongwayPosComponent->SpawnOnCube(m_pPyramid->GetCube(maxIndex, 0));
+		fileName = "Wrongway.png";
+		spawnColIdx = 0;
+		spawnSide = EnemyType::left;
 	}
+
+	auto* pRenderComponent = new RenderComponent(fileName);
+	auto* pPosComponent = new EnemyPositionComponent(spawnSide, m_pPyramid);
+	pNewEnemy->AddComponent(pRenderComponent);
+	pNewEnemy->AddComponent(pPosComponent);
+	pRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
+	pPosComponent->SpawnOnCube(m_pPyramid->GetCube(maxIndex, spawnColIdx));
 	
-	scene->Add(newEnemy);
+	pScene->Add(pNewEnemy);
 	
 	m_SpawnUgg = !m_SpawnUgg;
 }
 
 void dae::UggAndWrongSpawnerComponent::Render() const
-{
-}
+{}

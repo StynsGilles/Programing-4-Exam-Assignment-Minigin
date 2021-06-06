@@ -1,18 +1,17 @@
 #pragma once
-#include <BaseComponent.h>
 #include <Observer.h>
 
 namespace dae
 {
 	class GameObject;
 	
-	class PlayerObserver final
-		: public Observer
+	class PlayerObserver final : public Observer
     {
     public:
-        PlayerObserver();
-        virtual ~PlayerObserver();
-    	void onNotify(GameObject* pEntity, Event event) override;
+        explicit PlayerObserver();
+        ~PlayerObserver();
+
+		void onNotify(GameObject* pEntity, Event event) override;
 		
         PlayerObserver(const PlayerObserver& other) = delete;
         PlayerObserver(PlayerObserver&& other) = delete;
@@ -20,10 +19,8 @@ namespace dae
         PlayerObserver& operator=(PlayerObserver&& other) = delete;
 
 	private:
-
-        void UpdateHealthText(GameObject* pEntity);
-        void UpdateLivesText(GameObject* pEntity);
-        void UpdateScoreText(GameObject* pEntity);
-        void HandleFinishedLevel();
+        void UpdateLivesText(GameObject* pEntity) const;
+        void UpdateScoreText(GameObject* pEntity) const;
+        void HandleFinishedLevel() const;
     };
 }

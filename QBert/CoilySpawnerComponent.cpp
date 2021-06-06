@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "CoilySpawnerComponent.h"
+
+#include <GameObject.h>
+#include <RenderComponent.h>
+#include <Scene.h>
+#include <SceneManager.h>
+
 #include "CoilyNPCComponent.h"
 #include "CoilyPlayerComponent.h"
 #include "EnemyPositionComponent.h"
-#include "RenderComponent.h"
-#include "GameObject.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "LevelComponent.h"
 #include "GameCommands.h"
+#include "LevelComponent.h"
 
 dae::CoilySpawnerComponent::CoilySpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown, bool spawnPlayer)
 	: BaseSpawnerComponent(pPyramid)
@@ -33,11 +35,11 @@ void dae::CoilySpawnerComponent::Render() const
 
 void dae::CoilySpawnerComponent::SpawnEnemy()
 {
-	auto scene = SceneManager::GetInstance().GetCurrentScene();
-	auto activeCoily = scene->GetObjectOfType <CoilyNPCComponent>();
-	if (!activeCoily)
+	auto pScene = SceneManager::GetInstance().GetCurrentScene();
+	const auto pActiveCoily = pScene->GetObjectOfType <CoilyNPCComponent>();
+	if (!pActiveCoily)
 	{
-		auto coily = std::make_shared<GameObject>();
+		auto pCoily = std::make_shared<GameObject>();
 		auto* pCoilyRenderComp = new RenderComponent("Coily_Egg.png");
 		auto* pCoilyPosComp = new EnemyPositionComponent(dae::EnemyType::top, m_pPyramid);
 		CoilyNPCComponent* pCoilyComp;
@@ -46,23 +48,23 @@ void dae::CoilySpawnerComponent::SpawnEnemy()
 			pCoilyComp = new CoilyPlayerComponent(m_pPyramid, m_JumpCooldownEntity);
 		else
 			pCoilyComp = new CoilyNPCComponent(m_pPyramid, m_JumpCooldownEntity);
-		coily->AddComponent(pCoilyRenderComp);
-		coily->AddComponent(pCoilyPosComp);
-		coily->AddComponent(pCoilyComp);
+		pCoily->AddComponent(pCoilyRenderComp);
+		pCoily->AddComponent(pCoilyPosComp);
+		pCoily->AddComponent(pCoilyComp);
 		pCoilyRenderComp->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
 		pCoilyPosComp->SpawnOnCube(m_pPyramid->GetTopCube());
-		scene->Add(coily);
+		pScene->Add(pCoily);
 
-		auto* pInputManager = scene->GetInputManager();
+		auto* pInputManager = pScene->GetInputManager();
 		if (pInputManager)
 		{
 			auto& player2Commands =  pInputManager->GetPlayer2Commands();
 			
 			for (auto& pair : player2Commands)
 			{
-				auto command = dynamic_cast<CoilyCommand*>(pair.second.get());
-				if (command)
-					command->ChangeCoily(coily);
+				auto* pCommand = dynamic_cast<CoilyCommand*>(pair.second.get());
+				if (pCommand)
+					pCommand->ChangeCoily(pCoily);
 			}
 		}
 	}

@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "EntityComponent.h"
-#include "EnemyPositionComponent.h"
-#include <GameTime.h>
-#include "LevelComponent.h"
+
 #include <GameObject.h>
+#include <GameTime.h>
+
+#include "EnemyPositionComponent.h"
+#include "LevelComponent.h"
 
 dae::EntityComponent::EntityComponent(LevelComponent* pPyramid)
 	: m_pPyramid(pPyramid)
@@ -25,14 +27,14 @@ void dae::EntityComponent::JumpUpdate()
 	}
 }
 
-void dae::EntityComponent::JumpRandomDownwards(bool isSlickOrSam)
+void dae::EntityComponent::JumpRandomDownwards(bool isSlickOrSam) const
 {
 	auto* pPosComp = m_pObject->GetComponent<EnemyPositionComponent>();
 
 	if (pPosComp)
 	{
 		LevelCube* pCurrentCube = pPosComp->GetCurrentCube();
-		EnemyType enemyType = pPosComp->GetEnemyType();
+		const EnemyType enemyType = pPosComp->GetEnemyType();
 		
 		if (pCurrentCube)
 		{	

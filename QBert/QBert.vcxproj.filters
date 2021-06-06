@@ -101,9 +101,6 @@
     <ClCompile Include="EntityComponent.cpp">
       <Filter>Components\EnemyComponents</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components\PlayerComponents</Filter>
-    </ClCompile>
     <ClCompile Include="LivesComponent.cpp">
       <Filter>Components\PlayerComponents</Filter>
     </ClCompile>
@@ -118,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="PlateComponent.cpp">
       <Filter>Components\LevelComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerIndexComponent.cpp">
-      <Filter>Components\PlayerComponents</Filter>
     </ClCompile>
     <ClCompile Include="MenuClickComponent.cpp">
       <Filter>Components\MenuComponents</Filter>
@@ -184,9 +178,6 @@
     <ClInclude Include="EntityComponent.h">
       <Filter>Components\EnemyComponents</Filter>
     </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Components\PlayerComponents</Filter>
-    </ClInclude>
     <ClInclude Include="LivesComponent.h">
       <Filter>Components\PlayerComponents</Filter>
     </ClInclude>
@@ -202,11 +193,11 @@
     <ClInclude Include="PlateComponent.h">
       <Filter>Components\LevelComponents</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerIndexComponent.h">
-      <Filter>Components\PlayerComponents</Filter>
-    </ClInclude>
     <ClInclude Include="MenuClickComponent.h">
       <Filter>Components\MenuComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStructs.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

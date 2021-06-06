@@ -3,11 +3,11 @@
 
 namespace dae
 {
-	class CoilySpawnerComponent : public BaseSpawnerComponent
+	class CoilySpawnerComponent final : public BaseSpawnerComponent
 	{
 	public:
-		CoilySpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown, bool spawnPlayer = false);
-		virtual ~CoilySpawnerComponent();
+		explicit CoilySpawnerComponent(LevelComponent* pPyramid, float spawnInterval, float jumpCooldown, bool spawnPlayer = false);
+		~CoilySpawnerComponent();
 
 		void Update() override;
 		void Render() const override;

@@ -204,7 +204,6 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClCompile Include="SinglePlayerScene.cpp" />
     <ClCompile Include="PlateComponent.cpp" />
     <ClCompile Include="SlickAndSamSpawnerComponent.cpp" />
-    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LivesComponent.cpp" />
     <ClCompile Include="pch.cpp">
@@ -213,7 +212,6 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PlayerIndexComponent.cpp" />
     <ClCompile Include="PlayerObserver.cpp" />
     <ClCompile Include="QBert.cpp" />
     <ClCompile Include="QBertComponent.cpp" />
@@ -232,6 +230,7 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="CoopScene.h" />
     <ClInclude Include="EnemyPositionComponent.h" />
     <ClInclude Include="EntityComponent.h" />
+    <ClInclude Include="GameStructs.h" />
     <ClInclude Include="LevelParser.h" />
     <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="MenuClickComponent.h" />
@@ -239,11 +238,9 @@ xcopy "$(SolutionDir)3rdParty\imgui-master\lib\$(PlatformTarget)\*.dll" "$(Outpu
     <ClInclude Include="PlateComponent.h" />
     <ClInclude Include="SlickAndSamSpawnerComponent.h" />
     <ClInclude Include="GameCommands.h" />
-    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LivesComponent.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PlayerIndexComponent.h" />
     <ClInclude Include="PlayerObserver.h" />
     <ClInclude Include="QBertComponent.h" />
     <ClInclude Include="ScoreComponent.h" />

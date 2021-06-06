@@ -1,16 +1,13 @@
 #pragma once
 #include "CoilyNPCComponent.h"
 
-//TODO implement this to handle inputs and jump
-
-
 namespace dae
 {
-	class CoilyPlayerComponent : public CoilyNPCComponent
+	class CoilyPlayerComponent final : public CoilyNPCComponent
 	{
 	public:
-		CoilyPlayerComponent(LevelComponent* pPyramid, float jumpInterval);
-		virtual ~CoilyPlayerComponent();
+		explicit CoilyPlayerComponent(LevelComponent* pPyramid, float jumpInterval);
+		~CoilyPlayerComponent();
 
 		void Move(int rowChange, int colChange);
 		void SetTarget(PlateComponent* pPlate, LevelCube* pCurrentCubeQbert) override;

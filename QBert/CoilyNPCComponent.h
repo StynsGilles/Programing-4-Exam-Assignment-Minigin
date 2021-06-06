@@ -1,28 +1,19 @@
 #pragma once
-#include <iosfwd>
-#include <vector>
-
-
 #include "EntityComponent.h"
-#include "PlateComponent.h"
-#include "QBertComponent.h"
+#include "GameStructs.h"
 
 namespace dae
 {
+	class QBertComponent;
+	class PlateComponent;
+	enum class CoilyState;
 	struct LevelCube;
 	class LevelComponent;
-	
-	enum class CoilyState
-	{
-		egg,
-		normal,
-		targettedPlate
-	};
 	
 	class CoilyNPCComponent : public EntityComponent
 	{
 	public:
-		CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval);
+		explicit CoilyNPCComponent(LevelComponent* pPyramid, float jumpInterval);
 		virtual ~CoilyNPCComponent();
 
 		void Update() override;
@@ -35,12 +26,12 @@ namespace dae
 		CoilyNPCComponent& operator=(CoilyNPCComponent&& other) = delete;
 
 	protected:
-		CoilyState m_State;
+		CoilyState m_State = CoilyState::egg;
 		
 		bool m_ReachedPlateCube = false;
-		int m_PlateRow;
-		Side m_PlateSide;
-		LevelCube* m_PlateDestinationCube;
+		int m_PlateRow {};
+		Side m_PlateSide{};
+		LevelCube* m_pPlateDestinationCube = nullptr;
 
 		void Jump() override;
 		void CheckIfBottom();
@@ -48,6 +39,6 @@ namespace dae
 		int GetShortestPathToGoal(const std::pair<int, int>& rowColQBert, std::pair<int, int> rowColCoily) const;
 		virtual void ChasePlayer();
 		void GoToPlate();
-		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube);
+		LevelCube* GetNextCube(LevelCube* pCoilyCube, LevelCube* pQBertCube, bool& isOccupied, bool& QBertOnCube) const;
 	};
 }

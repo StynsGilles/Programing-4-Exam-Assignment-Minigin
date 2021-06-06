@@ -6,7 +6,7 @@ namespace dae
 	class LivesComponent final : public BaseComponent
 	{
     public:
-        LivesComponent(int maxLives);
+        explicit LivesComponent(int maxLives);
         virtual ~LivesComponent();
 
         void Update() override;

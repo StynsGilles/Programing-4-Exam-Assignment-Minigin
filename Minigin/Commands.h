@@ -3,7 +3,7 @@
 class Command
 {
 public:
-    Command() = default;
+    explicit Command() = default;
     virtual ~Command() = default;
     virtual void Execute() = 0;
 
