@@ -26,6 +26,13 @@ void dae::MainMenuScene::Initialize()
 	pBackgroundTextureComponent->SetDimensions(640, 480);
 	pBackground->AddComponent(pBackgroundTextureComponent);
 	Add(pBackground);
+
+	auto pLogo = std::make_shared<GameObject>();
+	auto* pLogoTextureComponent = new RenderComponent("Logo.png");
+	pLogoTextureComponent->SetDimensions(200,50);
+	pLogo->AddComponent(pLogoTextureComponent);
+	Add(pLogo);
+	pLogo->SetPosition(220, 0);
 	
 	const float x = 188.f;
 	float y = 108;
