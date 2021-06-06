@@ -49,7 +49,7 @@ void dae::CoilyNPCComponent::SetTarget(PlateComponent* pPlate, LevelCube* pCurre
 
 			if (numberOfJumps <= 2)
 			{
-				m_GoToPlate = true;
+				m_State = CoilyState::targettedPlate;
 				m_PlateDestinationCube = pCurrentCubeQbert;
 			}
 		}
@@ -65,8 +65,10 @@ void dae::CoilyNPCComponent::Jump()
 		CheckIfBottom();
 		break;
 	case CoilyState::normal:
-		if (m_GoToPlate) GoToPlate();
-		else ChasePlayer();
+		ChasePlayer();
+		break;
+	case CoilyState::targettedPlate:
+		GoToPlate();
 		break;
 	default:
 		break;

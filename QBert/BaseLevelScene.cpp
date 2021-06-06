@@ -5,9 +5,9 @@
 #include "ResourceManager.h"
 #include "TextComponent.h"
 
-dae::BaseLevelScene::BaseLevelScene(const std::string& name, const std::wstring& fileName)
+dae::BaseLevelScene::BaseLevelScene(const std::string& name, int level)
 	: Scene(name)
-	, m_FileName(fileName)
+	, m_Level(level)
 {
 }
 
@@ -30,4 +30,19 @@ void dae::BaseLevelScene::Initialize()
 	fps->AddComponent(pTextComponent);
 	fps->AddComponent(pFPSComponent);
 	Add(fps);
+}
+
+int dae::BaseLevelScene::GetLevel() const
+{
+	return m_Level;
+}
+
+int dae::BaseLevelScene::GetMaxLevel()
+{
+	return m_MaxLevel;
+}
+
+bool dae::BaseLevelScene::IsLastLevel() const
+{
+	return m_Level == m_MaxLevel;
 }

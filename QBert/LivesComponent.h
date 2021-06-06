@@ -11,7 +11,8 @@ namespace dae
 
         void Update() override;
         void Render() const override;
-        
+
+        void SetLives(int lives);
         void LoseLives(int amount);
         int GetLivesRemaining() const;
 

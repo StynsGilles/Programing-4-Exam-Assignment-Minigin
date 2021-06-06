@@ -75,7 +75,7 @@ void dae::SceneManager::PreviousScene()
 	}
 }
 
-void dae::SceneManager::NextScene()
+std::shared_ptr<dae::Scene> dae::SceneManager::NextScene()
 {
 	int indexCurScene = -1;
 	if (std::shared_ptr<Scene> pSharedActiveScene = m_ActiveScene)
@@ -95,5 +95,8 @@ void dae::SceneManager::NextScene()
 	{
 		m_ActiveScene = m_Scenes[indexPrevScene];
 		m_ActiveScene->ResetScene();
+		return m_ActiveScene;
 	}
+	
+	return nullptr;
 }

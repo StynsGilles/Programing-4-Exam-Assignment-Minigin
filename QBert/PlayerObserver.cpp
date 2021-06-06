@@ -6,8 +6,9 @@
 #include "ScoreComponent.h"
 #include <TextComponent.h>
 #include "LevelComponent.h"
-#include "Scene.h"
-#include "SceneManager.h"
+#include <Scene.h>
+#include <SceneManager.h>
+#include "BaseLevelScene.h"
 
 dae::PlayerObserver::PlayerObserver()
 	: Observer()
@@ -38,6 +39,9 @@ void dae::PlayerObserver::onNotify(GameObject* pEntity, Event event)
 		break;
 	case Event::LevelFinished:
 		HandleFinishedLevel();
+		break;
+	case Event::UpdatedLives:
+		UpdateLivesText(pEntity);
 		break;
 	default:
 		break;
@@ -82,5 +86,28 @@ void dae::PlayerObserver::UpdateScoreText(GameObject* pEntity)
 
 void dae::PlayerObserver::HandleFinishedLevel()
 {
-	SceneManager::GetInstance().NextScene();
+	auto pScene = SceneManager::GetInstance().GetCurrentScene();
+	
+	auto pLevelScene = std::dynamic_pointer_cast<BaseLevelScene>(pScene);
+
+	if (pLevelScene)
+	{
+		if (!pLevelScene->IsLastLevel())
+		{
+			auto* pCurrentLivesComp = pLevelScene->GetComponentOfType<LivesComponent>();
+			auto* pCurrentScoreComp = pLevelScene->GetComponentOfType<ScoreComponent>();
+			
+			auto pNextScene = SceneManager::GetInstance().NextScene();
+
+			auto* pNextLivesComp = pNextScene->GetComponentOfType<LivesComponent>();
+			auto* pNextScoreComp = pNextScene->GetComponentOfType<ScoreComponent>();
+			if (pCurrentLivesComp && pNextLivesComp)
+				pNextLivesComp->SetLives(pCurrentLivesComp->GetLivesRemaining());
+
+			if (pCurrentScoreComp && pNextScoreComp)
+				pNextScoreComp->SetScore(pCurrentScoreComp->GetScore());
+		}
+		else
+			SceneManager::GetInstance().SetActiveScene("MainMenu");
+	}
 }

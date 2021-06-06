@@ -15,7 +15,8 @@ namespace dae
 	enum class CoilyState
 	{
 		egg,
-		normal
+		normal,
+		targettedPlate
 	};
 	
 	class CoilyNPCComponent : public EntityComponent
@@ -35,8 +36,7 @@ namespace dae
 
 	protected:
 		CoilyState m_State;
-
-		bool m_GoToPlate = false;
+		
 		bool m_ReachedPlateCube = false;
 		int m_PlateRow;
 		Side m_PlateSide;

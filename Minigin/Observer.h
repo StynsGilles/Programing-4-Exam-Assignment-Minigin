@@ -9,7 +9,8 @@ namespace dae
         PlayerDied,
         PlayerLostHP,
     	IncreaseScore,
-    	LevelFinished
+    	LevelFinished,
+        UpdatedLives
     };
 
     class Observer

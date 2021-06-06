@@ -11,7 +11,8 @@ namespace dae
 
         void Update() override;
     	void Render() const override;
-    	
+
+        void SetScore(int score);
         void AddToScore(int score);
         int GetScore() const;
     	

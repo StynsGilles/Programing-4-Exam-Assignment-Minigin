@@ -12,7 +12,7 @@ namespace dae
 		std::shared_ptr<dae::Scene> GetCurrentScene() const;
 		void SetActiveScene(const std::string& name);
 		void PreviousScene();
-		void NextScene();
+		std::shared_ptr<Scene> NextScene();
 		
 		void Update();
 		void Render();

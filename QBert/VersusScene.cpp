@@ -18,8 +18,8 @@
 #include "TextComponent.h"
 #include "UggAndWrongSpawnerComponent.h"
 
-dae::VersusScene::VersusScene(const std::string& name, const std::wstring& fileName)
-	: BaseLevelScene(name, fileName)
+dae::VersusScene::VersusScene(const std::string& name, int level)
+	: BaseLevelScene(name, level)
 {
 }
 
@@ -48,7 +48,7 @@ void dae::VersusScene::Initialize()
 	float spawnIntervalCoily = 10.f;
 	float jumpCooldownCoily = 1.f;
 
-	LevelParser::LoadLevel(L"../Data/LevelData/" + m_FileName,
+	LevelParser::LoadLevel(L"../Data/LevelData/Level" + std::to_wstring(m_Level) + L".json",
 		revertible, colors,
 		pyramidSize, plateRows,
 		qbertLives, jumpCooldownQBert,

@@ -10,7 +10,7 @@
 		"revertible": false
 	},
 	"levelData": {
-		"pyramidSize": 7,
+		"pyramidSize": 2,
 		"plateRows": [{
 				"row": 1
 			},
@@ -21,7 +21,7 @@
 	},
 	"QBertData": {
 		"lives": 3,
-		"jumpCooldown": 0.5
+		"jumpCooldown": 0.3
 	},
 	"SlickAndSamData": {
 		"spawnInterval": 10.0,

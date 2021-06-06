@@ -6,7 +6,7 @@ namespace dae
 	class SinglePlayerScene final : public BaseLevelScene
 	{
 	public:
-		explicit SinglePlayerScene(const std::string& name, const std::wstring& fileName);
+		explicit SinglePlayerScene(const std::string& name, int level);
 		
 		void Initialize() override;
 		

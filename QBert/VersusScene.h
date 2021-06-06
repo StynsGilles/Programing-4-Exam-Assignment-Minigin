@@ -6,7 +6,7 @@ namespace dae
 	class VersusScene final : public BaseLevelScene
 	{
 	public:
-		explicit VersusScene(const std::string& name, const std::wstring& fileName);
+		explicit VersusScene(const std::string& name, int level);
 
 		void Initialize() override;
 

@@ -6,7 +6,7 @@ namespace dae
 	class CoopScene final : public BaseLevelScene
 	{
 	public:
-		explicit CoopScene(const std::string& name, const std::wstring& fileName);
+		explicit CoopScene(const std::string& name, int level);
 
 		void Initialize() override;
 

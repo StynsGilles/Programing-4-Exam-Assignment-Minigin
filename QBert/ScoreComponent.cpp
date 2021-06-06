@@ -23,6 +23,12 @@ void dae::ScoreComponent::Render() const
 {
 }
 
+void dae::ScoreComponent::SetScore(int score)
+{
+	m_Score = score;
+	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::IncreaseScore);
+}
+
 void dae::ScoreComponent::AddToScore(int score)
 {
 	m_Score += score;
