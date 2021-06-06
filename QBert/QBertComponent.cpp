@@ -53,7 +53,7 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 	m_pCurrentCube = pNewCube;
 	if (m_pCurrentCube)
 	{
-		if (isOccupied && m_pCurrentCube->entity)
+		if (isOccupied || m_pCurrentCube->entity)
 		{
 			auto* pEntityComp = m_pCurrentCube->entity->GetComponent<EntityComponent>();
 

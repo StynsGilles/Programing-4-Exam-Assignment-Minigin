@@ -7,12 +7,10 @@
 
 dae::ClickComponent::ClickComponent(RenderComponent* pRenderComp)
 	:m_pRenderComponent(pRenderComp)
-{
-}
+{}
 
 dae::ClickComponent::~ClickComponent()
-{
-}
+{}
 
 void dae::ClickComponent::Update()
 {
@@ -32,5 +30,4 @@ void dae::ClickComponent::Update()
 }
 
 void dae::ClickComponent::Render() const
-{
-}
+{}
