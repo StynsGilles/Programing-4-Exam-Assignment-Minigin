@@ -65,7 +65,7 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 			else
 			{
 				if (!m_pCurrentCube->entity->GetMarkedForDeletion())
-					m_pLivesComp->LoseLives(1);
+					GotHit();
 			}
 		}
 

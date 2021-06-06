@@ -160,7 +160,6 @@ int dae::CoilyNPCComponent::GetShortestPathToGoal(const std::pair<int, int>& row
 	
 	while (!distanceCalced)
 	{
-		std::cout << "calcing path to qbert" << std::endl;
 		if (rowColQbert.first < rowColCoily.first &&
 			rowColQbert.second < rowColCoily.second)
 		{
@@ -175,7 +174,7 @@ int dae::CoilyNPCComponent::GetShortestPathToGoal(const std::pair<int, int>& row
 		}
 		else if (rowColQbert.first > rowColCoily.first &&
 			rowColQbert.second < rowColCoily.second)
-			rowColCoily.first = 1;
+			rowColCoily.first += 1;
 		else if (rowColQbert.first < rowColCoily.first &&
 			rowColQbert.second > rowColCoily.second)
 			rowColCoily.first -= 1;
@@ -196,7 +195,8 @@ int dae::CoilyNPCComponent::GetShortestPathToGoal(const std::pair<int, int>& row
 			rowColCoily.first += 1;
 
 		numberOfJumps++;
-		if (rowColCoily == rowColQbert)
+		if (rowColCoily.first == rowColQbert.first &&
+			rowColCoily.second == rowColQbert.second)
 			distanceCalced = true;
 	}
 
