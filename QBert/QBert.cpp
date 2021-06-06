@@ -34,6 +34,8 @@ int main(int, char* [])
  */
 void LoadGame()
 {
+	dae::ResourceManager::GetInstance().Init("Data/");
+	
 	auto& sceneManager = dae::SceneManager::GetInstance();
 
 	dae::ServiceLocator::RegisterSoundSystem(std::make_unique<dae::SoundSystem>());

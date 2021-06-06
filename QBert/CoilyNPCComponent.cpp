@@ -201,7 +201,7 @@ void dae::CoilyNPCComponent::GoToPlate()
 			auto* pQbert = scene->GetComponentOfType <QBertComponent>();
 			if (pQbert)
 			{
-				ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/SnakeFall.wav");
+				ServiceLocator::GetSoundSystem()->PlaySound("Data/Sounds/SnakeFall.wav");
 				pQbert->KilledCoily();
 			}
 		}

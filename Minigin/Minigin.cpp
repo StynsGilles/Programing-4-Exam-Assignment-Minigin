@@ -42,7 +42,6 @@ void dae::Minigin::Initialize()
 	std::srand(static_cast<unsigned int>(time(nullptr)));
 	
 	Renderer::GetInstance().Init(m_Window);
-	dae::ResourceManager::GetInstance().Init("../Data/");
 }
 
 void dae::Minigin::Cleanup()

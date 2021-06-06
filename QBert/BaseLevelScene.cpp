@@ -83,7 +83,7 @@ bool dae::BaseLevelScene::IsLastLevel() const
 
 void dae::BaseLevelScene::LoadLevel()
 {
-	m_GameRules = LevelParser::LoadLevel(L"../Data/LevelData/Level" + std::to_wstring(m_Level) + L".json");
+	m_GameRules = LevelParser::LoadLevel(L"Data/LevelData/Level" + std::to_wstring(m_Level) + L".json");
 }
 
 void dae::BaseLevelScene::InitializeLevel()
