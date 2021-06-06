@@ -1,7 +1,8 @@
 #pragma once
+#include <SDL.h>
+
 #include "BaseComponent.h"
 #include "Font.h"
-#include <SDL.h>
 
 namespace dae
 {

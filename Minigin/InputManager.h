@@ -1,8 +1,8 @@
 #pragma once
-#include <XInput.h>
-#include "Commands.h"
 #include <map>
 #include <SDL.h>
+#include <XInput.h>
+#include "Commands.h"
 
 namespace dae
 {
@@ -68,8 +68,8 @@ namespace dae
 		bool HandleKeyBoard();
 		using CommandMap = std::map<ActionInfo, std::unique_ptr<Command>>;
 		bool HandleEvent(const SDL_Event& e, const CommandMap& commands);
-		void HandleKeyDown(const CommandMap& commands);
-		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState);
+		void HandleKeyDown(const CommandMap& commands) const;
+		void HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const;
 		
 		CommandMap m_CommandsPlayer1{};
 		CommandMap m_CommandsPlayer2{};

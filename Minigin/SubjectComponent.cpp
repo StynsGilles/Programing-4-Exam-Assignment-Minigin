@@ -1,24 +1,21 @@
 #include "MiniginPCH.h"
 #include "SubjectComponent.h"
+
 #include "GameObject.h"
 #include "Observer.h"
 
 dae::SubjectComponent::SubjectComponent()
 	: BaseComponent()
-{
-}
+{}
 
 dae::SubjectComponent::~SubjectComponent()
-{
-}
+{}
 
 void dae::SubjectComponent::Update()
-{
-}
+{}
 
 void dae::SubjectComponent::Render() const
-{
-}
+{}
 
 void dae::SubjectComponent::AddObserver(std::shared_ptr<Observer> observer)
 {

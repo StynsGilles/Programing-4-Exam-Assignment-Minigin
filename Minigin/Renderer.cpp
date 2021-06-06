@@ -1,9 +1,11 @@
 #include "MiniginPCH.h"
 #include "Renderer.h"
+
 #include <SDL.h>
+
+#include "imgui.h"
 #include "SceneManager.h"
 #include "Texture2D.h"
-#include "imgui.h"
 #include "backends/imgui_impl_opengl2.h"
 #include "backends/imgui_impl_sdl.h"
 
@@ -40,15 +42,7 @@ void dae::Renderer::Render() const
 {
 	SDL_RenderClear(m_Renderer);
 
-	//ImGui_ImplOpenGL2_NewFrame();
-	//ImGui_ImplSDL2_NewFrame(m_Window);
-	//ImGui::NewFrame();
 	SceneManager::GetInstance().Render();
-	
-	//RenderHUD();
-
-	//ImGui::Render();
-	//ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	
 	SDL_RenderPresent(m_Renderer);
 }
@@ -65,25 +59,6 @@ void dae::Renderer::Destroy()
 		m_Renderer = nullptr;
 	}
 }
-
-//void dae::Renderer::RenderHUD() const
-//{
-//	ImGui::Begin("Options");
-//	ImGui::SetWindowPos({ 50.f, 200.f });
-//	if (ImGui::Button("single player", { 200.f, 50.f }))
-//	{
-//		std::cout << "Starting single player game" << std::endl;
-//	}
-//	if (ImGui::Button("co-op", { 200.f, 50.f }))
-//	{
-//		std::cout << "Starting co-op game" << std::endl;
-//	};
-//	if (ImGui::Button("versus", { 200.f, 50.f }))
-//	{
-//		std::cout << "Starting versus game" << std::endl;
-//	}
-//	ImGui::End();
-//}
 
 void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
 {

@@ -9,8 +9,8 @@ namespace dae
 	class SubjectComponent final : public BaseComponent
     {
     public:
-        SubjectComponent();
-        virtual ~SubjectComponent();
+        explicit SubjectComponent();
+        ~SubjectComponent();
 
         void Update() override;
     	void Render() const override;

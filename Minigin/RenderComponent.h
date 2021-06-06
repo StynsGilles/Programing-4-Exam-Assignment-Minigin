@@ -1,14 +1,15 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Texture2D.h"
 
 namespace dae
 {
-    class RenderComponent : public BaseComponent
+	class Texture2D;
+
+	class RenderComponent final : public BaseComponent
     {
     public:
-        RenderComponent();
-        RenderComponent(const std::string& filename);
+        explicit RenderComponent();
+        explicit RenderComponent(const std::string& filename);
         virtual ~RenderComponent();
 
         void Update() override;

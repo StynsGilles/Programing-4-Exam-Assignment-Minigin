@@ -1,10 +1,12 @@
 #include "MiniginPCH.h"
+#include "TextComponent.h"
+
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include "Renderer.h"
-#include "TextComponent.h"
+
 #include "GameObject.h"
-#include "RenderComponent.h"
+#include "Renderer.h"
+#include "Texture2D.h"
 
 dae::TextComponent::TextComponent(const std::string& text, const std::shared_ptr<Font>& font, float x, float y)
 	: BaseComponent()

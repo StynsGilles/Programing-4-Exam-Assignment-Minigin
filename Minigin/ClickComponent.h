@@ -5,7 +5,7 @@ namespace dae
 {
 	class RenderComponent;
 
-	class ClickComponent : public BaseComponent
+	class ClickComponent: public BaseComponent
 	{
 	public:
 		explicit ClickComponent(RenderComponent* pRenderComp);

@@ -1,18 +1,18 @@
 #pragma once
-#include "string"
-#include "iostream"
-#include <rapidjson.h>
 #include <document.h>
 #include <filereadstream.h>
+#include <rapidjson.h>
+
+#include "iostream"
+#include "string"
 
 namespace dae
 {
 	class JsonParser
 	{
 	protected:
-		static rapidjson::Document ReadJsonFile(std::wstring filePath)
+		static rapidjson::Document ReadJsonFile(const std::wstring& filePath)
 		{
-			std::cout << "reading in the level" << std::endl;
 			using rapidjson::Document;
 			Document jsonDoc;
 			FILE* file = nullptr;
@@ -32,7 +32,6 @@ namespace dae
 				fclose(file);
 				return jsonDoc;
 			}
-			std::cout << "file not found" << std::endl;
 			return jsonDoc;
 		}
 	};

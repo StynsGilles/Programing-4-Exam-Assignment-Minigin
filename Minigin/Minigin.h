@@ -6,7 +6,7 @@ namespace dae
 	class Renderer;
 	class Scene;
 
-	class Minigin
+	class Minigin final
 	{
 	public:
 		void Initialize();

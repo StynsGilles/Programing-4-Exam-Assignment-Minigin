@@ -4,11 +4,11 @@
 namespace dae
 {
 	class TextComponent;
-	class FPSComponent : public BaseComponent
+	class FPSComponent final : public BaseComponent
 	{
     public:
         explicit FPSComponent(TextComponent* pTextComponent);
-        virtual ~FPSComponent();
+        ~FPSComponent();
 
         void Update() override;
         void Render() const override;

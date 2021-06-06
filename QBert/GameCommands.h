@@ -14,7 +14,7 @@ public:
         , m_pQbert(std::move(pQbert))
     {}
 
-    ~QBertCommand() override
+    ~QBertCommand()
     {}
 
     void Execute() override
@@ -35,7 +35,7 @@ public:
         : QBertCommand(pQbert)
     {}
 	
-    ~NorthEast() override
+    ~NorthEast()
     {}
 	
     void Execute() override
@@ -61,7 +61,7 @@ public:
         : QBertCommand(pQbert)
     {}
 
-    ~SouthEast() override
+    ~SouthEast()
 	{}
 	
     void Execute() override
@@ -87,7 +87,7 @@ public:
         : QBertCommand(pQbert)
     {}
 
-    ~NorthWest() override
+    ~NorthWest()
 	{}
 
     void Execute() override
@@ -113,7 +113,7 @@ public:
         : QBertCommand(pQbert)
     {}
 
-    ~SouthWest() override
+    ~SouthWest()
     {}
 	
     void Execute() override
@@ -140,7 +140,7 @@ public:
 		, m_pCoily(std::move(pCoily))
     {}
 
-    ~CoilyCommand() override
+    ~CoilyCommand()
 	{}
 	
     void Execute() override
@@ -167,7 +167,7 @@ public:
         : CoilyCommand(pCoily)
     {}
 
-    ~NorthEastCoily() override
+    ~NorthEastCoily()
 	{}
 	
     void Execute() override
@@ -193,7 +193,7 @@ public:
         : CoilyCommand(pCoily)
     {}
 
-    ~SouthEastCoily() override
+    ~SouthEastCoily()
 	{}
 	
     void Execute() override
@@ -219,7 +219,7 @@ public:
         : CoilyCommand(pCoily)
     {}
 
-    ~NorthWestCoily() override
+    ~NorthWestCoily()
 	{}
 	
     void Execute() override
@@ -245,7 +245,7 @@ public:
         : CoilyCommand(pCoily)
     {}
 
-	~SouthWestCoily() override
+	~SouthWestCoily()
 	{}
 
     void Execute() override

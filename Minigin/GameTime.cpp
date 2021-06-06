@@ -20,7 +20,7 @@ std::chrono::steady_clock::time_point GameTime::GetPreviousTime() const
 
 int GameTime::GetFPS() const
 {
-	return int(1.f / m_DeltaTime);
+	return static_cast<int>(1.f / m_DeltaTime);
 }
 
 int GameTime::GetMsPerFrame() const

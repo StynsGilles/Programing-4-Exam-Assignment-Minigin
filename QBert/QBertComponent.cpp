@@ -127,7 +127,7 @@ void dae::QBertComponent::FinishLevel() const
 {	
 	const auto pScene = SceneManager::GetInstance().GetCurrentScene();
 	const auto pPlates = pScene->GetAllObjectsOfType<PlateComponent>();
-	AwardScore(pPlates.size() * m_ScoreRemainingDisc);
+	AwardScore(static_cast<int>(pPlates.size()) * m_ScoreRemainingDisc);
 	m_pObject->GetComponent<SubjectComponent>()->Notify(m_pObject, Event::LevelFinished);
 	ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/Victory.wav");
 }

@@ -1,16 +1,15 @@
 #include "MiniginPCH.h"
 #include "FPSComponent.h"
+
 #include "GameTime.h"
 #include "TextComponent.h"
 
 dae::FPSComponent::FPSComponent(TextComponent* pTextComponent)
 	: m_pTextComponent(pTextComponent)
-{
-}
+{}
 
 dae::FPSComponent::~FPSComponent()
-{
-}
+{}
 
 void dae::FPSComponent::Update()
 {
@@ -24,5 +23,4 @@ void dae::FPSComponent::Update()
 }
 
 void dae::FPSComponent::Render() const
-{
-}
+{}

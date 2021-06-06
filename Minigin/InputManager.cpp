@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
+
 #include "GameTime.h"
 
 using CommandMap = std::map<dae::ActionInfo, std::unique_ptr<Command>>;
@@ -89,7 +90,7 @@ bool dae::InputManager::HandleEvent(const SDL_Event& e, const CommandMap& comman
 	return true;
 }
 
-void dae::InputManager::HandleKeyDown(const CommandMap& commands)
+void dae::InputManager::HandleKeyDown(const CommandMap& commands) const
 {
 	for (CommandMap::const_iterator commandIt = commands.begin(); commandIt != commands.end(); ++commandIt)
 	{
@@ -104,7 +105,7 @@ void dae::InputManager::HandleKeyDown(const CommandMap& commands)
 	}
 }
 
-void dae::InputManager::HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState)
+void dae::InputManager::HandleCommands(const CommandMap& commandMap, const XINPUT_STATE& currentState, const XINPUT_STATE& previousState) const
 {
 	for (CommandMap::const_iterator commandIt = commandMap.begin(); commandIt != commandMap.end(); ++commandIt)
 	{

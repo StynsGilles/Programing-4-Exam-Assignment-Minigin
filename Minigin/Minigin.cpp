@@ -1,16 +1,18 @@
 #include "MiniginPCH.h"
 #include "Minigin.h"
+
 #include <chrono>
 #include <functional>
+#include <SDL.h>
 #include <thread>
+
+#include "GameTime.h"
 #include "InputManager.h"
-#include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include <SDL.h>
-#include "GameTime.h"
-#include "SoundSystem.h"
 #include "Scene.h"
+#include "SceneManager.h"
+#include "SoundSystem.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -53,12 +55,6 @@ void dae::Minigin::Cleanup()
 
 void dae::Minigin::Run()
 {
-	//explain how to play the game
-	std::cout << "Welcome to QBert! " << std::endl;
-	std::cout << "This game can be played with 2 players and the controls are as follows:" << std::endl;
-	std::cout << "A: make your QBert lose a life, B: Make your QBert lose 1 hit point, X: Score some points" << std::endl;
-	std::cout << "Player 1 can also use respectively 1, 2 and 3 on the keyboard to do the same thing." << std::endl;
-
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& time = GameTime::GetInstance();
@@ -71,7 +67,6 @@ void dae::Minigin::Run()
 		doContinue = sceneManager.GetCurrentScene()->GetInputManager()->ProcessInput();
 		sceneManager.Update();
 		sceneManager.RemoveDeadObjects();
-
 
 		renderer.Render();
 

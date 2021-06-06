@@ -3,10 +3,11 @@
 namespace dae
 {
 	class GameObject;
+	
 	class BaseComponent
 	{
 	public:
-		BaseComponent();
+		explicit BaseComponent();
 		virtual ~BaseComponent();
 
 		virtual void Update() = 0;

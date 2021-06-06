@@ -11,6 +11,7 @@ namespace dae
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		explicit Scene(const std::string& name);
+		virtual ~Scene();
 		
 		void Add(const std::shared_ptr<GameObject>& object);
 		void Update();
@@ -63,7 +64,6 @@ namespace dae
 			return objectsOfType;
 		}
 		
-		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
 		Scene& operator=(const Scene& other) = delete;

@@ -4,6 +4,7 @@
 namespace dae
 {
 	class Scene;
+	
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
@@ -15,8 +16,8 @@ namespace dae
 		std::shared_ptr<Scene> NextScene();
 		
 		void Update();
-		void Render();
-		void RemoveDeadObjects();
+		void Render() const;
+		void RemoveDeadObjects() const;
 	
 	private:
 		friend class Singleton<SceneManager>;
