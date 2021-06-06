@@ -1,9 +1,9 @@
 #pragma once
 #include "string"
-#include "rapidjson/rapidjson.h"
-#include "rapidjson/document.h"
-#include "rapidjson/filereadstream.h"
 #include "iostream"
+#include <rapidjson.h>
+#include <document.h>
+#include <filereadstream.h>
 
 namespace dae
 {

@@ -24,28 +24,31 @@
     <Filter Include="FileParser">
       <UniqueIdentifier>{43a7c06a-18b4-4212-b54c-d3429a81f3c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene\LevelScenes">
+      <UniqueIdentifier>{a13bebd9-e07a-428f-a85b-a15430298c68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MenuScenes">
+      <UniqueIdentifier>{7501a803-dffe-413d-926f-fb947a50b8b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\SpawnerComponents">
+      <UniqueIdentifier>{5cbffbab-8b47-461f-af77-1960cfbd3079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\EnemyComponents">
+      <UniqueIdentifier>{64e034bb-e8f3-492b-9752-7a02414d8e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\PlayerComponents">
+      <UniqueIdentifier>{0edb35d2-6bde-4494-888e-b8d0a2b1b7e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\LevelComponents">
+      <UniqueIdentifier>{e876633a-229d-4cac-ba47-57efbeaa5c37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\MenuComponents">
+      <UniqueIdentifier>{edfa3194-49d3-41fd-9f3c-015da2354a18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LevelComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="QBertComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="QBert.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LivesComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerIndexComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PlayerObserver.cpp">
       <Filter>Observers</Filter>
@@ -53,79 +56,79 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SlickAndSamSpawnerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="SlickAndSamComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyPositionComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="UggAndWrongComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="UggAndWrongSpawnerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CoilyNPCComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseSpawnerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="CoilySpawnerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlateComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="SinglePlayerScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CoilyPlayerComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="VersusScene.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="BaseLevelScene.cpp">
+      <Filter>Scene\LevelScenes</Filter>
     </ClCompile>
     <ClCompile Include="CoopScene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scene\LevelScenes</Filter>
     </ClCompile>
-    <ClCompile Include="BaseLevelScene.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="SinglePlayerScene.cpp">
+      <Filter>Scene\LevelScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="VersusScene.cpp">
+      <Filter>Scene\LevelScenes</Filter>
     </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Scene\MenuScenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseSpawnerComponent.cpp">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilySpawnerComponent.cpp">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UggAndWrongSpawnerComponent.cpp">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickAndSamSpawnerComponent.cpp">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickAndSamComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UggAndWrongComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyNPCComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyPlayerComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyPositionComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityComponent.cpp">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="QBertComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Components\LevelComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlateComponent.cpp">
+      <Filter>Components\LevelComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIndexComponent.cpp">
+      <Filter>Components\PlayerComponents</Filter>
     </ClCompile>
     <ClCompile Include="MenuClickComponent.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\MenuComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameCommands.h">
       <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="QBertComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerIndexComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="PlayerObserver.h">
       <Filter>Observers</Filter>
@@ -133,59 +136,77 @@
     <ClInclude Include="pch.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SlickAndSamSpawnerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="SlickAndSamComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyPositionComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="UggAndWrongComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="UggAndWrongSpawnerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CoilyNPCComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseSpawnerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CoilySpawnerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlateComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="LevelParser.h">
       <Filter>FileParser</Filter>
     </ClInclude>
-    <ClInclude Include="SinglePlayerScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CoilyPlayerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="VersusScene.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="BaseLevelScene.h">
+      <Filter>Scene\LevelScenes</Filter>
     </ClInclude>
     <ClInclude Include="CoopScene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scene\LevelScenes</Filter>
     </ClInclude>
-    <ClInclude Include="BaseLevelScene.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="SinglePlayerScene.h">
+      <Filter>Scene\LevelScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="VersusScene.h">
+      <Filter>Scene\LevelScenes</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
-      <Filter>Scene</Filter>
+      <Filter>Scene\MenuScenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSpawnerComponent.h">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilySpawnerComponent.h">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UggAndWrongSpawnerComponent.h">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickAndSamSpawnerComponent.h">
+      <Filter>Components\SpawnerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickAndSamComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UggAndWrongComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyNPCComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyPlayerComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyPositionComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityComponent.h">
+      <Filter>Components\EnemyComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
+      <Filter>Components\LevelComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlateComponent.h">
+      <Filter>Components\LevelComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIndexComponent.h">
+      <Filter>Components\PlayerComponents</Filter>
     </ClInclude>
     <ClInclude Include="MenuClickComponent.h">
-      <Filter>Components</Filter>
+      <Filter>Components\MenuComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

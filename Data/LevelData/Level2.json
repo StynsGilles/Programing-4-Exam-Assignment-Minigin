@@ -13,7 +13,7 @@
 		"revertible": false
 	},
 	"levelData": {
-		"pyramidSize": 2,
+		"pyramidSize": 7,
 		"plateRows": [{
 				"row": 3
 			},

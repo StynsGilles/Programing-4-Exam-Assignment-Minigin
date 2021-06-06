@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "MenuClickComponent.h"
-#include <Scene.h>
 #include <SceneManager.h>
 
 dae::MenuClickComponent::MenuClickComponent(RenderComponent* pRenderComp, const std::string& sceneName)

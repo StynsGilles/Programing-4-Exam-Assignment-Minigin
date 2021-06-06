@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class LevelParser : dae::JsonParser
+	class LevelParser final : dae::JsonParser
 	{
 	public:
 		static void LoadLevel(std::wstring filePath, 
