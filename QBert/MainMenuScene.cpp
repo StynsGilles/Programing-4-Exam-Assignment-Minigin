@@ -18,17 +18,17 @@ void dae::MainMenuScene::Initialize()
 
 	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 	
-	auto go = std::make_shared<GameObject>();
+	auto pBackground = std::make_shared<GameObject>();
 	auto* pBackgroundTextureComponent = new RenderComponent();
 	pBackgroundTextureComponent->SetTexture("background.jpg");
-	go->AddComponent(pBackgroundTextureComponent);
-	Add(go);
+	pBackgroundTextureComponent->SetDimensions(640, 480);
+	pBackground->AddComponent(pBackgroundTextureComponent);
+	Add(pBackground);
 	
-	float x = 188.f;
+	const float x = 188.f;
 	float y = 108;
-	float textOffsetX = 50.f;
-	float textOffsetY = 20.f;
-
+	const float textOffsetX = 50.f;
+	const float textOffsetY = 20.f;
 	
 	auto buttonSinglePlayer = std::make_shared<GameObject>();
 	auto* pSingleTextureComponent = new RenderComponent();

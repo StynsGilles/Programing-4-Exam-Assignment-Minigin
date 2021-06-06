@@ -209,7 +209,6 @@ void dae::CoilyNPCComponent::GoToPlate()
 
 	if (pPosComp && m_PlateDestinationCube)
 	{
-		ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/SnakeFall.wav");
 		bool isOccupied = false;
 		bool QBertOnCube = false;
 		auto* pCoilyCube = pPosComp->GetCurrentCube();
@@ -219,7 +218,10 @@ void dae::CoilyNPCComponent::GoToPlate()
 			const auto scene = SceneManager::GetInstance().GetCurrentScene();
 			auto* pQbert = scene->GetComponentOfType <QBertComponent>();
 			if (pQbert)
+			{
+				ServiceLocator::GetSoundSystem()->PlaySound("../Data/Sounds/SnakeFall.wav");
 				pQbert->KilledCoily();
+			}
 		}
 		else
 		{

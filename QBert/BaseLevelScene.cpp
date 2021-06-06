@@ -19,6 +19,7 @@ void dae::BaseLevelScene::Initialize()
 	auto pBackGround = std::make_shared<dae::GameObject>();
 	auto* pBackgroundTextureComponent = new RenderComponent();
 	pBackgroundTextureComponent->SetTexture("background.jpg");
+	pBackgroundTextureComponent->SetDimensions(640, 480);
 	pBackGround->AddComponent(pBackgroundTextureComponent);
 	Add(pBackGround);
 
