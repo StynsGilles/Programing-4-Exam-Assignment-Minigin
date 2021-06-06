@@ -40,6 +40,7 @@ void dae::UggAndWrongSpawnerComponent::SpawnEnemy()
 		auto* pUggPosComponent = new EnemyPositionComponent(dae::EnemyType::right, m_pPyramid);
 		newEnemy->AddComponent(pUggRenderComponent);
 		newEnemy->AddComponent(pUggPosComponent);
+		pUggRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
 		pUggPosComponent->SpawnOnCube(m_pPyramid->GetCube(maxIndex, maxIndex));
 	}
 	else
@@ -48,6 +49,7 @@ void dae::UggAndWrongSpawnerComponent::SpawnEnemy()
 		auto* pWrongwayPosComponent = new dae::EnemyPositionComponent(dae::EnemyType::left, m_pPyramid);
 		newEnemy->AddComponent(pWrongwayRenderComponent);
 		newEnemy->AddComponent(pWrongwayPosComponent);
+		pWrongwayRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
 		pWrongwayPosComponent->SpawnOnCube(m_pPyramid->GetCube(maxIndex, 0));
 	}
 	

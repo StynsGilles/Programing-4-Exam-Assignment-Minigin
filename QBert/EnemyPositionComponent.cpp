@@ -4,7 +4,6 @@
 #include <GameObject.h>
 #include "EntityComponent.h"
 #include "LevelComponent.h"
-#include "LivesComponent.h"
 #include "QBertComponent.h"
 #include "SlickAndSamComponent.h"
 #include "SceneManager.h"
@@ -90,9 +89,9 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 				return;
 			}
 		}
-		
-		SDL_Rect dst;
-		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+
+		const float cubeWidth = m_pPyramid->GetCubeWidth();
+		const float cubeHeight = m_pPyramid->GetCubeHeight();
 
 		glm::vec3 pos = m_pCurrentCube->position;
 		
@@ -100,15 +99,15 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 		{
 		case EnemyType::top:
 			m_pCurrentCube->entity = m_pObject;
-			pos.x += (float)dst.w / 3.f;
-			pos.y -= (float)dst.h / 4.f;
+			pos.x += cubeWidth / 3.f;
+			pos.y -= cubeHeight / 4.f;
 			break;
 		case EnemyType::left:
 		{
 			auto* pLeftCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, 0);
 			if (pLeftCube)
 				pLeftCube->entity = m_pObject;
-			pos.x -= (float)dst.w / 6.f;
+			pos.x -= cubeWidth / 6.f;
 			pos.y += 15.f;
 			break;
 		}
@@ -117,13 +116,13 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 			auto* pRightCube = m_pPyramid->GetNextCubeNeutral(m_pCurrentCube, +1, +1);
 			if (pRightCube)
 				pRightCube->entity = m_pObject;
-			pos.x += ((float)dst.w / 3.f) * 2.f;
+			pos.x += (cubeWidth / 3.f) * 2.f;
 			pos.y += 15.f;
 			break;
 		}
 		default:
 			m_pCurrentCube->entity = m_pObject;
-			pos.x += (float)dst.w / 3.f;
+			pos.x += cubeWidth / 3.f;
 			pos.y -= 5.f;
 			break;
 		}

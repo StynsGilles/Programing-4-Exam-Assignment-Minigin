@@ -40,6 +40,7 @@ void dae::SlickAndSamSpawnerComponent::SpawnEnemy()
 	newEnemy->AddComponent(pSandSComponent);
 	newEnemy->AddComponent(pRenderComponent);
 	newEnemy->AddComponent(pPosComponent);
+	pRenderComponent->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
 	int randomCol = rand() % 2;
 	auto cubeToSpawnOn = m_pPyramid->GetCube(1, randomCol);
 	if (cubeToSpawnOn->entity && !cubeToSpawnOn->entity->GetComponent<QBertComponent>())

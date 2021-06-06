@@ -11,6 +11,8 @@
 	},
 	"levelData": {
 		"pyramidSize": 7,
+		"cubeWidth": 64, 
+		"cubeHeight":64, 
 		"plateRows": [{
 				"row": 1
 			},

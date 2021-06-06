@@ -8,7 +8,8 @@ namespace dae
 	public:
 		static void LoadLevel(std::wstring filePath, 
 			bool& revertible, std::vector<std::string>& colors, 
-			int& pyramidSize, std::vector<int>& plateRowsVector, 
+			int& pyramidSize, float& cubeWidth,
+			float& cubeHeight, std::vector<int>& plateRowsVector,
 			int& qbertLives, float& qbertJumpCD,
 			float& spawnIntervalSlick, float& jumpCdSlick, 
 			float& spawnIntervalUgg, float& jumpCdUgg,
@@ -23,11 +24,7 @@ namespace dae
 				if (levelFile.HasMember("gamerules") && levelFile["gamerules"].IsObject())
 				{
 					if (levelFile["gamerules"].HasMember("revertible"))
-					{
 						revertible = levelFile["gamerules"]["revertible"].GetBool();
-
-						std::cout << "file has data for revertible, revertible is: " << revertible << std::endl;
-					}
 					if (levelFile["gamerules"].HasMember("textures"))
 					{
 						colors.clear();
@@ -43,10 +40,14 @@ namespace dae
 				if (levelFile.HasMember("levelData") && levelFile["levelData"].IsObject())
 				{
 					if (levelFile["levelData"].HasMember("pyramidSize"))
-					{
 						pyramidSize = levelFile["levelData"]["pyramidSize"].GetInt();
-						std::cout << "pyramidsize:" << pyramidSize << std::endl;
-					}
+					
+					if (levelFile["levelData"].HasMember("cubeWidth"))
+						cubeWidth = levelFile["levelData"]["cubeWidth"].GetFloat();
+					
+					if (levelFile["levelData"].HasMember("cubeHeight"))
+						cubeHeight = levelFile["levelData"]["cubeHeight"].GetFloat();
+					
 					if (levelFile["levelData"].HasMember("plateRows"))
 					{
 						plateRowsVector.clear();

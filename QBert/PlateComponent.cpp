@@ -18,7 +18,10 @@ dae::PlateComponent::~PlateComponent()
 {}
 
 void dae::PlateComponent::Initialize()
-{	
+{
+	const float yOffset = 22.f;
+	const float xOffset = 3.f;
+	
 	switch (m_Side)
 	{
 	case Side::left:
@@ -27,8 +30,8 @@ void dae::PlateComponent::Initialize()
 		if (pCube)
 		{
 			auto pPlatePos = pCube->position;
-			pPlatePos.x -= (m_pObject->GetComponent<RenderComponent>()->GetWidth() + 1);
-			pPlatePos.y += 10.f;
+			pPlatePos.x -= m_pObject->GetComponent<RenderComponent>()->GetWidth() + xOffset;
+			pPlatePos.y += yOffset;
 			m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
 		}
 
@@ -39,12 +42,9 @@ void dae::PlateComponent::Initialize()
 		auto* pCube = m_pPyramid->GetCube(m_Row, m_Row);
 		if (pCube)
 		{
-
 			auto pPlatePos = pCube->position;
-			SDL_Rect dst;
-			SDL_QueryTexture(pCube->pCubeTextures[pCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-			pPlatePos.x += dst.w + 1;
-			pPlatePos.y += 10.f;
+			pPlatePos.x += m_pPyramid->GetCubeWidth() + xOffset;
+			pPlatePos.y += yOffset;
 			m_pObject->SetPosition(pPlatePos.x, pPlatePos.y);
 		}
 	}

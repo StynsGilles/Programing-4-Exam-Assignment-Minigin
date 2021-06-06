@@ -13,10 +13,12 @@
 #include "Scene.h"
 #include "PlateComponent.h"
 
-dae::LevelComponent::LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
+dae::LevelComponent::LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, const std::string& interColor, bool reversible)
 	: m_PyramidSize{pyramidSize}
+	, m_CubeWidth{cubeWidth}
+	, m_CubeHeight{cubeHeight}
 {
-	glm::vec3 initialCubePos = glm::vec3(320, 100, 0);
+	glm::vec3 initialCubePos = glm::vec3(320, 50, 0);
 
 	auto initialTexture = ResourceManager::GetInstance().LoadTexture("Cube_" + initialColor + ".png");
 	std::shared_ptr<Texture2D> interTexture = nullptr;
@@ -33,25 +35,24 @@ dae::LevelComponent::LevelComponent(int pyramidSize, const std::string& initialC
 			if (!interColor.empty())
 				newCube->pCubeTextures.push_back(interTexture);
 			newCube->pCubeTextures.push_back(finaltexture);
-			SDL_Rect dst;
-			SDL_QueryTexture(newCube->pCubeTextures[newCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
+			
 			newCube->position = initialCubePos;
 			newCube->reversible = reversible;
 			newRow.push_back(newCube);
 			if (col == row)
 			{
-				initialCubePos.x -= (float)dst.w / 2.f + (float)dst.w * col;
-				initialCubePos.y += dst.h * 0.75f;
+				initialCubePos.x -= m_CubeWidth / 2.f + m_CubeWidth * col;
+				initialCubePos.y += m_CubeHeight * 0.75f;
 			}
 			else
-				initialCubePos.x += (float)dst.w;
+				initialCubePos.x += m_CubeWidth;
 		}
 		m_Pyramid.push_back(newRow);
 	}
 }
 
-dae::LevelComponent::LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, bool reversible)
-	:LevelComponent(pyramidSize, initialColor, finalColor, "", reversible)
+dae::LevelComponent::LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, bool reversible)
+	:LevelComponent(pyramidSize, cubeWidth, cubeHeight, initialColor, finalColor, "", reversible)
 {}
 
 dae::LevelComponent::~LevelComponent()
@@ -77,7 +78,7 @@ void dae::LevelComponent::Render() const
 		for (int col = 0; col <= row; ++col)
 		{
 			if (m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage])
-				Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y);
+				Renderer::GetInstance().RenderTexture(*m_Pyramid[row][col]->pCubeTextures[m_Pyramid[row][col]->stage], m_Pyramid[row][col]->position.x, m_Pyramid[row][col]->position.y, m_CubeWidth, m_CubeHeight);
 		}
 	}
 }
@@ -300,6 +301,16 @@ void dae::LevelComponent::ClearBoard()
 		enemy->RemoveFromCurrentCube();
 		enemy->GetGameObject()->Delete();
 	}
+}
+
+float dae::LevelComponent::GetCubeWidth() const
+{
+	return m_CubeWidth;
+}
+
+float dae::LevelComponent::GetCubeHeight() const
+{
+	return m_CubeHeight;
 }
 
 void dae::LevelComponent::GetNextRowAndCol(LevelCube* pCurrentCube, int& newRow, int& newCol, int rowChange, int colChange) const

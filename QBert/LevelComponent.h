@@ -19,8 +19,8 @@ namespace dae
 	class LevelComponent final : public BaseComponent
 	{
 	public:
-		LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
-		LevelComponent(int pyramidSize, const std::string& initialColor, const std::string& finalColor, bool reversible);
+		LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, const std::string& interColor = "", bool reversible = false);
+		LevelComponent(int pyramidSize, float cubeWidth, float cubeHeight, const std::string& initialColor, const std::string& finalColor, bool reversible);
 		virtual ~LevelComponent();
 
 		void Update() override;
@@ -38,6 +38,8 @@ namespace dae
 		bool CheckIfJumpedOnPlate(LevelCube* pCurrentCube, int rowChange, int colChange, PlateComponent*& pJumpedOnPlate);
 		LevelCube* GetNextCubeNeutral(LevelCube* pCurrentCube, int rowChange, int colChange) const;
 		void ClearBoard();
+		float GetCubeWidth() const;
+		float GetCubeHeight() const;
 		
 		LevelComponent(const LevelComponent& other) = delete;
 		LevelComponent(LevelComponent&& other) = delete;
@@ -46,6 +48,8 @@ namespace dae
 
 	private:
 		int m_PyramidSize = 7;
+		float m_CubeWidth;
+		float m_CubeHeight;
 		std::vector<std::vector<LevelCube*>> m_Pyramid;
 		bool m_LevelFinished = false;
 

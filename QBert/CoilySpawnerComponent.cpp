@@ -49,6 +49,7 @@ void dae::CoilySpawnerComponent::SpawnEnemy()
 		coily->AddComponent(pCoilyRenderComp);
 		coily->AddComponent(pCoilyPosComp);
 		coily->AddComponent(pCoilyComp);
+		pCoilyRenderComp->SetDimensions(m_pPyramid->GetCubeWidth() * 0.5f, m_pPyramid->GetCubeHeight() * 0.5f);
 		pCoilyPosComp->SpawnOnCube(m_pPyramid->GetTopCube());
 		scene->Add(coily);
 

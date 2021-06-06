@@ -13,6 +13,7 @@
 #include "CoilyNPCComponent.h"
 #include "EntityComponent.h"
 #include "LivesComponent.h"
+#include "RenderComponent.h"
 #include "ScoreComponent.h"
 #include "SlickAndSamComponent.h"
 
@@ -82,12 +83,9 @@ void dae::QBertComponent::ChangeCube(LevelCube* pNewCube, bool fellOf, bool posi
 
 		m_pCurrentCube->entity = m_pObject;
 
-		SDL_Rect dst;
-		SDL_QueryTexture(pNewCube->pCubeTextures[pNewCube->stage]->GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-
 		glm::vec3 pos = m_pCurrentCube->position;
-		pos.x += (float)dst.w / 3.f;
-		pos.y -= 5.f;
+		pos.x += m_pPyramid->GetCubeWidth() / 2.f - m_pObject->GetComponent<RenderComponent>()->GetWidth() / 2.f;
+		pos.y -= m_pPyramid->GetCubeHeight() /4.f;
 
 		UpdatePosition(pos);
 	}

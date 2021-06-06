@@ -32,6 +32,8 @@ void dae::SinglePlayerScene::Initialize()
 	std::vector<std::string> colors{ "Pink", "Yellow" };
 	//levelData
 	int pyramidSize = 7;
+	float cubeWidth = 64.f;
+	float cubeHeight = 64.f;
 	std::vector<int> plateRows{ 3 };
 	//QBertData
 	int qbertLives = 3;
@@ -48,7 +50,8 @@ void dae::SinglePlayerScene::Initialize()
 
 	LevelParser::LoadLevel(L"../Data/LevelData/Level" + std::to_wstring(m_Level) + L".json",
 		revertible, colors,
-		pyramidSize, plateRows,
+		pyramidSize, cubeWidth,
+		cubeHeight, plateRows,
 		qbertLives, jumpCooldownQBert,
 		spawnIntervalSlick, jumpCooldownSlick,
 		spawnIntervalUgg, jumpCooldownUgg,
@@ -59,14 +62,15 @@ void dae::SinglePlayerScene::Initialize()
 	auto pyramid = std::make_shared<GameObject>();
 	LevelComponent* pLevelComponent = nullptr;
 	if (colors.size() == 2)
-		pLevelComponent = new LevelComponent(pyramidSize, colors[0], colors[1], revertible);
+		pLevelComponent = new LevelComponent(pyramidSize, cubeWidth, cubeHeight, colors[0], colors[1], revertible);
 	else if (colors.size() == 3)
-		pLevelComponent = new LevelComponent(pyramidSize, colors[0], colors[2], colors[1], revertible);
+		pLevelComponent = new LevelComponent(pyramidSize, cubeWidth, cubeHeight, colors[0], colors[2], colors[1], revertible);
 
 	pyramid->AddComponent(pLevelComponent);
 	Add(pyramid);
-
-	const float plateWidth = 20.f;
+	
+	const float plateWidth = cubeWidth / 2.f;
+	const float plateheight = cubeHeight / 2.f;
 
 	for (size_t idx = 0; idx < plateRows.size(); ++idx)
 	{
@@ -76,7 +80,7 @@ void dae::SinglePlayerScene::Initialize()
 		auto* pPlateLeftRenderComp = new RenderComponent("Plate.png");
 		leftPlate->AddComponent(pPlateLeftComp);
 		leftPlate->AddComponent(pPlateLeftRenderComp);
-		pPlateLeftRenderComp->SetDimensions(plateWidth, plateWidth);
+		pPlateLeftRenderComp->SetDimensions(plateWidth, plateheight);
 		pPlateLeftComp->Initialize();
 		Add(leftPlate);
 
@@ -86,7 +90,7 @@ void dae::SinglePlayerScene::Initialize()
 		auto* pPlateRightRenderComp = new RenderComponent("Plate.png");
 		rightPlate->AddComponent(pPlateRightComp);
 		rightPlate->AddComponent(pPlateRightRenderComp);
-		pPlateRightRenderComp->SetDimensions(plateWidth, plateWidth);
+		pPlateRightRenderComp->SetDimensions(plateWidth, plateheight);
 		pPlateRightComp->Initialize();
 		Add(rightPlate);
 	}
@@ -150,10 +154,12 @@ void dae::SinglePlayerScene::Initialize()
 	QBert->AddComponent(pQBertComponent);
 	QBert->AddComponent(pQBertRenderComponent);
 	QBert->AddComponent(pQBertSubjectComponent);
+	pQBertRenderComponent->SetDimensions(cubeWidth * 0.5f, cubeHeight * 0.5f);
 	pQBertComponent->ChangeCube(pLevelComponent->GetTopCube(), false, false, false);
 	Add(QBert);
 	pQBertSubjectComponent->AddObserver(pPlayerObserver);
 
+	
 	//Adding input
 	const ActionInfo GoNorthEast{ ControllerButton::Up, SDL_SCANCODE_W, InputState::Up };
 	const ActionInfo GoNorthWest{ ControllerButton::Left, SDL_SCANCODE_A, InputState::Up };
