@@ -5,6 +5,7 @@
 #include "EntityComponent.h"
 #include "LevelComponent.h"
 #include "QBertComponent.h"
+#include "RenderComponent.h"
 #include "SlickAndSamComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -99,7 +100,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 		{
 		case EnemyType::top:
 			m_pCurrentCube->entity = m_pObject;
-			pos.x += cubeWidth / 3.f;
+			pos.x += cubeWidth / 2.f - m_pObject->GetComponent<RenderComponent>()->GetWidth() / 2.f;
 			pos.y -= cubeHeight / 4.f;
 			break;
 		case EnemyType::left:
@@ -108,7 +109,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 			if (pLeftCube)
 				pLeftCube->entity = m_pObject;
 			pos.x -= cubeWidth / 6.f;
-			pos.y += 15.f;
+			pos.y += cubeHeight / 2.f;
 			break;
 		}
 		case EnemyType::right:
@@ -117,7 +118,7 @@ void dae::EnemyPositionComponent::ChangeCube(LevelCube* pNewCube, bool QBertOnCu
 			if (pRightCube)
 				pRightCube->entity = m_pObject;
 			pos.x += (cubeWidth / 3.f) * 2.f;
-			pos.y += 15.f;
+			pos.y += cubeHeight / 2.f;
 			break;
 		}
 		default:
